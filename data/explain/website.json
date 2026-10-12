@@ -1,0 +1,89 @@
+{
+  "_comment": "Kurz erklärt, Einträge von P1 (Spezifikation 6.6): contrast, borders, links, color-alone, oklch, dark-mode. Je 60 bis 120 Wörter, kein HTML, nur Hex-Literale in Platzhaltern.",
+  "entries": [
+    {
+      "id": "contrast",
+      "title_de": "Was das Kontrastverhältnis misst",
+      "title_en": "What the contrast ratio measures",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": ["wcag22-understanding-1-4-3"],
+      "body_de": "Das Kontrastverhältnis vergleicht die Helligkeit zweier Farben, genauer ihre relative Leuchtdichte. Es reicht von gleichen Farben bis 21:1 für Schwarz auf Weiß. WCAG 2.2 verlangt für Text mindestens 4,5:1 und für große Schrift mindestens 3:1.\n\nDie Schwelle gilt ungerundet. Grau #777777 auf Weiß erreicht {cr:#777777/#FFFFFF} und verfehlt damit 4,5:1, auch wenn eine gerundete Anzeige anderes nahelegt. Deshalb schneidet diese Seite jeden Kontrastwert ab, statt ihn zu runden. Die Formel kennt nur die Leuchtdichte: Ein kräftiges Rot und ein Grau gleicher Leuchtdichte haben denselben Kontrast zu Weiß.",
+      "body_en": "The contrast ratio compares the lightness of two colors, more precisely their relative luminance. It ranges from identical colors up to 21:1 for black on white. WCAG 2.2 requires at least 4.5:1 for text and at least 3:1 for large text.\n\nThe threshold applies without rounding. Gray #777777 on white reaches {cr:#777777/#FFFFFF} and so misses 4.5:1, even if a rounded display suggests otherwise. That is why this site truncates every contrast value instead of rounding it. The formula knows only luminance: a strong red and a gray of the same luminance have the same contrast against white.",
+      "sources": ["wcag22-1-4-3", "wcag22-understanding-1-4-3"],
+      "demo": null
+    },
+    {
+      "id": "borders",
+      "title_de": "Wann ein Rahmen 3:1 braucht",
+      "title_en": "When a border needs 3:1",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-11"],
+      "informative": ["wcag22-understanding-1-4-11"],
+      "body_de": "Ein Eingabefeld ist oft nur an seinem Rahmen zu erkennen. Dann ist der Rahmen das Merkmal des Bedienelements und braucht mindestens 3:1 zur angrenzenden Farbe. Grau #949494 auf Weiß erreicht {cr:#949494/#FFFFFF} und liegt damit knapp über der Grenze.\n\nEin Button mit Beschriftung braucht keinen Rand, denn die Schrift zeigt, dass er da ist. Trennlinien zwischen Karten sind Schmuck und brauchen keine 3:1. Diese Seite liefert deshalb zwei Rahmenfarben: eine kräftige für Eingabefelder und Checkboxen, eine dezente nur für Trennlinien. Auch der Fokusring ist ein solches Merkmal und braucht 3:1.",
+      "body_en": "An input is often recognizable only by its border. Then the border is the feature of the control and needs at least 3:1 against the adjacent color. Gray #949494 on white reaches {cr:#949494/#FFFFFF} and so sits just above the limit.\n\nA button with a label needs no border, because the text shows that it is there. Dividers between cards are decoration and need no 3:1. That is why this site delivers two border colors: a strong one for inputs and checkboxes, a subtle one for dividers only. The focus ring is such a feature too and needs 3:1.",
+      "sources": ["wcag22-1-4-11", "wcag22-understanding-1-4-11"],
+      "demo": null
+    },
+    {
+      "id": "links",
+      "title_de": "Warum Links unterstrichen sind",
+      "title_en": "Why links are underlined",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-1"],
+      "informative": ["wcag22-g183", "wcag22-f73"],
+      "body_de": "Ein Link im Fließtext muss auch ohne Farbsehen zu erkennen sein. Am zuverlässigsten ist die Unterstreichung. Ohne sie braucht die Linkfarbe nach Technik G183 mindestens 3:1 zum umgebenden Text, und beide Farben brauchen weiter 4,5:1 zum Hintergrund.\n\nDas lässt wenig Spielraum. Schwarzer Text und Blau #0072B2 auf Weiß schaffen es: Das Blau hat {cr:#0072B2/#000000} zum Text und {cr:#0072B2/#FFFFFF} zum Hintergrund. Mit Text in #333333 auf Weiß gibt es dagegen keine Linkfarbe, die beides erfüllt. Ein Merkmal, das erst bei Hover oder Fokus erscheint, reicht nicht.",
+      "body_en": "A link in body text must be recognizable without color vision too. An underline is the most reliable cue. Without it, the link color needs at least 3:1 against the surrounding text per technique G183, and both colors still need 4.5:1 against the background.\n\nThat leaves little room. Black text and blue #0072B2 on white manage it: the blue has {cr:#0072B2/#000000} against the text and {cr:#0072B2/#FFFFFF} against the background. With text in #333333 on white, however, no link color meets both. A cue that only appears on hover or focus is not enough.",
+      "sources": ["wcag22-1-4-1", "wcag22-g183", "wcag22-f73"],
+      "demo": null
+    },
+    {
+      "id": "color-alone",
+      "title_de": "Warum Farbe allein nicht reicht",
+      "title_en": "Why color alone is not enough",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-1"],
+      "informative": ["wcag22-understanding-1-4-1", "wcag22-f81"],
+      "body_de": "Nicht alle Menschen sehen Farben gleich. Wer eine Farbsehschwäche hat, verwechselt bestimmte Farben. Menschen mit Sehbehinderung sehen Farben oft eingeschränkt, viele Ältere sehen sie schlecht. Einfarbige Anzeigen geben sie gar nicht wieder. WCAG 2.2 verlangt deshalb, dass Farbe nie das einzige Mittel ist, um eine Bedeutung zu zeigen.\n\nRot #E04040 und Grün #40A040 liegen bei normalem Sehen {dist:#E04040/#40A040/normal} auseinander, bei simulierter Deuteranopie nur {dist:#E04040/#40A040/deutan}. Für Statusmeldungen heißt das: Jede Meldung trägt ein Icon und ein Wort, etwa „Fehler:“. Ein rot umrandetes Eingabefeld ohne Text ist ein bekannter Fehler. Die Simulation ist eine Näherung und ersetzt keinen Test mit Betroffenen.",
+      "body_en": "Not everyone sees colors the same way. People with color vision deficiency confuse certain colors. People with partial sight often see colors in a limited way, and many older people see them poorly. Monochrome displays do not show them at all. That is why WCAG 2.2 requires that color is never the only means of showing a meaning.\n\nRed #E04040 and green #40A040 are {dist:#E04040/#40A040/normal} apart with normal vision, but only {dist:#E04040/#40A040/deutan} with simulated deuteranopia. For status messages this means: every message carries an icon and a word, such as “Error:”. An input with only a red border and no text is a known failure. The simulation is an approximation and does not replace testing with affected people.",
+      "sources": ["wcag22-1-4-1", "wcag22-understanding-1-4-1", "wcag22-f81"],
+      "demo": null
+    },
+    {
+      "id": "oklch",
+      "title_de": "Warum die Seite in OKLCH rechnet",
+      "title_en": "Why the site calculates in OKLCH",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "OKLCH beschreibt eine Farbe mit drei Werten: Helligkeit L, Buntheit C und Farbton h. Anders als bei HSL oder HSV sagt L recht gut voraus, wie hell eine Farbe wirkt. Gelb #FFFF00 hat die OKLCH-Helligkeit {L:#FFFF00}, Blau #0000FF nur {L:#0000FF}, obwohl beide in HSL dieselbe Helligkeit haben.\n\nDeshalb ändert diese Seite für den Kontrast nur L. Farbton und Buntheit bleiben, soweit sRGB sie bei der neuen Helligkeit darstellen kann. Sie rechnet nach CSS Color 4. Geprüft und kopiert wird aber immer der Hex-Wert. Die OKLCH-Angabe steht als Kommentar daneben und führt exakt auf denselben Hex-Wert zurück.",
+      "body_en": "OKLCH describes a color with three values: lightness L, chroma C and hue h. Unlike HSL or HSV, L predicts fairly well how light a color looks. Yellow #FFFF00 has an OKLCH lightness of {L:#FFFF00}, blue #0000FF only {L:#0000FF}, although both have the same lightness in HSL.\n\nThat is why this site changes only L for contrast. Hue and chroma stay as far as sRGB can show them at the new lightness. It calculates per CSS Color 4. What is checked and copied, however, is always the hex value. The OKLCH note stands next to it as a comment and leads back to exactly the same hex value.",
+      "sources": ["ottosson-oklab", "css-color-4"],
+      "demo": null
+    },
+    {
+      "id": "dark-mode",
+      "title_de": "Dunkler Modus: eigene Werte statt Umkehrung",
+      "title_en": "Dark mode: own values instead of inversion",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Eine dunkle Palette entsteht nicht durch Invertieren. Apple beschreibt für den dunklen Modus dunklere Hintergründe und hellere Vordergründe. Sie sind nicht unbedingt Umkehrungen der hellen Farben, und für jede eigene Farbe empfiehlt Apple eine helle und eine gedimmte Variante. Diese Seite rechnet den dunklen Modus deshalb eigens: Hintergrund und Flächen bekommen feste dunkle Helligkeiten, der Akzent etwas weniger Buntheit, und jedes Paar wird neu geprüft.\n\nDass der Hintergrund dunkelgrau statt schwarz ist, folgt dem Vorbild von Material Design und ist kein Lesbarkeitsbefund. Material begründet Dunkelgrau mit Schatten und Augenbelastung, nennt aber keine Studie. Die Seite Farbsprache selbst nutzt im dunklen Modus #0B0B0B, wie das Schwesterprojekt Bildsprache.",
+      "body_en": "A dark palette is not created by inverting. Apple describes dimmer backgrounds and brighter foregrounds for Dark Mode. They are not necessarily inversions of the light colors, and Apple recommends a bright and a dim variant for each custom color. That is why this site calculates dark mode on its own: background and surfaces get fixed dark lightness values, the accent a little less chroma, and every pair is checked again.\n\nThat the background is dark gray rather than black follows the example of Material Design and is not a legibility finding. Material justifies dark gray with shadows and eye strain but cites no study. The Farbsprache site itself uses #0B0B0B in dark mode, like its sister project Bildsprache.",
+      "sources": ["apple-hig-dark-mode", "material-android-dark-theme"],
+      "demo": null
+    }
+  ]
+}

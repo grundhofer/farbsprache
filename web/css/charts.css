@@ -1,0 +1,4 @@
+/* ---------- Diagramm: Hinweise des DOM-Hakens (web/ui/charts.js), nur Selektoren mit .t-charts ---------- */
+.t-charts [data-slot="bar"] { flex-basis:100%; }
+.t-charts .ch-max { display:grid; gap:6px; justify-items:start; border-left:3px solid var(--rule); padding:2px 0 2px 10px; }
+.t-charts [data-ch-seed] { margin-top:10px; }

@@ -1,0 +1,26 @@
+{
+  "task": "ai-image",
+  "presets": {
+    "dunkelblau": {
+      "default": {
+        "dominant": "#1B3A76",
+        "secondary": "#F6F3ED",
+        "accent": "#D33B36"
+      }
+    },
+    "gruen": {
+      "default": {
+        "dominant": "#225A31",
+        "secondary": "#E6E9E6",
+        "accent": "#F0D947"
+      }
+    },
+    "erdtoene": {
+      "default": {
+        "dominant": "#6A4225",
+        "secondary": "#E9DCC8",
+        "accent": "#6B7941"
+      }
+    }
+  }
+}

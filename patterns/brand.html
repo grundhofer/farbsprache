@@ -1,0 +1,68 @@
+<style>
+.demo-brand { background:var(--d-bg-light); color:var(--d-mono-ink); font:13px/1.45 Inter, Helvetica, Arial, sans-serif; padding:14px; color-scheme:light; display:grid; gap:12px; }
+.demo-brand .bm-logo { display:inline-flex; align-items:center; gap:7px; font-weight:700; font-size:17px; letter-spacing:.01em; color:var(--d-brand); }
+.demo-brand .bm-mark { display:inline-grid; grid-template-columns:9px 9px; grid-template-rows:9px 9px; gap:2px; flex:none; }
+.demo-brand .bm-mark i { display:block; background:currentColor; }
+.demo-brand .bm-mark i:nth-child(2) { border-radius:50%; }
+.demo-brand .bm-mark i:nth-child(4) { background:none; border:2px solid currentColor; }
+.demo-brand .bm-row { display:flex; flex-wrap:wrap; gap:8px; align-items:stretch; }
+.demo-brand .bm-tile { flex:1 1 120px; padding:10px; display:flex; flex-direction:column; gap:4px; min-width:0; }
+.demo-brand .bm-cap { margin:0; font-size:11px; letter-spacing:.04em; text-transform:uppercase; }
+.demo-brand .bm-on-white { background:var(--d-bg-light); border:1px solid var(--d-brand-gray); }
+.demo-brand .bm-on-dark { background:var(--d-bg-dark); color:var(--d-brand-text-dark); }
+.demo-brand .bm-on-dark .bm-logo { color:var(--d-brand); }
+.demo-brand .bm-on-dark .bm-h { color:var(--d-brand-text-dark); }
+.demo-brand .bm-card { display:grid; grid-template-columns:42% 1fr; border:1px solid var(--d-brand-gray); min-height:84px; }
+.demo-brand .bm-band { background:var(--d-brand); color:var(--d-on-brand); display:flex; align-items:center; justify-content:center; padding:8px; }
+.demo-brand .bm-band .bm-logo { color:var(--d-on-brand); font-size:14px; }
+.demo-brand .bm-card-t { padding:8px 10px; display:flex; flex-direction:column; justify-content:center; gap:2px; }
+.demo-brand .bm-card-t b { font-size:13px; }
+.demo-brand .bm-web { color:var(--d-brand-text-light); font-size:12px; }
+.demo-brand .bm-letter { border:1px solid var(--d-brand-gray); padding:10px 12px; display:grid; gap:6px; }
+.demo-brand .bm-letter .bm-logo { font-size:13px; }
+.demo-brand .bm-rule { height:2px; background:var(--d-brand); }
+.demo-brand .bm-h { margin:0; font-weight:700; font-size:14px; color:var(--d-brand-text-light); }
+.demo-brand .bm-p { margin:0; font-size:12px; }
+.demo-brand .bm-btn { display:inline-block; justify-self:start; background:var(--d-brand); color:var(--d-on-brand); padding:7px 12px; font-weight:700; }
+.demo-brand .bm-link { color:var(--d-brand-text-dark); text-decoration:underline; text-underline-offset:3px; }
+.demo-brand .bm-fav { display:flex; align-items:flex-end; gap:10px; }
+.demo-brand .bm-fav > span { display:grid; place-items:center; background:var(--d-brand); color:var(--d-on-brand); }
+.demo-brand .bm-f16 { width:16px; height:16px; }
+.demo-brand .bm-f32 { width:32px; height:32px; }
+.demo-brand .bm-f16 .bm-mark { grid-template-columns:4px 4px; grid-template-rows:4px 4px; gap:1px; }
+.demo-brand .bm-f16 .bm-mark i:nth-child(4) { border-width:1px; }
+.demo-brand .bm-f32 .bm-mark { grid-template-columns:8px 8px; grid-template-rows:8px 8px; gap:2px; }
+.demo-brand .bm-mono-b { background:var(--d-mono-paper); color:var(--d-mono-ink); border:1px solid var(--d-mono-ink); }
+.demo-brand .bm-mono-w { background:var(--d-mono-ink); color:var(--d-mono-paper); }
+.demo-brand .bm-mono-b .bm-logo, .demo-brand .bm-mono-w .bm-logo { color:inherit; font-size:14px; }
+.demo-brand .bm-grayv .bm-logo { color:var(--d-brand-gray); font-size:14px; }
+.demo-brand .bm-second { display:var(--d-show-2); align-items:center; gap:8px; }
+.demo-brand .bm-second i { display:block; width:28px; height:28px; }
+.demo-brand .bm-s1 { background:var(--d-brand); }
+.demo-brand .bm-s2 { background:var(--d-brand-2); }
+</style>
+<div class="bm-row">
+<div class="bm-tile bm-on-white"><span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span></div>
+<div class="bm-tile bm-on-dark"><span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span></div>
+</div>
+<div class="bm-card">
+<div class="bm-band"><span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span></div>
+<div class="bm-card-t"><b>{{name}}</b><span>{{role}}</span><span class="bm-web">{{web}}</span></div>
+</div>
+<div class="bm-letter">
+<span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span>
+<div class="bm-rule"></div>
+<p class="bm-h">{{letter}}</p>
+<p class="bm-p">{{body}}</p>
+<span class="bm-btn">{{button}}</span>
+</div>
+<div class="bm-tile bm-on-dark"><p class="bm-h">{{dark}}</p><span class="bm-link">{{link}}</span></div>
+<div class="bm-row">
+<div class="bm-tile bm-on-white"><p class="bm-cap">{{fav}}</p><div class="bm-fav"><span class="bm-f16"><span class="bm-mark"><i></i><i></i><i></i><i></i></span></span><span class="bm-f32"><span class="bm-mark"><i></i><i></i><i></i><i></i></span></span></div></div>
+<div class="bm-tile bm-on-white bm-grayv"><p class="bm-cap">{{gray}}</p><span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span></div>
+</div>
+<div class="bm-row">
+<div class="bm-tile bm-mono-b"><p class="bm-cap">{{mono}}</p><span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span></div>
+<div class="bm-tile bm-mono-w"><p class="bm-cap">{{mono}}</p><span class="bm-logo"><span class="bm-mark"><i></i><i></i><i></i><i></i></span>{{word}}</span></div>
+</div>
+<div class="bm-second"><i class="bm-s1"></i><i class="bm-s2"></i><span>{{second}}</span></div>

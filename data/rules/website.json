@@ -1,0 +1,101 @@
+{
+  "_comment": "Regeln der Aufgaben Website oder App und Statusfarben (Spezifikation 6.5, Eigentümer P1). Texte mit Platzhaltern, nie mit Messzahlen. Rollen-Platzhalter tragen @light oder @dark, weil beide Aufgaben zwei Modi haben. Kernregeln (text-contrast, non-text-contrast, color-not-alone) stehen in core.json und werden nur referenziert.",
+  "rules": [
+    {
+      "id": "input-border",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-11"],
+      "informative": ["wcag22-understanding-1-4-11"],
+      "text_de": "Gib Rändern von Eingabefeldern, Checkboxen und Buttons ohne Füllung `--border-strong`. Er erreicht hell mindestens {cr:border-strong/bg@light} und dunkel mindestens {cr:border-strong/surface@dark}. Nimm `--border` nur für Trennlinien.",
+      "text_en": "Give the borders of inputs, checkboxes and unfilled buttons `--border-strong`. It reaches at least {cr:border-strong/bg@light} in light mode and at least {cr:border-strong/surface@dark} in dark mode. Use `--border` only for dividers.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-11", "wcag22-understanding-1-4-11"]
+    },
+    {
+      "id": "link-underline",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-1"],
+      "informative": ["wcag22-g183", "wcag22-f73"],
+      "text_de": "Unterstreiche Links im Fließtext. Die Linkfarbe hat zum Text hell {cr:accent-text/text@light} und dunkel {cr:accent-text/text@dark}. Ohne Unterstreichung bräuchte sie mindestens 3:1 zum Text, und ein Merkmal, das erst bei Hover oder Fokus erscheint, reicht nicht.",
+      "text_en": "Underline links in body text. The link color has {cr:accent-text/text@light} against the text in light mode and {cr:accent-text/text@dark} in dark mode. Without an underline it would need at least 3:1 against the text, and a cue that appears only on hover or focus is not enough.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-1", "wcag22-g183", "wcag22-f73"]
+    },
+    {
+      "id": "focus-visible",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-2-4-7", "wcag22-1-4-11"],
+      "informative": ["wcag22-understanding-2-4-7", "wcag22-c40"],
+      "text_de": "Zeige den Fokus mit `outline: 2px solid var(--accent-text); outline-offset: 2px;`, auch auf Buttons mit `--accent`. Der Ring erreicht auf Hintergrund und Fläche hell mindestens {cr:accent-text/bg@light} und dunkel mindestens {cr:accent-text/surface@dark}. Wechselt die Farbe hinter dem Ring, nimm einen zweifarbigen Ring und prüfe ihn auf Bildern und Verläufen trotzdem nach.",
+      "text_en": "Show the focus with `outline: 2px solid var(--accent-text); outline-offset: 2px;`, also on buttons with `--accent`. On background and surface the ring reaches at least {cr:accent-text/bg@light} in light mode and at least {cr:accent-text/surface@dark} in dark mode. If the color behind the ring changes, use a two-color ring and still check it on images and gradients.",
+      "show_if": null,
+      "sources": ["wcag22-2-4-7", "wcag22-1-4-11", "wcag22-understanding-2-4-7", "wcag22-c40"]
+    },
+    {
+      "id": "one-accent",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Setze den Akzent nur für die wichtigste Aktion einer Ansicht, für Links und für den Fokus ein. Färbe nicht die Fläche mehrerer Bedienelemente nebeneinander.",
+      "text_en": "Use the accent only for the most important action of a view, for links and for focus. Do not color the background of several controls side by side.",
+      "show_if": null,
+      "sources": ["apple-hig-color"]
+    },
+    {
+      "id": "dark-not-inverted",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Berechne die dunkle Variante eigens und erzeuge sie nie durch Invertieren. Helle und dunkle Werte stehen deshalb getrennt im Export, und jedes Paar ist in beiden Modi geprüft.",
+      "text_en": "Calculate the dark variant on its own and never create it by inverting. That is why light and dark values are separate in the export, and every pair is checked in both modes.",
+      "show_if": null,
+      "sources": ["apple-hig-dark-mode"]
+    },
+    {
+      "id": "dark-gray-not-black",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Nimm im dunklen Modus dunkles Grau statt Schwarz für Hintergrund und Flächen, hier {hex:bg@dark}. Material Design begründet das mit sichtbaren Schatten und weniger Anstrengung für die Augen, nennt aber keine Studie.",
+      "text_en": "Use dark gray instead of black for background and surfaces in dark mode, here {hex:bg@dark}. Material Design gives visible shadows and less eye strain as reasons but cites no study.",
+      "show_if": null,
+      "sources": ["material-android-dark-theme"]
+    },
+    {
+      "id": "status-convention",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Folge der üblichen Zuordnung: Rot für Fehler, Orange oder Gelb für Warnung, Grün für Erfolg, Blau für Info. Sie ist gelernt, nicht universell: An chinesischen Börsen steht Rot für steigende Kurse.",
+      "text_en": "Follow the common assignment: red for error, orange or yellow for warning, green for success, blue for info. It is learned, not universal: on Chinese stock exchanges, red stands for rising prices.",
+      "show_if": null,
+      "sources": ["carbon-status-indicators", "marketplace-2015-china-stocks"]
+    },
+    {
+      "id": "accent-error-conflict",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Deine Akzentfarbe ist selbst ein Rot. Aktion und Fehler unterscheiden sich dann nur über Icon, Wort und Position. Gib Fehlermeldungen deshalb immer Icon und Wort.",
+      "text_en": "Your accent color is itself a red. Action and error then differ only by icon, word and position. So always give error messages an icon and a word.",
+      "show_if": {"metric": "finding", "a": "accent-error-conflict", "mode": null},
+      "sources": ["apple-hig-color", "wcag22-1-4-1"]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "_comment": "Aufgabe Präsentation (Bauspezifikation 3.4, 4.5, 5.7). Ein Modus „default“: Der Folienhintergrund bg wählt die Spalte hell oder dunkel. Das Raumlicht room wirkt nur auf den projizierten Kontrast und die Ansicht „Beamer“. Prosa steht in web/copy/slides.py. menu_paths: Wege für PowerPoint, Keynote und Google Slides, geprüft gegen die Hilfeseiten der Hersteller (checked = Abrufdatum, url = Quelle unter source).",
+  "id": "slides",
+  "generator": "slides",
+  "name_de": "Präsentation",
+  "name_en": "Presentation",
+  "summary_de": "Mit Reserve für den Beamer. Zeigt, was bei Raumlicht übrig bleibt.",
+  "summary_en": "With headroom for a projector. Shows what is left under room light.",
+  "modes": ["default"],
+  "controls": [
+    {"id": "bg", "type": "chips", "values": ["light", "dark"], "default": "light", "visible": true, "label_key": "ctl.bg"},
+    {"id": "room", "type": "chips", "values": ["dim", "normal", "bright"], "default": "normal", "visible": true, "label_key": "ctl.room"},
+    {"id": "pr", "type": "toggle", "default": false, "visible": false, "label_key": "ctl.pr"}
+  ],
+  "pattern_toggles": [
+    {"id": "view", "values": ["screen", "projector"], "default": "screen"}
+  ],
+  "presets": [
+    {"id": "petrol", "seed": "oklch(0.48 0.08 215)", "options": {}, "name_de": "Petrol", "name_en": "Petrol",
+     "note_de": "Ruhiger Akzent auf hellem Grund", "note_en": "Calm accent on a light background", "dataset": "okabe-ito",
+     "expect": []},
+    {"id": "tinte", "seed": "oklch(0.45 0.15 265)", "options": {}, "name_de": "Tinte", "name_en": "Ink",
+     "note_de": "Kräftiges Blau auf hellem Grund", "note_en": "Strong blue on a light background", "dataset": "okabe-ito",
+     "expect": []},
+    {"id": "graphit", "seed": "oklch(0.72 0.13 75)", "options": {"bg": "dark"}, "name_de": "Graphit dunkel", "name_en": "Dark graphite",
+     "note_de": "Dunkler Grund. In einer Studie war hell auf dunkel schlechter lesbar.", "note_en": "Dark background. In a study, light on dark was less legible.",
+     "dataset": "okabe-ito", "expect": ["dark-slide"]}
+  ],
+  "roles": [
+    {"id": "slide", "name_de": "Folienhintergrund", "name_en": "Slide background", "use_de": "Grund aller Folien", "use_en": "background of every slide", "core": true, "kind": "surface", "css_name": "slide-bg"},
+    {"id": "slide-2", "name_de": "Folienfläche", "name_en": "Slide panel", "use_de": "Kästen, Tabellenzeilen, Hervorhebungsflächen", "use_en": "boxes, table rows, highlight panels", "core": false, "kind": "surface", "css_name": "slide-bg-2"},
+    {"id": "text", "name_de": "Schrift", "name_en": "Text", "use_de": "Titel und Fließtext", "use_en": "titles and body text", "core": true, "kind": "text", "css_name": "slide-text"},
+    {"id": "text-2", "name_de": "Schrift, gedämpft", "name_en": "Muted text", "use_de": "Unterzeilen, Quellen, Beschriftungen", "use_en": "subtitles, sources, labels", "core": true, "kind": "text", "css_name": "slide-text-2"},
+    {"id": "accent", "name_de": "Akzent", "name_en": "Accent", "use_de": "Hervorhebungen, Balken, Linien", "use_en": "highlights, bars, lines", "core": true, "kind": "ui", "css_name": "slide-accent"},
+    {"id": "accent-text", "name_de": "Akzent als Text", "name_en": "Accent as text", "use_de": "Links und hervorgehobene Wörter", "use_en": "links and highlighted words", "core": true, "kind": "text", "css_name": "slide-accent-text"},
+    {"id": "line", "name_de": "Linie", "name_en": "Line", "use_de": "Achsen, Rahmen, Trennlinien", "use_en": "axes, borders, dividers", "core": false, "kind": "ui", "css_name": "slide-line"},
+    {"id": "chart-1", "name_de": "Diagrammfarbe 1", "name_en": "Chart color 1", "use_de": "erste Serie, gleich dem Akzent", "use_en": "first series, same as the accent", "core": false, "kind": "data", "css_name": "slide-chart-1"},
+    {"id": "chart-2", "name_de": "Diagrammfarbe 2", "name_en": "Chart color 2", "use_de": "zweite Serie", "use_en": "second series", "core": false, "kind": "data", "css_name": "slide-chart-2"},
+    {"id": "chart-3", "name_de": "Diagrammfarbe 3", "name_en": "Chart color 3", "use_de": "dritte Serie", "use_en": "third series", "core": false, "kind": "data", "css_name": "slide-chart-3"},
+    {"id": "chart-4", "name_de": "Diagrammfarbe 4", "name_en": "Chart color 4", "use_de": "vierte Serie, Akzent 4 in Office", "use_en": "fourth series, Accent 4 in Office", "core": false, "kind": "data", "css_name": "slide-chart-4"}
+  ],
+  "pairs": [
+    {"fg": "text", "on": ["slide", "slide-2"], "min": 7, "criterion": "1.4.6", "rule": "text-contrast-aaa"},
+    {"fg": "text-2", "on": ["slide", "slide-2"], "min": 7, "criterion": "1.4.6", "rule": "text-contrast-aaa"},
+    {"fg": "accent-text", "on": ["slide", "slide-2"], "min": 7, "criterion": "1.4.6", "rule": "text-contrast-aaa"},
+    {"fg": "accent", "on": ["slide"], "min": 3, "criterion": "1.4.11", "rule": "non-text-contrast"},
+    {"fg": "line", "on": ["slide"], "min": 3, "criterion": "1.4.11", "rule": "non-text-contrast"},
+    {"fg": "chart-1", "on": ["slide"], "min": 3, "criterion": "1.4.11", "rule": "non-text-contrast"},
+    {"fg": "chart-2", "on": ["slide"], "min": 3, "criterion": "1.4.11", "rule": "non-text-contrast"},
+    {"fg": "chart-3", "on": ["slide"], "min": 3, "criterion": "1.4.11", "rule": "non-text-contrast"},
+    {"fg": "chart-4", "on": ["slide"], "min": 3, "criterion": "1.4.11", "rule": "non-text-contrast"}
+  ],
+  "decorative": [{"fg": "slide-2", "on": ["slide"]}],
+  "distinct": [
+    {"id": "chart", "set": ["chart-1", "chart-2", "chart-3", "chart-4"], "kinds": ["normal", "deutan", "protan"], "compare": "okabe-ito-7"},
+    {"id": "chart-gray", "set": ["chart-1", "chart-2", "chart-3", "chart-4"], "kinds": ["gray"]}
+  ],
+  "rules": ["slides-dark-on-light", "slides-plan-7", "slides-test-room", "text-contrast-aaa"],
+  "explain": ["projector", "contrast", "dark-mode"],
+  "pattern": "slides",
+  "exports": {"primary": "hex", "visible": ["hex", "css", "rationale"], "more": ["dtcg"]},
+  "related": ["charts", "image-text"],
+  "siblings": [{"site": "bildsprache", "path_de": "de/", "path_en": "en/", "label_key": "sibling.bildsprache"}],
+  "datasets": ["okabe-ito"],
+  "menu_paths": [
+    {"app": "PowerPoint", "source": "ms-ppt-theme-colors", "url": "https://support.microsoft.com/office/create-your-own-theme-in-powerpoint-83e68627-2c17-454a-9fd8-62deb81951a6", "checked": "2026-10-11",
+     "text_de": "Wähle auf der Registerkarte „Entwurf“ in der Gruppe „Varianten“ den Abwärtspfeil, dann „Farben“ und „Farben anpassen“. Klicke im Dialog „Neue Designfarben erstellen“ je Element auf „Weitere Farben“, gib den Wert auf der Registerkarte „Benutzerdefiniert“ ein und speichere die Farben unter einem Namen.",
+     "text_en": "On the Design tab, in the Variants group, select the down arrow, then Colors and Customize Colors. In the Create New Theme Colors dialog, choose More Colors for each element, enter the value on the Custom tab and save the colors under a name."},
+    {"app": "Keynote", "source": "apple-keynote-fill", "url": "https://support.apple.com/guide/keynote/tan754f55080/mac", "checked": "2026-10-11",
+     "text_de": "Klicke in der Seitenleiste „Format“ im Tab „Stil“ auf das Pfeilsymbol neben „Füllen“, wähle im Einblendmenü „Farbe“ und klicke auf das Farbrad. Lege die Farbe im Fenster „Farben“ fest. Zum Sichern klicke auf das Farbfeld neben „Füllen“ und ziehe die Füllung aus dem Farbfeld „Aktuelle Füllung“ in ein anderes Füllfeld.",
+     "text_en": "In the Format sidebar, click the Style tab, click the arrow next to Fill, choose Color Fill and click the color wheel. Set the color in the Colors window. To save it, click the color well next to Fill and drag the fill from the Current Fill well to another well."},
+    {"app": "Google Slides", "source": "google-slides-theme", "url": "https://support.google.com/docs/answer/1705254", "checked": "2026-10-11",
+     "text_de": "Klicke oben auf „Folie“, dann auf „Design bearbeiten“ und „Farben“. Wähle rechts unter „Designfarben“ die Farbe im Drop-down-Menü aus und gib den Hex-Wert ein.",
+     "text_en": "At the top, click Slide, then Edit theme and Colors. On the right, under Theme colors, select the color in the drop-down and enter the hex value."}
+  ],
+  "not_checked_de": ["deine Schriftgrößen und Schriftschnitte", "dein Beamer, deine Leinwand und das echte Raumlicht", "Bilder, Verläufe und Transparenz auf den Folien", "ob Diagrammserien beschriftet sind", "schwache Ausprägungen von Farbsehschwäche"],
+  "not_checked_en": ["your font sizes and weights", "your projector, your screen and the real room light", "images, gradients and transparency on the slides", "whether chart series are labeled", "mild forms of color vision deficiency"]
+}

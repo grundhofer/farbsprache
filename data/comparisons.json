@@ -1,0 +1,23 @@
+{
+  "_comment": "Vergleichswerte für „im Diagramm unterscheidbar“ (Spezifikation 4.1.8). Nur Definitionen. Die Werte rechnet reference_values() in tools/color.py bzw. referenceValues() in web/color.js beim Build: kleinster schlechtester Abstand (das Hundertfache von ΔEOK) über alle Farbpaare und die genannten Sichtweisen. Vergleichswerte sind keine belegte Grenze.",
+  "comparisons": [
+    {
+      "id": "okabe-ito-7",
+      "name_de": "Okabe-Ito",
+      "name_en": "Okabe-Ito",
+      "colors": {"dataset": "okabe-ito", "scheme": "okabe-ito", "exclude": ["black"]},
+      "kinds": ["normal", "deutan", "protan"],
+      "note_de": "Die sieben bunten Farben von Okabe-Ito, ohne Schwarz. Gemessen bei normaler Sicht, Deuteranopie und Protanopie.",
+      "note_en": "The seven chromatic Okabe-Ito colors, without black. Measured for normal vision, deuteranopia and protanopia."
+    },
+    {
+      "id": "naive-rainbow-7",
+      "name_de": "einfacher Regenbogen",
+      "name_en": "simple rainbow",
+      "colors": {"generate": "hsl-hues", "n": 7, "s": 100, "l": 50},
+      "kinds": ["normal", "deutan", "protan"],
+      "note_de": "Sieben Farben hsl(i · 360/7, 100 %, 50 %) für i von 0 bis 6, auf 8 Bit gerundet. Ein bewusst schlechtes Gegenbeispiel.",
+      "note_en": "Seven colors hsl(i · 360/7, 100%, 50%) for i from 0 to 6, rounded to 8 bits. A deliberately poor counterexample."
+    }
+  ]
+}

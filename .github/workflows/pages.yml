@@ -1,0 +1,91 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# Muster der offiziellen Pages-Vorlage: nur Leserechte für alle Jobs, die Schreibrechte für Pages und das OIDC-Token nur
+# im Deploy-Job. Die Gruppe pages gilt nur für das Deployment, damit ein Lauf eines Pull Requests nie ein wartendes
+# Deployment von main abbricht.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # build.py prüft vorher alle Daten (tools/checks.py) und den Farbkern gegen data/testvectors.json,
+      # rechnet alle Startpaletten und bricht ab, wenn eine Aufgabe fehlt (kein --allow-missing in der CI).
+      # --fixtures baut zusätzlich die Testaufgabe nach tests/out/fixtures/docs/ (wird nicht veröffentlicht).
+      - name: Build
+        run: python3 build.py --date "$(date -u +%F)" --fixtures
+
+      - name: Parity data (Python side)
+        run: python3 tools/parity.py
+
+      - name: Python tests
+        run: FARBSPRACHE_REQUIRE_BUILD=1 python3 -m unittest discover -s tests -v
+
+      - name: Node tests
+        run: FARBSPRACHE_REQUIRE_BUILD=1 node --test tests/*.test.cjs
+
+      # Dieselben Tests gegen die ausgelieferten, kompaktierten Skripte (build.compact_js), nicht nur gegen web/.
+      - name: Node tests (shipped scripts)
+        run: FARBSPRACHE_REQUIRE_BUILD=1 FARBSPRACHE_JS_DIR=docs/assets node --test tests/*.test.cjs
+
+      - name: Sanity check
+        run: |
+          set -e
+          for f in docs/index.html docs/404.html docs/de/index.html docs/en/index.html docs/og.png \
+                   docs/assets/site.css docs/assets/site.js docs/assets/color.js docs/assets/export.js; do
+            test -s "$f" || { echo "fehlt oder leer: $f"; exit 1; }
+          done
+          test -e docs/.nojekyll || { echo "fehlt: docs/.nojekyll"; exit 1; }
+          grep -q 'og:image" content="https://' docs/de/index.html || { echo "og:image fehlt oder ist relativ"; exit 1; }
+          n=$(python3 -c 'import build; print(build.N_PAGES_PER_LANG)')
+          for lang in de en; do
+            c=$(find "docs/$lang" -name index.html | wc -l | tr -d ' ')
+            test "$c" = "$n" || { echo "$lang: $c Seiten statt $n"; exit 1; }
+          done
+          if grep -rl '__N_' docs; then echo "Platzhalter __N_ in docs/"; exit 1; fi
+          echo "$(find docs -name '*.html' | wc -l | tr -d ' ') HTML-Dateien"
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+  deploy:
+    # Nur ein Push auf main veröffentlicht; Pull Requests und manuelle Läufe anderer Zweige nicht.
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

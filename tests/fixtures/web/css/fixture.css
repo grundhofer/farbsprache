@@ -1,0 +1,2 @@
+/* Testaufgabe: zeigt, dass web/css/<aufgabe>.css an site.css angehängt wird. Nur Selektoren mit .t-<aufgabe>. */
+.t-fixture .outcome { letter-spacing:.02em; }

@@ -1,0 +1,21 @@
+<style>
+.demo-fixture { background:var(--d-bg); color:var(--d-text); font:15px/1.5 Inter, Helvetica, Arial, sans-serif; padding:16px; color-scheme:light; min-height:220px; }
+.demo-fixture[data-demo="dark"] { color-scheme:dark; }
+.demo-fixture .fx-card { background:var(--d-surface); border:1px solid var(--d-border); padding:12px; display:grid; gap:8px; }
+.demo-fixture .fx-muted { color:var(--d-text-muted); margin:0; }
+.demo-fixture a { color:var(--d-accent-text); text-underline-offset:3px; }
+.demo-fixture .fx-btn { background:var(--d-accent); color:var(--d-on-accent); border:0; padding:8px 12px; font:inherit; justify-self:start; }
+.demo-fixture .fx-steps { display:flex; gap:6px; }
+.demo-fixture .fx-steps span { flex:1; height:24px; }
+.demo-fixture .fx-s1 { background:var(--d-step-1); }
+.demo-fixture .fx-s2 { background:var(--d-step-2); }
+.demo-fixture .fx-s3 { background:var(--d-step-3); }
+.demo-fixture[data-labels="direct"] .fx-legend { display:none; }
+</style>
+<div class="fx-card">
+<b>{{title}}</b>
+<p class="fx-muted">{{body}} <a href="#">{{link}}</a>.</p>
+<button type="button" class="fx-btn" tabindex="-1">{{button}}</button>
+<div class="fx-steps"><span class="fx-s1"></span><span class="fx-s2"></span><span class="fx-s3"></span></div>
+<p class="fx-legend fx-muted">{{legend}}</p>
+</div>

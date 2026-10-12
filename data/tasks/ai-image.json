@@ -1,0 +1,57 @@
+{
+  "_comment": "Aufgabe KI-Bild (Spezifikation 3.7, 4.8, 5.5). Prosa und die englischen Prompt-Bausteine stehen in web/copy/ai_image.py. Vorrang f vor c vor p: f setzt die Farben direkt, c zeigt die Vorschläge s statt der Startsets. Kein Startset kombiniert Teal mit Orange (9.10). Das Textpaar (dunkelste auf hellster Farbe) rechnet der Generator, deshalb ist pairs hier leer.",
+  "id": "ai-image",
+  "generator": "ai-image",
+  "name_de": "KI-Bild",
+  "name_en": "AI image",
+  "summary_de": "Ein Farbblock für deinen Bildprompt, passend zum Modell.",
+  "summary_en": "A color block for your image prompt, matched to the model.",
+  "modes": ["default"],
+  "data_files": ["models", "colornames"],
+  "seed_control": "s",
+  "controls": [
+    {"id": "mdl", "type": "chips", "values": ["flux2", "ideogram3", "recraft", "midjourney", "gpt-image"], "default": "flux2", "visible": true, "label_key": "ctl.mdl"},
+    {"id": "w", "type": "chips", "values": ["60-30-10", "70-20-10", "50-40-10"], "default": "60-30-10", "visible": true, "label_key": "ctl.w"},
+    {"id": "s", "type": "chips", "values": ["calm", "contrast", "signal"], "default": "calm", "visible": false, "label_key": "ctl.s"},
+    {"id": "f", "type": "colors", "max": 4, "default": null, "visible": false, "label_key": "ctl.f"},
+    {"id": "b1", "type": "text", "lang": "en", "default": "[BACKGROUND AND LARGE SHAPES]", "visible": false, "label_key": "ctl.b1"},
+    {"id": "b2", "type": "text", "lang": "en", "default": "[SECONDARY ELEMENTS]", "visible": false, "label_key": "ctl.b2"},
+    {"id": "b3", "type": "text", "lang": "en", "default": "[THE FOCAL ELEMENT]", "visible": false, "label_key": "ctl.b3"}
+  ],
+  "presets": [
+    {"id": "dunkelblau", "colors": [{"value": "oklch(0.36 0.11 262)", "role": "dominant"}, {"value": "oklch(0.965 0.008 85)", "role": "secondary"}, {"value": "oklch(0.58 0.19 27)", "role": "accent"}],
+     "options": {}, "name_de": "Dunkelblau, Papier, Rot", "name_en": "Dark blue, paper, red",
+     "note_de": "Dunkler Grund, helle Nebenflächen, ein roter Akzent", "note_en": "Dark ground, light secondary areas, one red accent", "expect": []},
+    {"id": "gruen", "colors": [{"value": "oklch(0.42 0.09 150)", "role": "dominant"}, {"value": "oklch(0.93 0.005 150)", "role": "secondary"}, {"value": "oklch(0.88 0.16 100)", "role": "accent"}],
+     "options": {}, "name_de": "Grün, Hellgrau, Gelb", "name_en": "Green, light gray, yellow",
+     "note_de": "Grüner Grund mit gelbem Akzent", "note_en": "Green ground with a yellow accent", "expect": []},
+    {"id": "erdtoene", "colors": [{"value": "oklch(0.42 0.07 55)", "role": "dominant"}, {"value": "oklch(0.90 0.03 80)", "role": "secondary"}, {"value": "oklch(0.55 0.08 120)", "role": "accent"}],
+     "options": {}, "name_de": "Erdtöne", "name_en": "Earth tones",
+     "note_de": "Braun, helles Papier, gedämpftes Gelbgrün", "note_en": "Brown, light paper, muted yellow-green", "expect": []}
+  ],
+  "roles": [
+    {"id": "dominant", "name_de": "Hauptfarbe", "name_en": "Main color", "use_de": "größte Flächen, etwa Hintergrund und große Formen", "use_en": "largest areas, such as background and large shapes", "core": true, "kind": "data"},
+    {"id": "secondary", "name_de": "Nebenfarbe", "name_en": "Secondary color", "use_de": "Nebenflächen", "use_en": "secondary areas", "core": true, "kind": "data"},
+    {"id": "accent", "name_de": "Akzent", "name_en": "Accent", "use_de": "nur der wichtigste Bildteil, kleine Fläche", "use_en": "only the focal element, small area", "core": true, "kind": "data"},
+    {"id": "background", "name_de": "Hintergrund", "name_en": "Background", "use_de": "eigene Hintergrundfarbe, optional", "use_en": "separate background color, optional", "core": true, "kind": "data"}
+  ],
+  "pairs": [],
+  "decorative": [
+    {"fg": "secondary", "on": ["dominant"]},
+    {"fg": "accent", "on": ["dominant", "secondary"]},
+    {"fg": "dominant", "on": ["background"]}
+  ],
+  "distinct": [{"id": "colors", "set": ["dominant", "secondary", "accent", "background"], "kinds": ["normal", "deutan", "protan", "gray"]}],
+  "rules": ["img-direction-not-guarantee", "img-2-3-colors", "img-60-30-10", "img-hex-where-documented"],
+  "explain": ["60-30-10", "harmony", "context"],
+  "pattern": "ai-image",
+  "exports": {"primary": "prompt", "visible": ["prompt", "hex"], "more": []},
+  "related": ["image-text", "brand"],
+  "siblings": [
+    {"site": "bildsprache", "path_de": "de/hebel/", "path_en": "en/levers/", "label_key": "sibling.levers"},
+    {"site": "bildsprache", "path_de": "de/hebel/#tell-1", "path_en": "en/levers/#tell-1", "label_key": "sibling.tells"},
+    {"site": "bildsprache", "path_de": "de/hebel/#tell-23", "path_en": "en/levers/#tell-23", "label_key": "sibling.tell23"}
+  ],
+  "not_checked_de": ["was ein Bildmodell aus dem Prompt macht", "die Farben im fertigen Bild", "dein Bildschirm", "schwache Ausprägungen von Farbsehschwäche", "Text, den das Modell ins Bild setzt"],
+  "not_checked_en": ["what an image model makes of the prompt", "the colors in the finished image", "your screen", "mild forms of color vision deficiency", "text the model puts into the image"]
+}

@@ -1,0 +1,113 @@
+{
+  "_comment": "Regeln von Paket P4 (Logo und Marke, KI-Bild). Texte mit Platzhaltern, nie mit Messzahlen. Belegstufen nach Spezifikation 6.5 und 6.13; Herstellerdokus sind Forschung mit Stärke teilweise, weil sie die Wirkung nicht messen.",
+  "rules": [
+    {
+      "id": "brand-text-variant",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": [],
+      "text_de": "Setze Text in der Markenfarbe nur, wenn er 4,5:1 erreicht. Auf Weiß nutzt du {hex:brand-text-light} mit {cr:brand-text-light/bg-light}, auf Dunkel {hex:brand-text-dark} mit {cr:brand-text-dark/bg-dark}. Logos und Wortmarken sind von dieser Regel ausgenommen, Links und Überschriften nicht.",
+      "text_en": "Set text in the brand color only if it reaches 4.5:1. On white you use {hex:brand-text-light} with {cr:brand-text-light/bg-light}, on dark {hex:brand-text-dark} with {cr:brand-text-dark/bg-dark}. Logos and word marks are exempt from this rule, links and headings are not.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-3"]
+    },
+    {
+      "id": "brand-aaa-gap",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-6"],
+      "informative": [],
+      "text_de": "Mit keiner der beiden Schriftfarben erreicht deine Farbe 7:1. Für AAA brauchst du eine dunklere oder hellere Variante. Die bessere Schriftfarbe erreicht {cr:on-brand/brand}.",
+      "text_en": "Your color does not reach 7:1 with either text color. For AAA you need a darker or lighter variant. The better text color reaches {cr:on-brand/brand}.",
+      "show_if": {"metric": "cr", "a": "on-brand", "b": "brand", "mode": null, "op": "<", "value": 7},
+      "sources": ["wcag22-1-4-6"]
+    },
+    {
+      "id": "brand-monochrome",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Lege eine einfarbige Fassung in Schwarz und eine in Weiß fest, etwa für Stempel, Gravur und Einfarbdruck. Prüfe das Zeichen auch in Graustufen: Deine Farbe wird dort zu {hex:brand-gray}.",
+      "text_en": "Define a one-color version in black and one in white, for stamps, engraving and one-color printing. Check the mark in grayscale too: your color becomes {hex:brand-gray} there.",
+      "show_if": null,
+      "sources": ["whoi-logo-color", "fpf-branding"]
+    },
+    {
+      "id": "brand-print-proof",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "CMYK und Sonderfarbe legst du mit der Druckerei fest. Prüfe einen Softproof im Zielprofil, etwa PSO Coated v3 für gestrichenes Papier. Der Hex-Wert gilt nur für den Bildschirm.",
+      "text_en": "Settle CMYK and spot color with your printer. Check a soft proof in the target profile, such as PSO Coated v3 for coated paper. The hex value applies to screens only.",
+      "show_if": null,
+      "sources": ["eci-downloads", "icc-pso-coated-v3"]
+    },
+    {
+      "id": "brand-trademark-check",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Prüfe, ob in deiner Branche eine Farbmarke eingetragen ist (DPMA, EUIPO). Eine einzelne Farbe kann dort als Marke geschützt sein. Diese Seite gibt keine Rechtsauskunft.",
+      "text_en": "Check whether a color mark is registered in your industry (DPMA, EUIPO). A single color can be protected there as a trademark. This page gives no legal advice.",
+      "show_if": null,
+      "sources": ["dpma-markenformen", "eutmr-art-4"]
+    },
+    {
+      "id": "img-direction-not-guarantee",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Miss die Farben im fertigen Bild mit einer Pipette nach. Die Herstellerdokus nennen Farbangaben eine Richtung, keine genaue Übereinstimmung, oder raten selbst zur Kontrolle.",
+      "text_en": "Measure the colors in the finished image with an eyedropper. The vendor docs call color settings a direction, not an exact match, or advise checking the result themselves.",
+      "show_if": null,
+      "sources": ["ideogram-image-settings", "recraft-palettes", "bfl-hex-prompting"]
+    },
+    {
+      "id": "img-2-3-colors",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Lege zwei bis drei Farben fest und halte den Rest des Prompts schlicht. Laut Recraft-Doku kann es einem Modell umso schwerer fallen, eine kleine Palette einzuhalten, je komplexer Prompt und Stil sind.",
+      "text_en": "Fix two to three colors and keep the rest of the prompt plain. According to the Recraft docs, the more complex the prompt and style, the harder it can be for a model to stick to a small palette.",
+      "show_if": null,
+      "sources": ["recraft-palettes", "bildsprache-tell-23"]
+    },
+    {
+      "id": "img-60-30-10",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Lasse eine Farbe dominieren und setze den Akzent sparsam. Die Anteile 60, 30 und 10 sind eine Merkhilfe, die in der Raumgestaltung verbreitet ist, keine Regel mit Studie.",
+      "text_en": "Let one color dominate and use the accent sparingly. The shares 60, 30 and 10 are a mnemonic that is common in interior design, not a rule backed by a study.",
+      "show_if": null,
+      "sources": ["idealhome-60-30-10", "few-2008"]
+    },
+    {
+      "id": "img-hex-where-documented",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Setze Hex-Werte nur dort ein, wo die Herstellerdoku sie vorsieht. FLUX.2 liest sie im Prompt, Ideogram 3.0 nur im Palettenfeld, Recraft über die API. Für Midjourney und gpt-image findet sich keine Hex-Syntax, dort stehen nur Farbwörter.",
+      "text_en": "Use hex values only where the vendor docs provide for them. FLUX.2 reads them in the prompt, Ideogram 3.0 only in the palette field, Recraft through the API. For Midjourney and gpt-image there is no hex syntax, so the block uses color words only.",
+      "show_if": null,
+      "sources": ["bfl-hex-prompting", "bfl-flux2-overview", "ideogram-memory-colors", "recraft-api-usage", "midjourney-style-reference", "openai-image-guide"]
+    }
+  ]
+}

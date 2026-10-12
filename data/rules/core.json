@@ -1,0 +1,65 @@
+{
+  "_comment": "Kernregeln des Rahmens (Spezifikation 6.5, Eigentümer P0). Texte mit Platzhaltern, nie mit Messzahlen. Schwellen wie 4,5:1 stehen direkt im Text.",
+  "rules": [
+    {
+      "id": "text-contrast",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": [],
+      "text_de": "Gib Text mindestens 4,5:1 zu seiner Fläche, große Schrift ab 24 px oder ab 18,67 px fett mindestens 3:1. Runde nicht: #777777 auf Weiß hat {cr:#777777/#FFFFFF} und reicht für Text nicht.",
+      "text_en": "Give text at least 4.5:1 against its surface, and large text from 24 px, or from 18.67 px in bold, at least 3:1. Do not round: #777777 on white has {cr:#777777/#FFFFFF} and is not enough for text.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-3"]
+    },
+    {
+      "id": "text-contrast-aaa",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-6"],
+      "informative": [],
+      "text_de": "Für erhöhten Kontrast nach Stufe AAA gib Text mindestens 7:1 und großer Schrift mindestens 4,5:1.",
+      "text_en": "For enhanced contrast at level AAA, give text at least 7:1 and large text at least 4.5:1.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-6"]
+    },
+    {
+      "id": "non-text-contrast",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-11"],
+      "informative": [],
+      "text_de": "Gib Bedienelementen, ihren Zuständen und Grafiken, die man zum Verstehen braucht, mindestens 3:1 zu den angrenzenden Farben.",
+      "text_en": "Give user interface components, their states and graphics needed for understanding at least 3:1 against adjacent colors.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-11"]
+    },
+    {
+      "id": "color-not-alone",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-1"],
+      "informative": ["wcag22-f81"],
+      "text_de": "Zeige Bedeutung nie nur über Farbe. Ergänze ein Wort, ein Icon oder eine Form, etwa dort, wo Rot und Grün für schlecht und gut stehen.",
+      "text_en": "Never show meaning through color alone. Add a word, an icon or a shape, for example where red and green stand for bad and good.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-1", "wcag22-f81"]
+    },
+    {
+      "id": "no-rounding",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": ["wcag22-understanding-1-4-3"],
+      "text_de": "Vergleiche den Kontrast ungerundet mit der Schwelle. #777777 auf Weiß erreicht {cr:#777777/#FFFFFF} und verfehlt damit 4,5:1, auch wenn eine gerundete Angabe anderes nahelegt.",
+      "text_en": "Compare the contrast with the threshold without rounding. #777777 on white reaches {cr:#777777/#FFFFFF} and so misses 4.5:1, even if a rounded figure suggests otherwise.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-3", "wcag22-understanding-1-4-3"]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "_comment": "Erklärt-Einträge der Testaufgabe. Je 60 bis 120 Wörter, mit Platzhaltern.",
+  "entries": [
+    {
+      "id": "fixture-contrast",
+      "title_de": "Warum der Rahmen jede Zahl nachrechnet",
+      "title_en": "Why the frame recalculates every number",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": ["wcag22-understanding-1-4-3"],
+      "body_de": "Dieser Eintrag prüft, ob Platzhalter in Kurz erklärt aufgelöst werden. Grau #777777 auf Weiß erreicht {cr:#777777/#FFFFFF}. Das reicht für Text nicht, denn WCAG 2.2 verlangt 4,5:1 und vergleicht ungerundet.\n\nDie Zahl steht nicht im Text der Daten. Der Build rechnet sie aus dem Hex-Wert und schreibt sie als data-Element in die Seite. Der Ehrlichkeitstest liest jedes dieser Elemente, rechnet neu und vergleicht den angezeigten Text mit dem Formatierer. So fällt jede Abweichung im Build auf.",
+      "body_en": "This entry checks that placeholders in the explained entries are resolved. Gray #777777 on white reaches {cr:#777777/#FFFFFF}. That is not enough for text, because WCAG 2.2 requires 4.5:1 and compares without rounding.\n\nThe number is not part of the data text. The build calculates it from the hex value and writes it into the page as a data element. The honesty test reads every such element, calculates it again and compares the shown text with the formatter. Any difference shows up in the build.",
+      "sources": ["wcag22-1-4-3", "wcag22-understanding-1-4-3"],
+      "demo": null
+    },
+    {
+      "id": "fixture-modes",
+      "title_de": "Hell und dunkel als zwei eigene Paletten",
+      "title_en": "Light and dark as two separate palettes",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "body_de": "Die Testaufgabe hat zwei Modi, damit der Rahmen beide Ansichten zeigt: nebeneinander auf breiten Bildschirmen und als zwei Reiter auf dem Handy. Jede Rolle hat in jedem Modus einen eigenen Hex-Wert, und jedes Paar wird je Modus geprüft.\n\nGelb wirkt hell, Blau dunkel. Die OKLCH-Helligkeit von #FFFF00 ist {L:#FFFF00}, die von #0000FF ist {L:#0000FF}. Dieser Unterschied ist der Grund, warum der Generator mit OKLCH rechnet und nicht mit HSL.",
+      "body_en": "The test task has two modes so the frame shows both views: side by side on wide screens and as two tabs on a phone. Every role has its own hex value in each mode, and every pair is checked per mode.\n\nYellow looks light, blue looks dark. The OKLCH lightness of #FFFF00 is {L:#FFFF00}, the one of #0000FF is {L:#0000FF}. This difference is the reason the generator calculates in OKLCH and not in HSL.",
+      "sources": ["fixture-source"],
+      "demo": null
+    },
+    {
+      "id": "fixture-steps",
+      "title_de": "Stufen und Abstände bei Farbsehschwäche",
+      "title_en": "Steps and distances under color vision deficiency",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "body_de": "Die Stufen der Testaufgabe zeigen, wie der Rahmen Abstände darstellt. Ein Abstand ist der Farbunterschied in OKLab mal hundert, gemessen zwischen zwei simulierten Farben. Zum Vergleich steht daneben Okabe-Ito mit {ref:okabe-ito-7} und ein einfacher Regenbogen mit {ref:naive-rainbow-7}.\n\nDas sind Vergleichswerte und keine belegte Grenze. Eine Stufe darf deshalb nie allein über ihre Farbe erkennbar sein. Beschrifte sie oder gib ihr eine Form.",
+      "body_en": "The steps of the test task show how the frame presents distances. A distance is the color difference in OKLab times one hundred, measured between two simulated colors. For comparison it shows Okabe-Ito with {ref:okabe-ito-7} and a simple rainbow with {ref:naive-rainbow-7}.\n\nThese are reference values, not an established limit. A step should therefore never be recognizable by its color alone. Label it or give it a shape.",
+      "sources": ["fixture-source"],
+      "demo": null
+    }
+  ]
+}

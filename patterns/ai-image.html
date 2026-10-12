@@ -1,0 +1,37 @@
+<style>
+.demo-ai-image { background:var(--d-paper); color:var(--d-ink); font:13px/1.45 Inter, Helvetica, Arial, sans-serif; padding:14px; color-scheme:light; display:grid; gap:10px; }
+.demo-ai-image .ai-t { margin:0; font-weight:700; font-size:13px; }
+.demo-ai-image .ai-board { background:var(--d-board); padding:10px; border:1px solid var(--d-ink); }
+.demo-ai-image .ai-bar { display:flex; height:132px; }
+.demo-ai-image .ai-seg { flex-basis:0; min-width:4px; }
+.demo-ai-image .ai-d { flex-grow:var(--d-w-dominant); background:var(--d-dominant); display:var(--d-show-dominant); }
+.demo-ai-image .ai-s { flex-grow:var(--d-w-secondary); background:var(--d-secondary); display:var(--d-show-secondary); }
+.demo-ai-image .ai-a { flex-grow:var(--d-w-accent); background:var(--d-accent); display:var(--d-show-accent); }
+.demo-ai-image .ai-legend { list-style:none; margin:0; padding:0; display:grid; gap:5px; }
+.demo-ai-image .ai-legend li { align-items:center; gap:8px; min-width:0; }
+.demo-ai-image .ai-r-d { display:var(--d-show-dominant); }
+.demo-ai-image .ai-r-s { display:var(--d-show-secondary); }
+.demo-ai-image .ai-r-a { display:var(--d-show-accent); }
+.demo-ai-image .ai-r-b { display:var(--d-show-background); }
+.demo-ai-image .ai-sw { width:16px; height:16px; flex:none; border:1px solid var(--d-ink); }
+.demo-ai-image .ai-sw-d { background:var(--d-dominant); }
+.demo-ai-image .ai-sw-s { background:var(--d-secondary); }
+.demo-ai-image .ai-sw-a { background:var(--d-accent); }
+.demo-ai-image .ai-sw-b { background:var(--d-board); }
+.demo-ai-image .ai-n { overflow-wrap:anywhere; }
+.demo-ai-image .ai-n::after { font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:12px; }
+.demo-ai-image .ai-n-d::after { content:var(--d-label-dominant); }
+.demo-ai-image .ai-n-s::after { content:var(--d-label-secondary); }
+.demo-ai-image .ai-n-a::after { content:var(--d-label-accent); }
+.demo-ai-image .ai-n-b::after { content:var(--d-label-background); }
+.demo-ai-image .ai-note { margin:0; font-size:12px; }
+</style>
+<p class="ai-t">{{title}}</p>
+<div class="ai-board"><div class="ai-bar"><span class="ai-seg ai-d"></span><span class="ai-seg ai-s"></span><span class="ai-seg ai-a"></span></div></div>
+<ul class="ai-legend">
+<li class="ai-r-d"><span class="ai-sw ai-sw-d"></span><span class="ai-n ai-n-d">{{dominant}}: </span></li>
+<li class="ai-r-s"><span class="ai-sw ai-sw-s"></span><span class="ai-n ai-n-s">{{secondary}}: </span></li>
+<li class="ai-r-a"><span class="ai-sw ai-sw-a"></span><span class="ai-n ai-n-a">{{accent}}: </span></li>
+<li class="ai-r-b"><span class="ai-sw ai-sw-b"></span><span class="ai-n ai-n-b">{{background}}: </span></li>
+</ul>
+<p class="ai-note">{{note}}</p>

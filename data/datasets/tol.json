@@ -1,0 +1,48 @@
+{
+  "_comment": "Paul Tol, qualitative Farbsätze bright und muted. Werte per tools/datasets.py aus tol_colors.py (Version 2022.10, Funktion tol_cset) übernommen, nicht abgetippt; Datei per machine_sha256 festgehalten. black (in tol_colors.py an jeden Satz angehängt) und pale_grey (bei muted nur für fehlende Daten) gehören nicht zu den Schemata der Website (Fig. 1, Fig. 4) und fehlen hier. Namen wörtlich wie in der Quelle (grey).",
+  "id": "tol",
+  "name": "Paul Tol",
+  "authors": ["Paul Tol"],
+  "year": 2022,
+  "source_url": "https://sronpersonalpages.nl/~pault/",
+  "machine_source": "https://sronpersonalpages.nl/~pault/data/tol_colors.py",
+  "machine_sha256": "149ca0aa2e7936a866a25444c70598cf160dabd94d26eecfc4b4005e3e83cb90",
+  "retrieved": "2026-10-11",
+  "license": "BSD-3-Clause",
+  "license_note_de": "BSD-3-Clause gilt für die Datei tol_colors.py. Für die Schemata auf seiner Website nennt Paul Tol keine eigene Lizenz. Copyright-Vermerk und Haftungsausschluss mitführen, den Namen nicht als Empfehlung für eigene Produkte nutzen.",
+  "license_note_en": "BSD-3-Clause applies to the file tol_colors.py. Paul Tol states no separate license for the schemes on his website. Keep the copyright notice and the disclaimer, and do not use the name to endorse your own products.",
+  "attribution": "Paul Tol, tol_colors.py (2022), BSD-3-Clause",
+  "required_notice": "Copyright (c) 2022, Paul Tol. All rights reserved.",
+  "reliability": "defined",
+  "kind": "categorical",
+  "schemes": [
+    {
+      "id": "bright",
+      "interpolate": false,
+      "colors": [
+        {"name": "blue", "hex": "#4477AA", "origin": {"hex": "#4477AA"}},
+        {"name": "red", "hex": "#EE6677", "origin": {"hex": "#EE6677"}},
+        {"name": "green", "hex": "#228833", "origin": {"hex": "#228833"}},
+        {"name": "yellow", "hex": "#CCBB44", "origin": {"hex": "#CCBB44"}},
+        {"name": "cyan", "hex": "#66CCEE", "origin": {"hex": "#66CCEE"}},
+        {"name": "purple", "hex": "#AA3377", "origin": {"hex": "#AA3377"}},
+        {"name": "grey", "hex": "#BBBBBB", "origin": {"hex": "#BBBBBB"}}
+      ]
+    },
+    {
+      "id": "muted",
+      "interpolate": false,
+      "colors": [
+        {"name": "rose", "hex": "#CC6677", "origin": {"hex": "#CC6677"}},
+        {"name": "indigo", "hex": "#332288", "origin": {"hex": "#332288"}},
+        {"name": "sand", "hex": "#DDCC77", "origin": {"hex": "#DDCC77"}},
+        {"name": "green", "hex": "#117733", "origin": {"hex": "#117733"}},
+        {"name": "cyan", "hex": "#88CCEE", "origin": {"hex": "#88CCEE"}},
+        {"name": "wine", "hex": "#882255", "origin": {"hex": "#882255"}},
+        {"name": "teal", "hex": "#44AA99", "origin": {"hex": "#44AA99"}},
+        {"name": "olive", "hex": "#999933", "origin": {"hex": "#999933"}},
+        {"name": "purple", "hex": "#AA4499", "origin": {"hex": "#AA4499"}}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+<style>
+.demo-website { background:var(--d-bg); color:var(--d-text); font:13px/1.45 Inter, Helvetica, Arial, sans-serif; padding:12px; color-scheme:light; display:grid; gap:10px; }
+.demo-website[data-demo="dark"] { color-scheme:dark; }
+.demo-website p { margin:0; }
+.demo-website .w-head { display:flex; flex-wrap:wrap; justify-content:space-between; gap:4px 12px; align-items:baseline; padding-bottom:8px; border-bottom:1px solid var(--d-border); }
+.demo-website .w-nav, .demo-website .w-meta { color:var(--d-text-muted); font-size:12px; }
+.demo-website .w-h { font-weight:700; font-size:16px; line-height:1.25; }
+.demo-website .w-link { color:var(--d-accent-text); text-decoration:underline; text-underline-offset:2px; }
+.demo-website .w-card { background:var(--d-surface); border:1px solid var(--d-border); padding:10px; display:grid; gap:9px; }
+.demo-website .w-label { display:block; font-size:12px; margin-bottom:3px; }
+.demo-website .w-input { display:block; background:var(--d-surface); color:var(--d-text); border:1px solid var(--d-border-strong); padding:4px 7px; overflow-wrap:anywhere; }
+.demo-website .w-focus { outline:2px solid var(--d-accent-text); outline-offset:2px; }
+.demo-website .w-invalid { border-color:var(--d-danger); }
+.demo-website .w-err { color:var(--d-danger); display:flex; gap:4px; align-items:flex-start; font-size:12px; margin-top:4px; }
+.demo-website .w-btns { display:flex; flex-wrap:wrap; gap:8px; }
+.demo-website .w-btn { display:inline-block; padding:6px 12px; font-weight:700; border:1px solid var(--d-accent); }
+.demo-website .w-primary { background:var(--d-accent); color:var(--d-on-accent); }
+.demo-website .w-secondary { background:var(--d-surface); color:var(--d-accent-text); border-color:var(--d-border-strong); }
+.demo-website .w-area { background:var(--d-surface-2); color:var(--d-text); padding:8px 10px; }
+.demo-website .w-msgs { display:grid; gap:5px; }
+.demo-website .w-msg { display:flex; gap:6px; align-items:flex-start; padding:5px 8px; border-left:3px solid; }
+.demo-website .w-msg svg, .demo-website .w-err svg, .demo-website .w-badge svg { flex:none; width:14px; height:14px; margin-top:2px; }
+.demo-website .w-danger { color:var(--d-danger); background:var(--d-danger-subtle); border-left-color:var(--d-danger); }
+.demo-website .w-warning { color:var(--d-warning); background:var(--d-warning-subtle); border-left-color:var(--d-warning); }
+.demo-website .w-success { color:var(--d-success); background:var(--d-success-subtle); border-left-color:var(--d-success); }
+.demo-website .w-info { color:var(--d-info); background:var(--d-info-subtle); border-left-color:var(--d-info); }
+.demo-website .w-table { width:100%; border-collapse:collapse; background:var(--d-surface); }
+.demo-website .w-table th { text-align:left; font-weight:700; color:var(--d-text-muted); font-size:12px; padding:5px 8px; border-bottom:1px solid var(--d-border); }
+.demo-website .w-table td { padding:5px 8px; border-bottom:1px solid var(--d-border); }
+.demo-website .w-badge { display:inline-flex; gap:4px; align-items:flex-start; padding:0 6px; color:var(--d-success); background:var(--d-success-subtle); }
+.demo-website svg { fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+.demo-website svg .dot { fill:currentColor; stroke:none; }
+</style>
+<div class="w-head"><b>{{brand}}</b><span class="w-nav">{{nav}}</span></div>
+<p class="w-h">{{title}}</p>
+<p>{{body}} <span class="w-link">{{link}}</span>.</p>
+<p class="w-meta">{{meta}}</p>
+<div class="w-card">
+<div><span class="w-label">{{f-name}}</span><span class="w-input">{{v-name}}</span></div>
+<div><span class="w-label">{{f-mail}}</span><span class="w-input w-focus">{{v-mail}}</span></div>
+<div><span class="w-label">{{f-date}}</span><span class="w-input w-invalid">{{v-date}}</span>
+<p class="w-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg><span><b>{{err-word}}</b> {{err-text}}</span></p></div>
+<div class="w-btns"><span class="w-btn w-primary">{{primary}}</span><span class="w-btn w-secondary">{{secondary}}</span></div>
+</div>
+<p class="w-area">{{area}}</p>
+<div class="w-msgs">
+<p class="w-msg w-danger"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg><span><b>{{w-danger}}</b> {{t-danger}}</span></p>
+<p class="w-msg w-warning"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20Z"/><path d="M12 9v5"/><circle cx="12" cy="17" r="1" class="dot"/></svg><span><b>{{w-warning}}</b> {{t-warning}}</span></p>
+<p class="w-msg w-success"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg><span><b>{{w-success}}</b> {{t-success}}</span></p>
+<p class="w-msg w-info"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="1" class="dot"/></svg><span><b>{{w-info}}</b> {{t-info}}</span></p>
+</div>
+<table class="w-table"><thead><tr><th scope="col">{{th-1}}</th><th scope="col">{{th-2}}</th></tr></thead>
+<tbody><tr><td>{{td-1}}</td><td><span class="w-badge"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>{{td-2}}</span></td></tr></tbody></table>

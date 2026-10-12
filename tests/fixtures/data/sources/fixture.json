@@ -1,0 +1,24 @@
+{
+  "_comment": "Quelle der Testaufgabe. Belegt nichts, prüft nur Verweise und Darstellung.",
+  "sources": [
+    {
+      "id": "fixture-source",
+      "title": "Farbsprache, Repository",
+      "title_lang": "de",
+      "authors": ["Sebastian Grundhöfer"],
+      "publisher": null,
+      "date": "2026-10-11",
+      "url": "https://github.com/grundhofer/farbsprache",
+      "retrieved": "2026-10-11",
+      "kind": "docs",
+      "normative": false,
+      "access": "fulltext",
+      "short_de": "Testquelle",
+      "short_en": "Test source",
+      "claim_de": "Testquelle für den Rahmen. Sie belegt keine Aussage.",
+      "claim_en": "Test source for the frame. It backs no claim.",
+      "unverified_de": null,
+      "unverified_en": null
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<style>
+.demo-status { background:var(--d-bg); color:var(--d-text); font:13px/1.45 Inter, Helvetica, Arial, sans-serif; padding:12px; color-scheme:light; display:grid; gap:10px; }
+.demo-status[data-demo="dark"] { color-scheme:dark; }
+.demo-status p { margin:0; }
+.demo-status svg { flex:none; width:14px; height:14px; margin-top:2px; }
+.demo-status .s-card { background:var(--d-surface); padding:10px; display:grid; gap:4px; }
+.demo-status .s-label { font-size:12px; }
+.demo-status .s-row { display:flex; gap:8px; align-items:stretch; }
+.demo-status .s-input { flex:1; min-width:0; background:var(--d-surface); color:var(--d-text); border:2px solid var(--d-danger); padding:3px 7px; overflow-wrap:anywhere; }
+.demo-status .s-btn { background:var(--d-text); color:var(--d-surface); padding:5px 12px; font-weight:700; }
+.demo-status .s-err { color:var(--d-danger); display:flex; gap:4px; align-items:flex-start; font-size:12px; }
+.demo-status .s-msgs { display:grid; gap:5px; }
+.demo-status .s-msg { display:flex; gap:6px; align-items:flex-start; padding:5px 8px; border-left:4px solid; }
+.demo-status .s-danger { color:var(--d-danger); background:var(--d-danger-subtle); border-left-color:var(--d-danger); }
+.demo-status .s-warning { color:var(--d-warning); background:var(--d-warning-subtle); border-left-color:var(--d-warning); }
+.demo-status .s-success { color:var(--d-success); background:var(--d-success-subtle); border-left-color:var(--d-success); }
+.demo-status .s-info { color:var(--d-info); background:var(--d-info-subtle); border-left-color:var(--d-info); }
+.demo-status .s-table { width:100%; border-collapse:separate; border-spacing:0 3px; }
+.demo-status .s-table th { text-align:left; font-weight:700; font-size:12px; padding:2px 8px; }
+.demo-status .s-table td { background:var(--d-surface); padding:5px 8px; }
+.demo-status .s-badge { display:inline-flex; gap:4px; align-items:flex-start; padding:0 6px; }
+.demo-status .s-toast { display:flex; gap:6px; align-items:flex-start; background:var(--d-text); color:var(--d-bg); padding:7px 10px; justify-self:end; max-width:100%; }
+.demo-status svg { fill:none; stroke:currentColor; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; }
+.demo-status svg .dot { fill:currentColor; stroke:none; }
+</style>
+<div class="s-card">
+<span class="s-label">{{f-mail}}</span>
+<div class="s-row"><span class="s-input">{{v-mail}}</span><span class="s-btn">{{btn}}</span></div>
+<p class="s-err"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg><span><b>{{err-word}}</b> {{err-text}}</span></p>
+</div>
+<div class="s-msgs">
+<p class="s-msg s-danger"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg><span><b>{{w-danger}}</b> {{t-danger}}</span></p>
+<p class="s-msg s-warning"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20Z"/><path d="M12 9v5"/><circle cx="12" cy="17" r="1" class="dot"/></svg><span><b>{{w-warning}}</b> {{t-warning}}</span></p>
+<p class="s-msg s-success"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg><span><b>{{w-success}}</b> {{t-success}}</span></p>
+<p class="s-msg s-info"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="1" class="dot"/></svg><span><b>{{w-info}}</b> {{t-info}}</span></p>
+</div>
+<table class="s-table"><thead><tr><th scope="col">{{th-1}}</th><th scope="col">{{th-2}}</th></tr></thead>
+<tbody>
+<tr><td>{{r-1}}</td><td><span class="s-badge s-danger"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 9l6 6M15 9l-6 6"/></svg>{{b-danger}}</span></td></tr>
+<tr><td>{{r-2}}</td><td><span class="s-badge s-warning"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 2 20h20Z"/><path d="M12 9v5"/><circle cx="12" cy="17" r="1" class="dot"/></svg>{{b-warning}}</span></td></tr>
+<tr><td>{{r-3}}</td><td><span class="s-badge s-success"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg>{{b-success}}</span></td></tr>
+<tr><td>{{r-4}}</td><td><span class="s-badge s-info"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r="1" class="dot"/></svg>{{b-info}}</span></td></tr>
+</tbody></table>
+<p class="s-toast"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7"/></svg><span><b>{{toast-word}}</b> {{toast-text}}</span></p>

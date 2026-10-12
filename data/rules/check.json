@@ -1,0 +1,95 @@
+{
+  "_comment": "Regeln der Seite Palette prüfen (Spezifikation 4.9, 6.5, Eigentümer P5). Texte mit Platzhaltern, nie mit Messzahlen. check-gamut und check-alpha sind zusätzlich zum Regelkatalog 6.5 angelegt, damit jeder Befund eine Belegstufe und Quelle trägt. Verwendet werden alle Regeln über data/check.json (findings[].rule).",
+  "rules": [
+    {
+      "id": "check-duplicates",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Fasse Farben zusammen, die praktisch gleich aussehen. CSS Color 4 setzt den eben merklichen Unterschied auf dieser Skala mit 2 an, als Parameter für das Gamut-Mapping und ohne Messbedingungen.",
+      "text_en": "Merge colors that look practically the same. CSS Color 4 puts the just noticeable difference at 2 on this scale, as a parameter for gamut mapping and without viewing conditions.",
+      "show_if": null,
+      "sources": [
+        "css-color-4"
+      ]
+    },
+    {
+      "id": "check-cvd",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Rücke Farben auseinander, die bei normalem Sehen oder simulierter Rot-Grün-Schwäche näher beieinanderliegen als die Farben von Okabe-Ito ({ref:okabe-ito-7}). Das ist ein Vergleichswert und keine belegte Grenze. Beschrifte Serien zusätzlich, statt dich nur auf Farbe zu verlassen.",
+      "text_en": "Move colors apart that come closer with normal vision or simulated red-green deficiency than the Okabe-Ito colors ({ref:okabe-ito-7}). This is a reference value, not an established limit. Label series as well instead of relying on color alone.",
+      "show_if": null,
+      "sources": [
+        "daltonlens-review",
+        "libdaltonlens"
+      ]
+    },
+    {
+      "id": "check-gray",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Prüfe, ob sich deine Farben auch in Graustufen unterscheiden, wenn du druckst oder kopierst. Die Seite rechnet Graustufen über die Leuchtdichte nach WCAG 2.2, deshalb bleiben die Kontraste dabei gleich.",
+      "text_en": "Check that your colors still differ in grayscale when you print or photocopy. The page calculates grayscale from the luminance defined in WCAG 2.2, so contrasts stay the same.",
+      "show_if": null,
+      "sources": [
+        "datawrapper-colors-2018",
+        "wcag22-relative-luminance"
+      ]
+    },
+    {
+      "id": "check-neutral-missing",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Nimm ein Grau in deine Palette auf. Grau trägt Achsen, Rahmen, Kontext und weniger wichtige Daten, damit die bunten Farben für das Wichtige frei bleiben.",
+      "text_en": "Add a gray to your palette. Gray carries axes, borders, context and less important data, so the colorful hues stay free for what matters.",
+      "show_if": null,
+      "sources": [
+        "few-2008",
+        "datawrapper-colors-2018"
+      ]
+    },
+    {
+      "id": "check-gamut",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": [
+        "css-color-4-gamut-mapping"
+      ],
+      "informative": [],
+      "text_de": "Prüfe Farben außerhalb von sRGB als die Farbe, die am Ende zu sehen ist. Browser bilden solche Farben ab und dürfen dafür zwischen drei Verfahren wählen. Farbsprache prüft den eigenen 8-Bit-Wert nach dem Verfahren mit binärer Suche.",
+      "text_en": "Check colors outside sRGB as the color that is finally shown. Browsers map such colors and may choose among three methods. Farbsprache checks its own 8-bit value from the binary search method.",
+      "show_if": null,
+      "sources": [
+        "css-color-4-gamut-mapping",
+        "css-color-4"
+      ]
+    },
+    {
+      "id": "check-alpha",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Prüfe transparente Farben als die Farbe, die am Ende zu sehen ist. WCAG 2.2 regelt Transparenz nicht. Der Arbeitsentwurf von WCAG 3 empfiehlt, sie als gerenderte Farbe zu prüfen, deshalb mischt die Seite sie über dem gewählten Hintergrund.",
+      "text_en": "Check transparent colors as the color that is finally shown. WCAG 2.2 does not cover transparency. The WCAG 3 working draft recommends testing it as the rendered color, so the page blends it over the chosen background.",
+      "show_if": null,
+      "sources": [
+        "wcag3-wd-2026"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "_comment": "Regeln der Aufgaben Präsentation und Text auf Bild (Paket P3, Bauspezifikation 6.5). Texte mit Platzhaltern, nie mit Messzahlen. Die Platzhalter nutzen feste Hex-Werte, damit dieselbe Regel zu jeder Palette passt.",
+  "rules": [
+    {
+      "id": "slides-dark-on-light",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Setze dunkle Schrift auf einen hellen Folienhintergrund. In einer Studie mit drei Experimenten war das am Laptop und am Beamer am besten lesbar, entgegen der verbreiteten Annahme, für den Beamer sei hell auf dunkel besser.",
+      "text_en": "Put dark text on a light slide background. In a study with three experiments this was the most legible on a laptop and on a projector, contrary to the common belief that light on dark is better for projection.",
+      "show_if": null,
+      "sources": ["greco-2008"]
+    },
+    {
+      "id": "slides-plan-7",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Plane für Schrift am Bildschirm 7:1 ein, auch wenn die Grenze bei 4,5:1 liegt. Raumlicht hebt am Beamer Schwarz und Weiß gleich stark an. In der vereinfachten Modellrechnung bleiben von Schwarz auf Weiß im gedimmten Raum aus einem Beispiel von Texas Instruments nur {proj:#000000/#FFFFFF/normal}.",
+      "text_en": "Plan for 7:1 for text on screen, even though the limit is 4.5:1. On a projector, room light raises black and white by the same amount. In the simplified model, black on white keeps only {proj:#000000/#FFFFFF/normal} in the dimmed room from an example by Texas Instruments.",
+      "show_if": null,
+      "sources": ["ti-dlpa088"]
+    },
+    {
+      "id": "slides-test-room",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Prüfe die Folien vor dem Vortrag im echten Raum, bei dem Licht, das dann brennt, und aus der letzten Reihe. Die Modellrechnung kennt weder deinen Beamer noch deine Leinwand.",
+      "text_en": "Check the slides in the actual room before the talk, with the lights that will be on, and from the back row. The model knows neither your projector nor your screen.",
+      "show_if": null,
+      "sources": ["ti-dlpa088"]
+    },
+    {
+      "id": "scrim-worst-case",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": ["wcag22-f83"],
+      "text_de": "Rechne den Schleier gegen die ungünstigste Stelle des Bilds: helle Schrift gegen reines Weiß, dunkle Schrift gegen reines Schwarz. Dann reicht er über jedem Foto. Weiße Schrift auf schwarzem Schleier braucht so für 4,5:1 mindestens {scrim:#FFFFFF/#000000/4.5}.",
+      "text_en": "Calculate the scrim against the least favorable spot of the image: light text against pure white, dark text against pure black. Then it works over any photo. White text on a black scrim needs at least {scrim:#FFFFFF/#000000/4.5} for 4.5:1.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-3", "wcag22-f83"]
+    },
+    {
+      "id": "scrim-cover-text",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Setze die Schrift nur dorthin, wo der Schleier voll deckt, meist in den unteren Bildteil. Bei einem Verlauf zählt die Deckung an jeder Stelle mit Schrift, nicht der Mittelwert.",
+      "text_en": "Place text only where the scrim fully covers the image, usually in the lower part. With a gradient, the opacity counts at every spot with text, not on average.",
+      "show_if": null,
+      "sources": ["nngroup-text-over-images"]
+    },
+    {
+      "id": "scrim-brightest-image",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Prüfe gegen das ungünstigste Bild der Serie, nicht gegen das Beispielbild: das hellste hinter heller Schrift, das dunkelste hinter dunkler. Ein Schleier, der nur auf einem Bild reicht, reicht oft nicht für das nächste.",
+      "text_en": "Check against the least favorable image of the series, not the sample image: the brightest behind light text, the darkest behind dark text. A scrim that works on one image often fails on the next.",
+      "show_if": null,
+      "sources": ["nngroup-text-over-images"]
+    },
+    {
+      "id": "focus-on-image",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-2-4-7", "wcag22-1-4-11"],
+      "informative": ["wcag22-c40"],
+      "text_de": "Gib Links und Buttons auf Bildern einen zweifarbigen Fokusring aus einer hellen und einer dunklen Farbe, etwa innen Weiß und außen Schwarz mit {cr:#FFFFFF/#000000} zueinander. Nach Technik C40 erreicht dann auf jeder einfarbigen Fläche mindestens eine der beiden Farben 3:1. Über einem Foto ersetzt das nicht die Prüfung an den Stellen hinter dem Ring.",
+      "text_en": "Give links and buttons on images a two-color focus ring of a light and a dark color, for example white inside and black outside with {cr:#FFFFFF/#000000} between them. According to technique C40, at least one of the two colors then reaches 3:1 on any solid background. Over a photo this does not replace checking the spots behind the ring.",
+      "show_if": null,
+      "sources": ["wcag22-2-4-7", "wcag22-1-4-11", "wcag22-c40"]
+    }
+  ]
+}

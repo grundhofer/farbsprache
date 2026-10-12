@@ -1,0 +1,53 @@
+{
+  "task": "charts",
+  "presets": {
+    "cat-okabe": {
+      "default": {
+        "series-1": "#0072B2",
+        "series-2": "#D55E00",
+        "series-3": "#009E73",
+        "series-4": "#CC79A7",
+        "bg": "#FFFFFF",
+        "text": "#222222",
+        "text-2": "#555555",
+        "grid": "#DEDEDE"
+      }
+    },
+    "seq-viridis": {
+      "default": {
+        "step-1": "#FDE725",
+        "step-2": "#5CC863",
+        "step-3": "#21918C",
+        "step-4": "#3B528B",
+        "step-5": "#440154",
+        "bg": "#FFFFFF",
+        "text": "#222222",
+        "text-2": "#555555",
+        "grid": "#DEDEDE"
+      }
+    },
+    "div-blue-orange": {
+      "default": {
+        "step-1": "#0B4C92",
+        "step-2": "#829FC5",
+        "step-3": "#F5F5F5",
+        "step-4": "#BF9279",
+        "step-5": "#823000",
+        "bg": "#FFFFFF",
+        "text": "#222222",
+        "text-2": "#555555",
+        "grid": "#DEDEDE"
+      }
+    },
+    "hl-gray": {
+      "default": {
+        "highlight": "#0072B2",
+        "context": "#949494",
+        "bg": "#FFFFFF",
+        "text": "#222222",
+        "text-2": "#555555",
+        "grid": "#DEDEDE"
+      }
+    }
+  }
+}

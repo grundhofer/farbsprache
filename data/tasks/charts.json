@@ -1,0 +1,369 @@
+{
+  "_comment": "Aufgabe Diagramm oder Dashboard (Spezifikation 3.3, 4.4). Prosa steht in web/copy/charts.py. Ein Modus; der Hintergrund kommt aus der Option bg. Die Datentyp-Chips (t) wählen die Startpalette (preset_control). Startpaletten beruhen auf Datensätzen und haben keine eigene Farbe, deshalb weder seed noch colors (erlaubt mit preset_control). Stufen und Flächen sind keine Normpaare, sondern Hinweise (advisory), weil sie mit Kontur, Zellrand oder Beschriftung auskommen dürfen (Understanding 1.4.11).",
+  "id": "charts",
+  "generator": "charts",
+  "name_de": "Diagramm oder Dashboard",
+  "name_en": "Chart or dashboard",
+  "summary_de": "Kategorien, Verläufe, Abweichungen. Auch für Druck und Kopierer.",
+  "summary_en": "Categories, gradients, deviations. Also for print and photocopies.",
+  "modes": ["default"],
+  "preset_control": "t",
+  "controls": [
+    {"id": "t", "type": "chips", "values": ["cat", "seq", "div", "hl"], "default": "cat", "visible": true, "label_key": "ctl.t"},
+    {
+      "id": "n",
+      "type": "stepper",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "visible": true,
+      "label_key": "ctl.n",
+      "by": "t",
+      "cases": {
+        "cat": {"min": 2, "max": 8, "step": 1, "default": 4},
+        "seq": {"min": 3, "max": 9, "step": 1, "default": 5},
+        "div": {"min": 3, "max": 9, "step": 2, "default": 5},
+        "hl": {"min": 1, "max": 1, "step": 1, "default": 1}
+      }
+    },
+    {"id": "pr", "type": "toggle", "default": false, "visible": true, "label_key": "ctl.pr"},
+    {"id": "bg", "type": "chips", "values": ["light", "dark"], "default": "light", "visible": false, "label_key": "ctl.bg"},
+    {"id": "mark", "type": "chips", "values": ["lines", "areas"], "default": "lines", "visible": false, "label_key": "ctl.mark"},
+    {
+      "id": "fam",
+      "type": "chips",
+      "default": "okabe-ito",
+      "visible": false,
+      "label_key": "ctl.fam",
+      "by": "t",
+      "cases": {
+        "cat": {"values": ["okabe-ito", "tol-bright", "tol-muted"], "default": "okabe-ito"},
+        "seq": {"values": ["viridis", "cb-blues", "seed"], "default": "viridis"},
+        "div": {"values": ["blue-orange", "cb-rdbu", "cb-puor", "seed"], "default": "blue-orange"},
+        "hl": {"values": ["gray"], "default": "gray"}
+      }
+    }
+  ],
+  "pattern_toggles": [{"id": "labels", "values": ["legend", "direct"], "default": "legend"}],
+  "presets": [
+    {
+      "id": "cat-okabe",
+      "options": {"t": "cat", "n": 4, "fam": "okabe-ito"},
+      "dataset": "okabe-ito",
+      "name_de": "Okabe-Ito, Linien auf Weiß",
+      "name_en": "Okabe-Ito, lines on white",
+      "note_de": "Vier Farben mit 3:1 auf Weiß, nach größtem Abstand geordnet",
+      "note_en": "Four colors with 3:1 on white, ordered by largest distance",
+      "expect": []
+    },
+    {
+      "id": "seq-viridis",
+      "options": {"t": "seq", "n": 5, "fam": "viridis"},
+      "dataset": "viridis",
+      "name_de": "viridis, 5 Stufen",
+      "name_en": "viridis, 5 steps",
+      "note_de": "Gelb heißt wenig, Violett heißt viel",
+      "note_en": "Yellow means little, purple means a lot",
+      "expect": ["low-contrast"]
+    },
+    {
+      "id": "div-blue-orange",
+      "options": {"t": "div", "n": 5, "fam": "blue-orange"},
+      "name_de": "Blau-Orange, 5 Stufen",
+      "name_en": "Blue-orange, 5 steps",
+      "note_de": "Blau darunter, Orange darüber, die Mitte unbunt",
+      "note_en": "Blue below, orange above, a neutral middle",
+      "expect": ["low-contrast"]
+    },
+    {
+      "id": "hl-gray",
+      "options": {"t": "hl", "n": 1, "fam": "gray"},
+      "dataset": "okabe-ito",
+      "name_de": "Grau mit Blau hervorgehoben",
+      "name_en": "Gray with a blue highlight",
+      "note_de": "Alle Linien grau, eine in Okabe-Ito-Blau",
+      "note_en": "All lines gray, one in Okabe-Ito blue",
+      "expect": []
+    }
+  ],
+  "roles": [
+    {
+      "id": "series-1",
+      "name_de": "Serie 1",
+      "name_en": "Series 1",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-1"
+    },
+    {
+      "id": "series-2",
+      "name_de": "Serie 2",
+      "name_en": "Series 2",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-2"
+    },
+    {
+      "id": "series-3",
+      "name_de": "Serie 3",
+      "name_en": "Series 3",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-3"
+    },
+    {
+      "id": "series-4",
+      "name_de": "Serie 4",
+      "name_en": "Series 4",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-4"
+    },
+    {
+      "id": "series-5",
+      "name_de": "Serie 5",
+      "name_en": "Series 5",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-5"
+    },
+    {
+      "id": "series-6",
+      "name_de": "Serie 6",
+      "name_en": "Series 6",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-6"
+    },
+    {
+      "id": "series-7",
+      "name_de": "Serie 7",
+      "name_en": "Series 7",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-7"
+    },
+    {
+      "id": "series-8",
+      "name_de": "Serie 8",
+      "name_en": "Series 8",
+      "use_de": "Linien, Punkte, Balken",
+      "use_en": "lines, points, bars",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-8"
+    },
+    {
+      "id": "step-1",
+      "name_de": "Stufe 1",
+      "name_en": "Step 1",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-1"
+    },
+    {
+      "id": "step-2",
+      "name_de": "Stufe 2",
+      "name_en": "Step 2",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-2"
+    },
+    {
+      "id": "step-3",
+      "name_de": "Stufe 3",
+      "name_en": "Step 3",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-3"
+    },
+    {
+      "id": "step-4",
+      "name_de": "Stufe 4",
+      "name_en": "Step 4",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-4"
+    },
+    {
+      "id": "step-5",
+      "name_de": "Stufe 5",
+      "name_en": "Step 5",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-5"
+    },
+    {
+      "id": "step-6",
+      "name_de": "Stufe 6",
+      "name_en": "Step 6",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-6"
+    },
+    {
+      "id": "step-7",
+      "name_de": "Stufe 7",
+      "name_en": "Step 7",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-7"
+    },
+    {
+      "id": "step-8",
+      "name_de": "Stufe 8",
+      "name_en": "Step 8",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-8"
+    },
+    {
+      "id": "step-9",
+      "name_de": "Stufe 9",
+      "name_en": "Step 9",
+      "use_de": "Kacheln, Flächen, Klassen",
+      "use_en": "tiles, areas, classes",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-9"
+    },
+    {
+      "id": "highlight",
+      "name_de": "Hervorhebung",
+      "name_en": "Highlight",
+      "use_de": "die eine wichtige Linie",
+      "use_en": "the one key line",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-highlight"
+    },
+    {
+      "id": "context",
+      "name_de": "Kontext",
+      "name_en": "Context",
+      "use_de": "alle anderen Linien",
+      "use_en": "all other lines",
+      "core": true,
+      "kind": "data",
+      "css_name": "chart-context"
+    },
+    {
+      "id": "bg",
+      "name_de": "Hintergrund",
+      "name_en": "Background",
+      "use_de": "Diagrammfläche",
+      "use_en": "chart area",
+      "core": true,
+      "kind": "surface",
+      "css_name": "chart-bg"
+    },
+    {
+      "id": "text",
+      "name_de": "Text",
+      "name_en": "Text",
+      "use_de": "Titel, Werte, direkte Beschriftung",
+      "use_en": "title, values, direct labels",
+      "core": true,
+      "kind": "text",
+      "css_name": "chart-text"
+    },
+    {
+      "id": "text-2",
+      "name_de": "Achsentext",
+      "name_en": "Axis text",
+      "use_de": "Achsen und Legende",
+      "use_en": "axes and legend",
+      "core": true,
+      "kind": "text",
+      "css_name": "chart-axis"
+    },
+    {
+      "id": "grid",
+      "name_de": "Gitter",
+      "name_en": "Grid",
+      "use_de": "Gitterlinien, dekorativ",
+      "use_en": "grid lines, decorative",
+      "core": false,
+      "kind": "decor",
+      "css_name": "chart-grid"
+    }
+  ],
+  "pairs": [
+    {"fg": "text", "on": ["bg"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "text-2", "on": ["bg"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "series-1", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-2", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-3", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-4", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-5", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-6", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-7", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "series-8", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "highlight", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"},
+    {"fg": "context", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "chart-lines-3-1", "group": "data"}
+  ],
+  "decorative": [{"fg": "grid", "on": ["bg"]}],
+  "advisory": [
+    {"fg": "step-1", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-2", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-3", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-4", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-5", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-6", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-7", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-8", "on": ["bg"], "min": 3.0, "finding": "low-contrast"},
+    {"fg": "step-9", "on": ["bg"], "min": 3.0, "finding": "low-contrast"}
+  ],
+  "distinct": [
+    {"id": "series", "set": ["series-1", "series-2", "series-3", "series-4", "series-5", "series-6", "series-7", "series-8"], "kinds": ["normal", "deutan", "protan"]},
+    {"id": "series-gray", "set": ["series-1", "series-2", "series-3", "series-4", "series-5", "series-6", "series-7", "series-8"], "kinds": ["gray"]},
+    {"id": "steps", "set": ["step-1", "step-2", "step-3", "step-4", "step-5", "step-6", "step-7", "step-8", "step-9"], "kinds": ["normal", "deutan", "protan"]},
+    {"id": "steps-gray", "set": ["step-1", "step-2", "step-3", "step-4", "step-5", "step-6", "step-7", "step-8", "step-9"], "kinds": ["gray"]},
+    {"id": "highlight", "set": ["highlight", "context"], "kinds": ["normal", "deutan", "protan"]},
+    {"id": "highlight-gray", "set": ["highlight", "context"], "kinds": ["gray"]}
+  ],
+  "rules": ["chart-lines-3-1", "chart-adjacent", "chart-direct-labels", "chart-max-categories", "chart-dark-more", "chart-dark-lighter-more", "chart-monotone", "chart-gray-context", "chart-same-meaning", "color-not-alone"],
+  "explain": ["simulation", "categories", "data-types", "rainbow"],
+  "pattern": "charts",
+  "exports": {
+    "primary": "hex",
+    "visible": ["hex", "css", "js"],
+    "more": ["agent", "dtcg", "rationale"]
+  },
+  "related": ["website", "slides"],
+  "siblings": [{"site": "bildsprache", "path_de": "de/anwendungen/charts/", "path_en": "en/use-cases/charts/", "label_key": "sibling.bildsprache"}],
+  "datasets": ["okabe-ito", "tol", "colorbrewer", "viridis"],
+  "not_checked_de": ["deine Linienstärken und Punktgrößen", "Schrift in Datenfarben", "Transparenz und Überlagerungen", "dein Bildschirm, Drucker oder Kopierer", "schwache Ausprägungen von Farbsehschwäche", "die Etiketten der Datensätze, etwa bei ColorBrewer"],
+  "not_checked_en": ["your line widths and point sizes", "text in data colors", "transparency and overlaps", "your screen, printer or photocopier", "mild forms of color vision deficiency", "the labels of the data sets, for example at ColorBrewer"]
+}

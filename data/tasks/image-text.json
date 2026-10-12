@@ -1,0 +1,44 @@
+{
+  "_comment": "Aufgabe Text auf Bild (Bauspezifikation 3.6, 4.7, 4.1.15, 5.8). Die eigene Farbe ist die Schleierfarbe (URL-Name sc). Schriftfarbe tc und Ziel tg sind Steuerelemente; das Ziel aus tg ersetzt beim Rechnen das min des Paars. Format fmt und Sicherheitsrand safe sind reine Muster-Schalter. Prosa steht in web/copy/image_text.py. Kein Bild-Upload in v1.",
+  "id": "image-text",
+  "generator": "image-text",
+  "name_de": "Text auf Bild",
+  "name_en": "Text on image",
+  "summary_de": "Thumbnail, Hero, Social-Post: Schrift auf Fotos mit berechnetem Schleier.",
+  "summary_en": "Thumbnail, hero, social post: text on photos with a calculated scrim.",
+  "modes": ["default"],
+  "seed_param": "sc",
+  "controls": [
+    {"id": "tc", "type": "color", "default": "#FFFFFF", "visible": true, "label_key": "ctl.tc"},
+    {"id": "tg", "type": "chips", "values": ["3", "4.5"], "default": "4.5", "visible": true, "label_key": "ctl.tg"}
+  ],
+  "pattern_toggles": [
+    {"id": "fmt", "values": ["16x9", "4x5", "og"], "default": "16x9"},
+    {"id": "safe", "values": ["off", "on"], "default": "off"}
+  ],
+  "presets": [
+    {"id": "white-on-black", "seed": "#000000", "options": {"tc": "#FFFFFF"}, "name_de": "Weiß auf Schwarz", "name_en": "White on black",
+     "note_de": "Weiße Schrift auf schwarzem Schleier", "note_en": "White text on a black scrim", "expect": []},
+    {"id": "black-on-white", "seed": "#FFFFFF", "options": {"tc": "#000000"}, "name_de": "Schwarz auf Weiß", "name_en": "Black on white",
+     "note_de": "Schwarze Schrift auf weißem Schleier", "note_en": "Black text on a white scrim", "expect": []},
+    {"id": "white-on-color", "seed": "oklch(0.48 0.08 215)", "options": {"tc": "#FFFFFF"}, "name_de": "Weiß auf Farbe", "name_en": "White on color",
+     "note_de": "Weiße Schrift auf einem Petrol-Schleier", "note_en": "White text on a petrol scrim", "expect": []}
+  ],
+  "roles": [
+    {"id": "text", "name_de": "Schrift", "name_en": "Text", "use_de": "Titel und Unterzeile auf dem Bild", "use_en": "title and subtitle on the image", "core": true, "kind": "text"},
+    {"id": "scrim", "name_de": "Schleier", "name_en": "Scrim", "use_de": "halbdurchsichtige Fläche zwischen Bild und Schrift", "use_en": "semi-transparent layer between image and text", "core": true, "kind": "surface"},
+    {"id": "worst-pixel", "name_de": "Schlimmster Pixel", "name_en": "Worst pixel", "use_de": "reines Weiß oder Schwarz, gegen das die Seite rechnet", "use_en": "pure white or black that the page calculates against", "core": true, "kind": "surface"},
+    {"id": "composite", "name_de": "Mischfarbe (8 Bit)", "name_en": "Blended color (8-bit)", "use_de": "Schleier über dem schlimmsten Pixel bei Mindestdeckkraft", "use_en": "scrim over the worst pixel at minimum opacity", "core": true, "kind": "surface"}
+  ],
+  "pairs": [
+    {"fg": "text", "on": ["composite"], "min": 4.5, "criterion": "1.4.3", "rule": "scrim-worst-case"}
+  ],
+  "rules": ["scrim-worst-case", "scrim-cover-text", "scrim-brightest-image", "focus-on-image"],
+  "explain": ["scrim", "contrast", "context"],
+  "pattern": "image-text",
+  "exports": {"primary": "scrim", "visible": ["scrim", "values", "agent"], "more": []},
+  "related": ["ai-image", "slides"],
+  "siblings": [{"site": "bildsprache", "path_de": "de/", "path_en": "en/", "label_key": "sibling.bildsprache"}],
+  "not_checked_de": ["Bilder, die heller als Weiß dargestellt werden (HDR)", "deine Schriftgröße und dein Schriftschnitt", "Textschatten, Konturen und Weichzeichner", "Zuschnitt und Kompression durch Plattformen", "Fokusringe über dem Bild", "schwache Ausprägungen von Farbsehschwäche"],
+  "not_checked_en": ["images shown brighter than white (HDR)", "your font size and weight", "text shadows, outlines and blur", "cropping and compression by platforms", "focus rings over the image", "mild forms of color vision deficiency"]
+}

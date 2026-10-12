@@ -1,0 +1,50 @@
+{
+  "task": "slides",
+  "presets": {
+    "petrol": {
+      "default": {
+        "slide": "#F8FBFB",
+        "slide-2": "#EBEFF0",
+        "text": "#182123",
+        "text-2": "#495154",
+        "line": "#838C8F",
+        "accent": "#11697A",
+        "accent-text": "#005768",
+        "chart-1": "#11697A",
+        "chart-2": "#009E73",
+        "chart-3": "#D55E00",
+        "chart-4": "#0072B2"
+      }
+    },
+    "tinte": {
+      "default": {
+        "slide": "#F8FAFD",
+        "slide-2": "#ECEEF3",
+        "text": "#1B1F29",
+        "text-2": "#4B4F59",
+        "line": "#858A95",
+        "accent": "#2B4EA7",
+        "accent-text": "#2749A2",
+        "chart-1": "#2B4EA7",
+        "chart-2": "#D55E00",
+        "chart-3": "#009E73",
+        "chart-4": "#0072B2"
+      }
+    },
+    "graphit": {
+      "default": {
+        "slide": "#191510",
+        "slide-2": "#25211B",
+        "text": "#EEEBE6",
+        "text-2": "#C2BDB5",
+        "line": "#6D6962",
+        "accent": "#CD9B4F",
+        "accent-text": "#D6A357",
+        "chart-1": "#CD9B4F",
+        "chart-2": "#0072B2",
+        "chart-3": "#56B4E9",
+        "chart-4": "#F0E442"
+      }
+    }
+  }
+}

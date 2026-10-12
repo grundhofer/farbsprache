@@ -1,0 +1,61 @@
+{
+  "_comment": "Kurz erklärt, Eigentümer Diagramm (Spezifikation 3.9). Je 60 bis 120 Wörter, kein HTML, Absätze durch Leerzeile. Zahlen der Quellen stehen als Quellzahlen im Text, eigene Messwerte nur über {ref:…}.",
+  "entries": [
+    {
+      "id": "simulation",
+      "title_de": "Farbsehschwäche: wer, wie simuliert, wo die Grenzen sind",
+      "title_en": "Color vision deficiency: who, how simulated, limits",
+      "level": "research",
+      "strength": "strong",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Etwa 8 % der Männer und 0,4 % der Frauen europäischer Herkunft haben eine angeborene Rot-Grün-Schwäche. Eine Blau-Gelb-Schwäche betrifft weniger als 1 von 10.000 Menschen.\n\nDie Seite rechnet jede Farbe in linearem RGB um: Protanopie und Deuteranopie nach Viénot, Brettel und Mollon 1999, Tritanopie nach Brettel, Viénot und Mollon 1997. Ein Vergleich offener Verfahren empfiehlt diese für vollständige Ausprägungen.\n\nDie Modelle beschreiben einen Durchschnittsbeobachter und starke Formen. Geprüft wurden sie selten mit mehr als zehn Personen. Schwache Formen, die häufiger sind, zeigt die Seite nicht. Die Simulation ersetzt deshalb keinen Test mit Betroffenen. Keine Palette funktioniert garantiert für alle.",
+      "body_en": "About 8% of men and 0.4% of women of European descent have an inherited red-green deficiency. A blue-yellow deficiency affects fewer than 1 in 10,000 people.\n\nThe page converts every color in linear RGB: protanopia and deuteranopia after Viénot, Brettel and Mollon 1999, tritanopia after Brettel, Viénot and Mollon 1997. A comparison of open methods recommends these for complete forms.\n\nThe models describe an average observer and strong forms. They were rarely validated with more than ten people. Mild forms, which are more common, are not shown here. So the simulation does not replace a test with people who have color vision deficiency. No palette is guaranteed to work for everyone.",
+      "sources": ["birch-2012", "medlineplus-cvd", "daltonlens-review"],
+      "demo": null
+    },
+    {
+      "id": "categories",
+      "title_de": "Wie viele Farben verträgt ein Diagramm?",
+      "title_en": "How many colors can a chart take?",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Healey fand 1996, dass bei gleicher Helligkeit höchstens sieben Farben schnell und genau zu finden sind. Eine Vorlesung von Liu und Munzner (UBC) nennt als Faustregel 6 bis 12 Farbklassen, Hintergrund und Hervorhebung eingeschlossen. Wilke sieht qualitative Skalen am besten bei drei bis fünf Kategorien und rät bei mehr als etwa acht zur direkten Beschriftung.\n\nDie Seite bietet deshalb höchstens acht Farben an. Ab sechs Serien zeigt sie die Regel zur direkten Beschriftung. Der Schnitt bei sechs ist eine Festlegung von Farbsprache, keine belegte Grenze. Bei mehr Gruppen hilft Grau für den Rest und eine einzige hervorgehobene Linie.",
+      "body_en": "In 1996 Healey found that at equal lightness at most seven colors can be found quickly and accurately. A lecture by Liu and Munzner (UBC) gives 6 to 12 color classes as a rule of thumb, including background and highlights. Wilke sees qualitative scales working best with three to five categories and advises direct labels for more than about eight.\n\nSo the page offers at most eight colors. From six series on it shows the rule about direct labels. The cut at six is a Farbsprache setting, not an established limit. With more groups, gray for the rest and a single highlighted line help.",
+      "sources": ["healey-1996", "munzner-color-2020", "wilke-color-pitfalls"],
+      "demo": null
+    },
+    {
+      "id": "data-types",
+      "title_de": "Gruppen, Verlauf oder Abweichung?",
+      "title_en": "Groups, gradient or deviation?",
+      "level": "research",
+      "strength": "strong",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Der Datentyp bestimmt die Palette. Ungeordnete Gruppen brauchen klar verschiedene Farbtöne, die keine Reihenfolge andeuten. Geordnete Werte von wenig bis viel brauchen einen Verlauf, dessen Helligkeit gleichmäßig in eine Richtung läuft. Abweichungen von einem Mittelwert brauchen zwei Farbtöne, die sich an einer hellen, unbunten Mitte treffen.\n\nColorBrewer, matplotlib und Wilke unterscheiden diese drei Arten auf dieselbe Weise. Crameri und Kollegen betonen, dass Datensatz und Farbskala zusammenpassen müssen und jede Farbskala eine Legende braucht.\n\nWähle deshalb oben zuerst, was du zeigst. Die Seite wählt dann die passende Familie.",
+      "body_en": "The data type decides the palette. Unordered groups need clearly different hues that imply no order. Ordered values from little to a lot need a gradient whose lightness runs evenly in one direction. Deviations from an average need two hues that meet at a light, neutral middle.\n\nColorBrewer, matplotlib and Wilke distinguish these three kinds in the same way. Crameri and colleagues stress that data set and color scale must match and that every color scale needs a legend.\n\nSo first choose above what you show. The page then picks the fitting family.",
+      "sources": ["colorbrewer-schemes", "matplotlib-colormaps", "wilke-color-basics", "crameri-2020"],
+      "demo": null
+    },
+    {
+      "id": "rainbow",
+      "title_de": "Ist Regenbogen immer falsch?",
+      "title_en": "Is a rainbow always wrong?",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Ein Regenbogen springt in der Helligkeit. Gelb sticht hervor, Grün bildet ein breites Band, und bei Rot-Grün-Schwäche fallen Teile zusammen. Crameri und Kollegen nennen für solche Skalen Sehfehler von über 7 % der gezeigten Datenspanne.\n\nWare und Kollegen halten 2023 dagegen: Muss man einen Wert mit einer Legende ablesen, war der Regenbogen in Studien wiederholt am genauesten.\n\nEin einfacher Regenbogen aus sieben Farben liegt im ungünstigsten Paar bei normalem Sehen und simulierter Rot-Grün-Schwäche nur {ref:naive-rainbow-7} auseinander, Okabe-Ito dagegen {ref:okabe-ito-7}. Nutze für Verläufe deshalb viridis oder eine ähnliche Skala und einen Regenbogen nur mit Legende.",
+      "body_en": "A rainbow jumps in lightness. Yellow stands out, green forms a wide band, and parts merge under red-green deficiency. Crameri and colleagues report visual errors of more than 7% of the displayed data range for such scales.\n\nIn 2023 Ware and colleagues argue against this: when a value has to be read with a legend, the rainbow was repeatedly the most accurate in studies.\n\nA simple rainbow of seven colors is only {ref:naive-rainbow-7} apart in its worst pair across normal vision and simulated red-green deficiency, Okabe-Ito {ref:okabe-ito-7}. So use viridis or a similar scale for gradients, and a rainbow only with a legend.",
+      "sources": ["crameri-2020", "ware-2023", "matplotlib-colormaps"],
+      "demo": null
+    }
+  ]
+}

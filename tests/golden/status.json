@@ -1,0 +1,89 @@
+{
+  "task": "status",
+  "presets": {
+    "grau": {
+      "light": {
+        "bg": "#FAFAFA",
+        "surface": "#FFFFFF",
+        "text": "#1F1F1F",
+        "danger-subtle": "#FFEEEA",
+        "warning-subtle": "#FFF1E2",
+        "success-subtle": "#E8F9EB",
+        "info-subtle": "#E7F5FF",
+        "danger": "#B6433C",
+        "warning": "#723F00",
+        "success": "#007329",
+        "info": "#004D9A"
+      },
+      "dark": {
+        "bg": "#141414",
+        "surface": "#1D1D1D",
+        "text": "#EBEBEB",
+        "danger-subtle": "#381F1C",
+        "warning-subtle": "#33230F",
+        "success-subtle": "#172C1C",
+        "info-subtle": "#172839",
+        "danger": "#D67066",
+        "warning": "#E5A14B",
+        "success": "#90E9A3",
+        "info": "#4D97DE"
+      }
+    },
+    "petrol": {
+      "light": {
+        "bg": "#F8FBFB",
+        "surface": "#FFFFFF",
+        "text": "#182123",
+        "danger-subtle": "#FFEEEA",
+        "warning-subtle": "#FFF1E2",
+        "success-subtle": "#E8F9EB",
+        "info-subtle": "#E7F5FF",
+        "danger": "#B6433C",
+        "warning": "#723F00",
+        "success": "#007329",
+        "info": "#004D9A"
+      },
+      "dark": {
+        "bg": "#101516",
+        "surface": "#191E1F",
+        "text": "#E8ECED",
+        "danger-subtle": "#381F1C",
+        "warning-subtle": "#33230F",
+        "success-subtle": "#172C1C",
+        "info-subtle": "#172839",
+        "danger": "#D67066",
+        "warning": "#E5A14B",
+        "success": "#90E9A3",
+        "info": "#4D97DE"
+      }
+    },
+    "kraeftiges-rot": {
+      "light": {
+        "bg": "#FDF9F9",
+        "surface": "#FFFFFF",
+        "text": "#281C1B",
+        "danger-subtle": "#FFEEEA",
+        "warning-subtle": "#FFF1E2",
+        "success-subtle": "#E8F9EB",
+        "info-subtle": "#E7F5FF",
+        "danger": "#B6433C",
+        "warning": "#723F00",
+        "success": "#007329",
+        "info": "#004D9A"
+      },
+      "dark": {
+        "bg": "#191211",
+        "surface": "#221B1A",
+        "text": "#F0E9E9",
+        "danger-subtle": "#381F1C",
+        "warning-subtle": "#33230F",
+        "success-subtle": "#172C1C",
+        "info-subtle": "#172839",
+        "danger": "#D67066",
+        "warning": "#E5A14B",
+        "success": "#90E9A3",
+        "info": "#4D97DE"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "_comment": "Regel der Testaufgabe mit Bedingung (show_if), damit der Rahmen bedingte Regeln zeigt und ausblendet.",
+  "rules": [
+    {
+      "id": "fixture-many-steps",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Ab drei Stufen beschrifte jede Stufe direkt. Die erste Stufe hat hell {cr:step-1/bg@light} zum Hintergrund.",
+      "text_en": "From three steps on, label every step directly. In light mode the first step has {cr:step-1/bg@light} against the background.",
+      "show_if": {"metric": "count", "a": "step-", "mode": "light", "op": ">=", "value": 3},
+      "sources": ["fixture-source"]
+    }
+  ]
+}

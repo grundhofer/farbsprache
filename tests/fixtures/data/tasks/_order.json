@@ -1,0 +1,4 @@
+{
+  "_comment": "Nur die Testaufgabe. Ersetzt beim Bau mit --fixtures die Reihenfolge des Projekts.",
+  "order": ["fixture"]
+}

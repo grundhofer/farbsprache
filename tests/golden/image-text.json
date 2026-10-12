@@ -1,0 +1,29 @@
+{
+  "task": "image-text",
+  "presets": {
+    "white-on-black": {
+      "default": {
+        "text": "#FFFFFF",
+        "scrim": "#000000",
+        "worst-pixel": "#FFFFFF",
+        "composite": "#757575"
+      }
+    },
+    "black-on-white": {
+      "default": {
+        "text": "#000000",
+        "scrim": "#FFFFFF",
+        "worst-pixel": "#000000",
+        "composite": "#757575"
+      }
+    },
+    "white-on-color": {
+      "default": {
+        "text": "#FFFFFF",
+        "scrim": "#11697A",
+        "worst-pixel": "#FFFFFF",
+        "composite": "#35808E"
+      }
+    }
+  }
+}

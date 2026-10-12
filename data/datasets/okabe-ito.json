@@ -1,0 +1,30 @@
+{
+  "_comment": "Okabe-Ito. Werte aus R grDevices::palette.colors (colorstuff.R, Datei per machine_sha256 festgehalten), geprüft gegen Fig. 16 der Originalseite (RGB 0-255, Bild pallete.jpg, alle acht Werte gleich). R ergänzt ein neuntes Grau #999999, das nicht zur Originalpalette gehört und hier fehlt. Namen wie in Fig. 16, klein geschrieben; vermillion in der Schreibweise von R (Fig. 16: Vermilion).",
+  "id": "okabe-ito",
+  "name": "Okabe-Ito",
+  "authors": ["Masataka Okabe", "Kei Ito"],
+  "year": 2002,
+  "source_url": "https://jfly.uni-koeln.de/color/",
+  "machine_source": "https://raw.githubusercontent.com/wch/r-source/trunk/src/library/grDevices/R/colorstuff.R",
+  "machine_sha256": "1ed5996914afbe70250cf3cf587b2d723969be2d6e29e9beea08f78851f2e945",
+  "retrieved": "2026-10-11",
+  "license": "none-stated",
+  "license_note_de": "Keine formale Lizenz. Die Autoren bitten um Nennung. CUD-Logos nicht verwenden.",
+  "license_note_en": "No formal license. The authors ask to be credited. Do not use the CUD logos.",
+  "attribution": "Masataka Okabe, Kei Ito: Color Universal Design (2002)",
+  "required_notice": null,
+  "reliability": "defined",
+  "kind": "categorical",
+  "schemes": [
+    {"id": "okabe-ito", "interpolate": false, "colors": [
+      {"name": "black", "hex": "#000000", "origin": {"rgb": [0, 0, 0]}},
+      {"name": "orange", "hex": "#E69F00", "origin": {"rgb": [230, 159, 0]}},
+      {"name": "sky blue", "hex": "#56B4E9", "origin": {"rgb": [86, 180, 233]}},
+      {"name": "bluish green", "hex": "#009E73", "origin": {"rgb": [0, 158, 115]}},
+      {"name": "yellow", "hex": "#F0E442", "origin": {"rgb": [240, 228, 66]}},
+      {"name": "blue", "hex": "#0072B2", "origin": {"rgb": [0, 114, 178]}},
+      {"name": "vermillion", "hex": "#D55E00", "origin": {"rgb": [213, 94, 0]}},
+      {"name": "reddish purple", "hex": "#CC79A7", "origin": {"rgb": [204, 121, 167]}}
+    ]}
+  ]
+}

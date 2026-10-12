@@ -1,0 +1,41 @@
+<style>
+.demo-slides { background:var(--d-slide-2); color:var(--d-text); color-scheme:light; font:15px/1.4 Inter, Helvetica, Arial, sans-serif; padding:10px; container-type:inline-size; }
+.demo-slides .sl-grid { display:grid; gap:10px; }
+@container (min-width:460px) {
+  .demo-slides .sl-grid { grid-template-columns:repeat(2, minmax(0, 1fr)); }
+}
+.demo-slides .sl-slide { position:relative; aspect-ratio:16 / 9; background:var(--d-slide); color:var(--d-text); overflow:hidden; container-type:inline-size;
+  padding:6cqw 7cqw; display:flex; flex-direction:column; gap:2.2cqw; border:1px solid var(--d-line); }
+.demo-slides .sl-h { margin:0; font-weight:700; font-size:7.2cqw; line-height:1.1; letter-spacing:-.01em; }
+.demo-slides .sl-title { justify-content:center; padding-left:9cqw; }
+.demo-slides .sl-title .sl-h { font-size:8.4cqw; }
+.demo-slides .sl-title .sl-bar { position:absolute; left:0; top:0; bottom:0; width:3.2cqw; background:var(--d-accent); }
+.demo-slides .sl-sub { margin:0; font-size:5cqw; color:var(--d-text-2); }
+.demo-slides .sl-rule { height:0; border-top:1px solid var(--d-line); width:40%; }
+.demo-slides ul { margin:0; padding:0; list-style:none; display:grid; gap:1.6cqw; font-size:5.4cqw; line-height:1.25; }
+.demo-slides li { display:flex; gap:2.4cqw; align-items:baseline; }
+.demo-slides li::before { content:""; flex:0 0 auto; width:1.8cqw; height:1.8cqw; background:var(--d-text-2); transform:translateY(-.4cqw); }
+.demo-slides li.sl-hi { background:var(--d-slide-2); border-left:1cqw solid var(--d-accent); padding:1cqw 2cqw; margin-left:-3cqw; }
+.demo-slides li.sl-hi::before { background:var(--d-accent); }
+.demo-slides .sl-hi b { color:var(--d-accent-text); }
+.demo-slides .sl-foot { margin-top:auto; display:flex; justify-content:space-between; gap:3cqw; font-size:4.2cqw; color:var(--d-text-2); }
+.demo-slides .sl-link { color:var(--d-accent-text); text-decoration:underline; text-underline-offset:.2em; }
+.demo-slides .sl-chart { display:grid; grid-template-columns:auto minmax(0, 1fr); gap:1.8cqw 2.4cqw; align-items:center; font-size:4.8cqw;
+  border-left:1px solid var(--d-line); padding-left:0; }
+.demo-slides .sl-chart > span { padding-left:2cqw; color:var(--d-text); white-space:nowrap; }
+.demo-slides .sl-row { display:flex; align-items:center; gap:1.5cqw; min-width:0; }
+.demo-slides .sl-row i { display:block; height:5.4cqw; flex:0 0 auto; }
+.demo-slides .sl-c1 { width:80%; background:var(--d-chart-1); }
+.demo-slides .sl-c2 { width:60%; background:var(--d-chart-2); }
+.demo-slides .sl-c3 { width:46%; background:var(--d-chart-3); }
+.demo-slides .sl-c4 { width:28%; background:var(--d-chart-4); }
+.demo-slides .sl-chart b { font-weight:700; color:var(--d-text); }
+.demo-slides .sl-model { display:none; margin:0; padding:4px 6px; font-size:13px; line-height:1.4; color:var(--d-cap-text); background:var(--d-cap-bg); align-self:end; }
+.demo-slides[data-view="projector"] .sl-model { display:block; }
+</style>
+<div class="sl-grid">
+<div class="sl-slide sl-title"><span class="sl-bar"></span><p class="sl-h">{{t1}}</p><p class="sl-sub">{{t1sub}}</p><span class="sl-rule"></span></div>
+<div class="sl-slide"><p class="sl-h">{{t2}}</p><ul><li>{{b1}}</li><li class="sl-hi"><b>{{b2}}</b></li><li>{{b3}}</li></ul><p class="sl-foot"><span class="sl-link">{{link}}</span><span>{{src}}</span></p></div>
+<div class="sl-slide"><p class="sl-h">{{t3}}</p><div class="sl-chart"><span>{{c1}}</span><span class="sl-row"><i class="sl-c1"></i><b>12</b></span><span>{{c2}}</span><span class="sl-row"><i class="sl-c2"></i><b>9</b></span><span>{{c3}}</span><span class="sl-row"><i class="sl-c3"></i><b>7</b></span><span>{{c4}}</span><span class="sl-row"><i class="sl-c4"></i><b>4</b></span></div><p class="sl-foot"><span>{{src}}</span></p></div>
+<p class="sl-model">{{model}}</p>
+</div>

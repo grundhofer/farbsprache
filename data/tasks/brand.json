@@ -1,0 +1,52 @@
+{
+  "_comment": "Aufgabe Logo und Marke (Spezifikation 3.5, 4.6, 5.8). Prosa und Steckbrief-Bausteine stehen in web/copy/brand.py. Die Rollen bg-light (#FFFFFF) und bg-dark (#16191D) sind die festen Flächen, auf denen die Textvarianten geprüft werden; ohne sie gäbe es kein Paar im Rollenschema (6.2). Logos sind von 1.4.3 ausgenommen, deshalb steht die Markenfarbe auf diesen Flächen nur unter decorative.",
+  "id": "brand",
+  "generator": "brand",
+  "name_de": "Logo und Marke",
+  "name_en": "Logo and brand",
+  "summary_de": "Eine Markenfarbe mit Schriftfarbe, Textvariante und Steckbrief.",
+  "summary_en": "One brand color with text color, text variant and fact sheet.",
+  "modes": ["default"],
+  "controls": [
+    {"id": "c2", "type": "color", "default": null, "visible": true, "label_key": "ctl.c2"}
+  ],
+  "presets": [
+    {"id": "tinte", "seed": "#2B4EA7", "options": {}, "name_de": "Tinte", "name_en": "Ink",
+     "note_de": "Dunkles Blau mit weißer Schrift", "note_en": "Dark blue with white text", "expect": []},
+    {"id": "safran", "seed": "#F2A900", "options": {}, "name_de": "Safran", "name_en": "Saffron",
+     "note_de": "Helles Gelb mit schwarzer Schrift", "note_en": "Light yellow with black text", "expect": []},
+    {"id": "kraeftiges-rot", "seed": "#E63946", "options": {}, "name_de": "Kräftiges Rot", "name_en": "Strong red",
+     "note_de": "Rot mittlerer Helligkeit, knapp mit beiden Schriftfarben", "note_en": "Medium red, close with both text colors", "expect": []}
+  ],
+  "roles": [
+    {"id": "brand", "name_de": "Markenfarbe", "name_en": "Brand color", "use_de": "Logo, Flächen, Buttons", "use_en": "logo, surfaces, buttons", "core": true, "kind": "surface"},
+    {"id": "on-brand", "name_de": "Schriftfarbe", "name_en": "Text color", "use_de": "Schrift auf Buttons und Flächen in der Markenfarbe", "use_en": "text on buttons and surfaces in the brand color", "core": true, "kind": "text"},
+    {"id": "brand-text-light", "name_de": "Textvariante für Weiß", "name_en": "Text variant for white", "use_de": "Links und Überschriften in Markenfarbe auf Weiß", "use_en": "links and headings in the brand color on white", "core": true, "kind": "text"},
+    {"id": "brand-text-dark", "name_de": "Textvariante für Dunkel", "name_en": "Text variant for dark", "use_de": "Links und Überschriften in Markenfarbe auf Dunkel", "use_en": "links and headings in the brand color on dark", "core": true, "kind": "text"},
+    {"id": "brand-gray", "name_de": "Graustufe", "name_en": "Grayscale", "use_de": "Grau mit derselben Leuchtdichte, zum Prüfen", "use_en": "gray with the same luminance, for checking", "core": true, "kind": "decor"},
+    {"id": "brand-2", "name_de": "Zweite Markenfarbe", "name_en": "Second brand color", "use_de": "optionale zweite Farbe", "use_en": "optional second color", "core": true, "kind": "surface"},
+    {"id": "bg-light", "name_de": "Weiß", "name_en": "White", "use_de": "Fläche für die Textvariante auf Weiß", "use_en": "surface for the text variant on white", "core": false, "kind": "surface"},
+    {"id": "bg-dark", "name_de": "Dunkel", "name_en": "Dark", "use_de": "Fläche für die Textvariante auf Dunkel", "use_en": "surface for the text variant on dark", "core": false, "kind": "surface"}
+  ],
+  "pairs": [
+    {"fg": "on-brand", "on": ["brand"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "brand-text-light", "on": ["bg-light"], "min": 4.5, "criterion": "1.4.3", "rule": "brand-text-variant"},
+    {"fg": "brand-text-dark", "on": ["bg-dark"], "min": 4.5, "criterion": "1.4.3", "rule": "brand-text-variant"}
+  ],
+  "decorative": [
+    {"fg": "brand", "on": ["bg-light", "bg-dark"]},
+    {"fg": "brand-2", "on": ["brand"]}
+  ],
+  "distinct": [
+    {"id": "brand2", "set": ["brand", "brand-2"], "kinds": ["normal", "deutan", "protan"], "compare": "okabe-ito-7"},
+    {"id": "brand2-gray", "set": ["brand", "brand-2"], "kinds": ["gray"]}
+  ],
+  "rules": ["brand-text-variant", "brand-aaa-gap", "brand-monochrome", "brand-print-proof", "brand-trademark-check"],
+  "explain": ["oklch", "context", "meaning", "color-systems"],
+  "pattern": "brand",
+  "exports": {"primary": "factsheet", "visible": ["factsheet", "css", "hex"], "more": ["dtcg", "rationale"]},
+  "related": ["website", "ai-image"],
+  "siblings": [{"site": "designsprache", "path_de": "de/?level=styles#family-swiss", "path_en": "en/?level=styles#family-swiss", "label_key": "sibling.designsprache"}],
+  "not_checked_de": ["Form und Lesbarkeit deines Logos", "CMYK, Sonderfarben und Druckprofile", "eingetragene Farbmarken", "dein Bildschirm", "schwache Ausprägungen von Farbsehschwäche"],
+  "not_checked_en": ["shape and legibility of your logo", "CMYK, spot colors and print profiles", "registered color marks", "your screen", "mild forms of color vision deficiency"]
+}

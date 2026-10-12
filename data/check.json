@@ -1,0 +1,53 @@
+{
+  "_comment": "Palette prüfen (Spezifikation 3.8, 4.9, Eigentümer P5): Rollen-Regex, Paare und Befundarten. Nur Eingaben und Schwellen, keine Messergebnisse. Die Rollen-Regex sind die aus 4.9, je Rolle nach Priorität aufgeteilt (die erste Liste gewinnt, etwa muted-foreground vor muted), damit shadcn-Blöcke richtig geraten werden. Jede Regel und jeder Erklärt-Eintrag, der hier als Zeichenkette steht, gilt beim strengen Bau als verwendet (tools/checks.py, Waisenprüfung).",
+  "max_colors": 12,
+  "open_findings": 5,
+  "example": "#0F172B #F8FAFC #E69F00",
+  "name_prefix": "color-",
+  "dark_contexts": [
+    "prefers-color-scheme[ \\t]*:[ \\t]*dark",
+    "\\.dark(?![A-Za-z0-9_-])",
+    "\\[data-theme[ \\t]*=[ \\t]*[\"']?dark[\"']?[ \\t]*\\]"
+  ],
+  "neutral_c_max": 0.03,
+  "free_text_min": 4.5,
+  "free_nontext_min": 3,
+  "compare": "okabe-ito-7",
+  "repair_grid": {"from": 20, "to": 95, "div": 100},
+  "signal_roles": ["accent", "danger", "warning", "success", "info"],
+  "roles": [
+    {"id": "bg", "patterns": ["^(bg|background|page|canvas)$"], "name_de": "Hintergrund", "name_en": "Background"},
+    {"id": "surface", "patterns": ["^(surface|card|panel|popover)(-[0-9])?$"], "name_de": "Fläche", "name_en": "Surface"},
+    {"id": "text", "patterns": ["^(text|fg|foreground|ink)$"], "name_de": "Text", "name_en": "Text"},
+    {"id": "text-muted", "patterns": ["^(text-muted|muted-foreground)$", "^(text-2|secondary-foreground)$", "^muted$"], "name_de": "Text, gedämpft", "name_en": "Muted text"},
+    {"id": "border", "patterns": ["^(border|divider|rule)$"], "name_de": "Rahmen, dezent", "name_en": "Subtle border"},
+    {"id": "border-strong", "patterns": ["^(border-strong|input|outline|ring-border)$"], "name_de": "Rahmen, kräftig", "name_en": "Strong border"},
+    {"id": "accent", "patterns": ["^(primary|brand)$", "^accent$"], "name_de": "Akzent", "name_en": "Accent"},
+    {"id": "on-accent", "patterns": ["^(on-primary|primary-foreground)$", "^(on-accent|accent-foreground)$"], "name_de": "Schrift für Akzent", "name_en": "Text for accent"},
+    {"id": "danger", "patterns": ["^(danger|error|destructive)$"], "name_de": "Fehler", "name_en": "Error"},
+    {"id": "warning", "patterns": ["^(warn|warning)$"], "name_de": "Warnung", "name_en": "Warning"},
+    {"id": "success", "patterns": ["^(success|ok)$"], "name_de": "Erfolg", "name_en": "Success"},
+    {"id": "info", "patterns": ["^(info)$"], "name_de": "Info", "name_en": "Info"}
+  ],
+  "pairs": [
+    {"fg": "text", "on": ["bg", "surface"], "min": 4.5, "finding": "check-text", "firm": true},
+    {"fg": "text-muted", "on": ["bg", "surface"], "min": 4.5, "finding": "check-text", "firm": true},
+    {"fg": "on-accent", "on": ["accent"], "min": 4.5, "finding": "check-text", "firm": true},
+    {"fg": "danger", "on": ["bg", "surface"], "min": 4.5, "finding": "check-text", "firm": false, "cond": "as-text"},
+    {"fg": "warning", "on": ["bg", "surface"], "min": 4.5, "finding": "check-text", "firm": false, "cond": "as-text"},
+    {"fg": "success", "on": ["bg", "surface"], "min": 4.5, "finding": "check-text", "firm": false, "cond": "as-text"},
+    {"fg": "info", "on": ["bg", "surface"], "min": 4.5, "finding": "check-text", "firm": false, "cond": "as-text"},
+    {"fg": "border-strong", "on": ["bg", "surface"], "min": 3, "finding": "check-nontext", "firm": true},
+    {"fg": "accent", "on": ["bg"], "min": 3, "finding": "check-nontext", "firm": false, "cond": "only-color"}
+  ],
+  "findings": [
+    {"id": "check-text", "rule": "text-contrast", "also": "no-rounding", "explain": "contrast"},
+    {"id": "check-nontext", "rule": "non-text-contrast", "explain": "borders"},
+    {"id": "check-duplicates", "rule": "check-duplicates", "explain": "oklch"},
+    {"id": "check-cvd", "rule": "check-cvd", "explain": "simulation"},
+    {"id": "check-gray", "rule": "check-gray", "explain": "simulation"},
+    {"id": "check-neutral-missing", "rule": "check-neutral-missing", "explain": "categories"},
+    {"id": "check-gamut", "rule": "check-gamut", "explain": "oklch"},
+    {"id": "check-alpha", "rule": "check-alpha", "explain": "scrim"}
+  ]
+}

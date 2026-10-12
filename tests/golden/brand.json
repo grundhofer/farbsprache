@@ -1,0 +1,38 @@
+{
+  "task": "brand",
+  "presets": {
+    "tinte": {
+      "default": {
+        "brand": "#2B4EA7",
+        "on-brand": "#FFFFFF",
+        "brand-text-light": "#2B4EA7",
+        "brand-text-dark": "#557EDB",
+        "brand-gray": "#535353",
+        "bg-light": "#FFFFFF",
+        "bg-dark": "#16191D"
+      }
+    },
+    "safran": {
+      "default": {
+        "brand": "#F2A900",
+        "on-brand": "#000000",
+        "brand-text-light": "#A46A00",
+        "brand-text-dark": "#F2A900",
+        "brand-gray": "#B7B7B7",
+        "bg-light": "#FFFFFF",
+        "bg-dark": "#16191D"
+      }
+    },
+    "kraeftiges-rot": {
+      "default": {
+        "brand": "#E63946",
+        "on-brand": "#000000",
+        "brand-text-light": "#DF3141",
+        "brand-text-dark": "#EC3F4A",
+        "brand-gray": "#7C7C7C",
+        "bg-light": "#FFFFFF",
+        "bg-dark": "#16191D"
+      }
+    }
+  }
+}

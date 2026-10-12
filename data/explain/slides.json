@@ -1,0 +1,33 @@
+{
+  "_comment": "Kurz erklärt, Paket P3 (Bauspezifikation 3.9): projector und scrim. Je 60 bis 120 Wörter, kein HTML, nur Hex-Literale in Platzhaltern.",
+  "entries": [
+    {
+      "id": "projector",
+      "title_de": "Warum der Beamer Kontrast frisst",
+      "title_en": "Why projectors eat contrast",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Ein Beamer kann Schwarz nicht dunkler machen als die Leinwand im Raumlicht. Das Licht im Raum kommt zu Schwarz und Weiß gleich stark hinzu. Deshalb schrumpft jeder Kontrast, und was am Bildschirm knapp reicht, wird am Beamer zu wenig.\n\nIn einer vereinfachten Modellrechnung nach Texas Instruments hat Schwarz auf Weiß in ihrem gedimmten Besprechungsraum nur noch {proj:#000000/#FFFFFF/normal}. Grau #595959 auf Weiß hat am Bildschirm {cr:#595959/#FFFFFF} und am Beamer {proj:#595959/#FFFFFF/normal}, Grau #767676 hat {cr:#767676/#FFFFFF} und {proj:#767676/#FFFFFF/normal}. Schwarz auf Weiß behält im dunklen Raum {proj:#000000/#FFFFFF/dim} und im hellen Raum {proj:#000000/#FFFFFF/bright}, mit angenommenem Raumlicht.\n\nPlane deshalb 7:1 am Bildschirm ein. In einer Studie war dunkle Schrift auf hellem Grund auch am Beamer am besten lesbar.",
+      "body_en": "A projector cannot make black darker than the screen under room light. The light in the room adds equally to black and white. So every contrast shrinks, and what is just enough on screen becomes too little on the projector.\n\nIn a simplified model after Texas Instruments, black on white keeps only {proj:#000000/#FFFFFF/normal} in their dimmed meeting room. Gray #595959 on white has {cr:#595959/#FFFFFF} on screen and {proj:#595959/#FFFFFF/normal} on the projector, gray #767676 has {cr:#767676/#FFFFFF} and {proj:#767676/#FFFFFF/normal}. Black on white keeps {proj:#000000/#FFFFFF/dim} in a dark room and {proj:#000000/#FFFFFF/bright} in a bright room, with assumed room light.\n\nSo plan for 7:1 on screen. In a study, dark text on a light background was the most legible on a projector too.",
+      "sources": ["ti-dlpa088", "greco-2008"],
+      "demo": null
+    },
+    {
+      "id": "scrim",
+      "title_de": "Schrift auf Fotos: der Schleier",
+      "title_en": "Text on photos: the scrim",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-3"],
+      "informative": ["wcag22-f83"],
+      "body_de": "Ein Schleier ist eine halbdurchsichtige Fläche zwischen Foto und Schrift. Wie dicht er sein muss, hängt von der ungünstigsten Stelle im Bild ab. Das Fehlerbild F83 zu WCAG 2.2 prüft helle Schrift gegen die hellste Stelle und dunkle Schrift gegen die dunkelste. Bei einem beliebigen Foto ist das im ungünstigsten Fall ein rein weißer oder ein rein schwarzer Pixel.\n\nWeiße Schrift auf schwarzem Schleier braucht deshalb für große Schrift (3:1) mindestens {scrim:#FFFFFF/#000000/3}, für normale Schrift (4,5:1) {scrim:#FFFFFF/#000000/4.5} und für 7:1 {scrim:#FFFFFF/#000000/7}. Die Seite rundet dabei immer auf.\n\nBei einem Verlauf gilt der Wert an jeder Stelle, an der Schrift steht, nicht im Mittel.",
+      "body_en": "A scrim is a semi-transparent layer between photo and text. How dense it must be depends on the least favorable spot in the image. Failure F83 of WCAG 2.2 checks light text against the lightest area and dark text against the darkest. For any photo, the worst case is a pure white or a pure black pixel.\n\nWhite text on a black scrim therefore needs at least {scrim:#FFFFFF/#000000/3} for large text (3:1), {scrim:#FFFFFF/#000000/4.5} for normal text (4.5:1) and {scrim:#FFFFFF/#000000/7} for 7:1. The page always rounds up.\n\nWith a gradient, the value applies at every spot with text, not on average.",
+      "sources": ["wcag22-1-4-3", "wcag22-f83"],
+      "demo": null
+    }
+  ]
+}

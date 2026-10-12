@@ -1,0 +1,113 @@
+{
+  "_comment": "Regeln der Aufgabe Diagramm oder Dashboard (Spezifikation 3.3, 6.5). Texte mit Platzhaltern, nie mit Messzahlen. Bedingte Regeln (show_if) erscheinen nur, wenn die Bedingung für die aktuelle Palette gilt: count zählt Rollen mit dem Präfix a, finding prüft die Hinweise der Palette.",
+  "rules": [
+    {
+      "id": "chart-lines-3-1",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-11"],
+      "informative": ["wcag22-understanding-1-4-11"],
+      "text_de": "Gib Linien, Punkten und Balken mindestens 3:1 zum Hintergrund. Die Prüfung oben zeigt den Wert jeder Farbe. Farben darunter brauchen eine Kontur in der Textfarbe, die selbst {cr:text/bg} hat.",
+      "text_en": "Give lines, points and bars at least 3:1 against the background. The check above shows the value of every color. Colors below that need an outline in the text color, which itself has {cr:text/bg}.",
+      "show_if": null,
+      "sources": ["wcag22-1-4-11", "wcag22-understanding-1-4-11"]
+    },
+    {
+      "id": "chart-adjacent",
+      "level": "norm",
+      "strength": null,
+      "own": false,
+      "normative": ["wcag22-1-4-11"],
+      "informative": ["wcag22-understanding-1-4-11"],
+      "text_de": "Trenne aneinanderstoßende Flächen wie Kacheln oder gestapelte Balken mit einem Rand oder einer Kontur, wenn sie zueinander oder zum Hintergrund keine 3:1 haben. Zeige bei Verläufen immer eine Legende mit Zahlen. Stehen Werte direkt an jeder Fläche, braucht die Fläche selbst keine 3:1.",
+      "text_en": "Separate touching areas such as tiles or stacked bars with a border or an outline if they lack 3:1 against each other or against the background. Always show a legend with numbers for gradients. If values stand right at every area, the area itself does not need 3:1.",
+      "show_if": {"metric": "finding", "a": "low-contrast", "mode": null},
+      "sources": ["wcag22-1-4-11", "wcag22-understanding-1-4-11", "crameri-2020"]
+    },
+    {
+      "id": "chart-direct-labels",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Beschrifte Linien ab sechs Serien direkt am Ende statt nur mit einer Legende. Der Schnitt bei sechs ist eine Festlegung von Farbsprache. Wilke empfiehlt direkte Beschriftung bei mehr als etwa acht Kategorien.",
+      "text_en": "From six series on, label lines directly at their end instead of using only a legend. The cut at six is a Farbsprache setting. Wilke recommends direct labels for more than about eight categories.",
+      "show_if": {"metric": "count", "a": "series-", "mode": null, "op": ">=", "value": 6},
+      "sources": ["wilke-color-pitfalls", "datawrapper-fewer-colors"]
+    },
+    {
+      "id": "chart-max-categories",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Zeige möglichst nicht mehr als etwa sieben Gruppen in eigenen Farben. Fasse den Rest als „Andere“ in Grau zusammen oder hebe eine Linie hervor.",
+      "text_en": "Where possible, show no more than about seven groups in their own colors. Combine the rest as “Other” in gray or highlight one line.",
+      "show_if": {"metric": "count", "a": "series-", "mode": null, "op": ">=", "value": 1},
+      "sources": ["healey-1996", "munzner-color-2020", "wilke-color-pitfalls"]
+    },
+    {
+      "id": "chart-dark-more",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Lasse auf hellem Grund die dunklere Farbe für mehr stehen, bei Abweichungen beide Enden dunkler als die Mitte. Auf dunklem Grund wirken zwei Neigungen gegeneinander: Dunkler heißt mehr, aber auch die Farbe, die sich stärker vom Grund abhebt.",
+      "text_en": "On a light background, let the darker color stand for more, and for deviations make both ends darker than the middle. On a dark background two tendencies work against each other: darker means more, but so does the color that stands out more from the background.",
+      "show_if": {"metric": "count", "a": "step-", "mode": null, "op": ">=", "value": 1},
+      "sources": ["schloss-2019", "few-2008"]
+    },
+    {
+      "id": "chart-dark-lighter-more",
+      "level": "convention",
+      "strength": null,
+      "own": true,
+      "normative": [],
+      "informative": [],
+      "text_de": "Auf dunklem Grund lässt die Seite bei Verläufen die hellere Farbe für mehr stehen, weil sie sich dort stärker abhebt. Schloss und Kollegen raten dagegen zu dunkler für mehr, wenn eine Skala auf jedem Grund gleich gelesen werden soll. Zeige die Richtung deshalb immer in der Legende.",
+      "text_en": "On a dark background, the page lets the lighter color stand for more in gradients, because it stands out more there. Schloss and colleagues advise darker for more if a scale should read the same on any background. So always show the direction in the legend.",
+      "show_if": {"metric": "count", "a": "step-", "mode": null, "op": ">=", "value": 1},
+      "sources": ["schloss-2019"]
+    },
+    {
+      "id": "chart-monotone",
+      "level": "research",
+      "strength": "strong",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Lasse die Helligkeit eines Verlaufs streng in eine Richtung laufen, bei Abweichungen von der Mitte zu beiden Enden. Dann bleibt die Reihenfolge in Graustufen und bei Farbsehschwäche lesbar. Die Seite prüft das für jede Stufe.",
+      "text_en": "Let the lightness of a gradient run strictly in one direction, for deviations from the middle toward both ends. Then the order stays readable in grayscale and under color vision deficiency. The page checks this for every step.",
+      "show_if": {"metric": "count", "a": "step-", "mode": null, "op": ">=", "value": 1},
+      "sources": ["matplotlib-colormaps", "crameri-2020"]
+    },
+    {
+      "id": "chart-gray-context",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Zeichne alles Unwichtige in Grau und nur die eine wichtige Linie in Farbe. Beschrifte die hervorgehobene Linie direkt.",
+      "text_en": "Draw everything less important in gray and only the one key line in color. Label the highlighted line directly.",
+      "show_if": {"metric": "count", "a": "highlight", "mode": null, "op": ">=", "value": 1},
+      "sources": ["few-2008", "datawrapper-fewer-colors"]
+    },
+    {
+      "id": "chart-same-meaning",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "text_de": "Nutze verschiedene Farben nur für verschiedene Bedeutungen. Gib einer Gruppe in allen Diagrammen eines Berichts dieselbe Farbe.",
+      "text_en": "Use different colors only for different meanings. Give a group the same color in every chart of a report.",
+      "show_if": null,
+      "sources": ["few-2008", "wilke-multi-panel"]
+    }
+  ]
+}

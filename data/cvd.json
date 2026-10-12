@@ -1,0 +1,35 @@
+{
+  "_comment": "Matrizen für die Simulation von Farbsehschwäche, wörtlich aus libDaltonLens.c (Nicolas Burrus, Unlicense). Alle Matrizen wirken auf lineares sRGB (Zeile i ergibt Kanal i), Schweregrad 1. Protan und Deutan: Viénot, Brettel & Mollon 1999 (eine Matrix). Tritan: Brettel, Viénot & Mollon 1997 (zwei Halbebenen; ist n · rgb_lin ≥ 0, gilt m1, sonst m2). Machado, Oliveira & Fernandes 2009 ist für v1.1 vorgemerkt (Schweregrad-Regler mit eigener Beschriftung) und hier bewusst nicht enthalten: Bei Schweregrad 1 liefert es andere Werte als Viénot, und Machado modelliert Tritanopie ausdrücklich nicht. Quelle dafür: https://www.inf.ufrgs.br/~oliveira/pubs_files/CVD_Simulation/CVD_Simulation.html",
+  "source": "libDaltonLens.c, Unlicense",
+  "url": "https://github.com/DaltonLens/libDaltonLens/blob/master/libDaltonLens.c",
+  "machine_source": "https://raw.githubusercontent.com/DaltonLens/libDaltonLens/master/libDaltonLens.c",
+  "machine_sha256": "6503e903876280e66e3fbaae983c0f647da502d1c555ac200e32cb04e2905999",
+  "retrieved": "2026-10-11",
+  "vienot1999": {
+    "protan": [
+      [0.11238, 0.88762, 0.00000],
+      [0.11238, 0.88762, -0.00000],
+      [0.00401, -0.00401, 1.00000]
+    ],
+    "deutan": [
+      [0.29275, 0.70725, 0.00000],
+      [0.29275, 0.70725, -0.00000],
+      [-0.02234, 0.02234, 1.00000]
+    ]
+  },
+  "brettel1997": {
+    "tritan": {
+      "m1": [
+        [1.01277, 0.13548, -0.14826],
+        [-0.01243, 0.86812, 0.14431],
+        [0.07589, 0.80500, 0.11911]
+      ],
+      "m2": [
+        [0.93678, 0.18979, -0.12657],
+        [0.06154, 0.81526, 0.12320],
+        [-0.37562, 1.12767, 0.24796]
+      ],
+      "n": [0.03901, -0.02788, -0.01113]
+    }
+  }
+}

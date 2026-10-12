@@ -1,0 +1,364 @@
+{
+  "_comment": "ColorBrewer, nur Blues, RdBu und PuOr mit allen Klassenstufen (Spezifikation 9.4). Werte per tools/datasets.py aus colorbrewer.json übernommen und gegen colorbrewer_schemes.js abgeglichen, nicht abgetippt. Reihenfolge wie in der Quelle (Blues hell nach dunkel, RdBu rot nach blau, PuOr orange nach lila). flags_quoted sind Etiketten der Website colorbrewer2.org, keine Aussage von Farbsprache. kind auf oberster Ebene „mixed“, weil Blues sequenziell und RdBu und PuOr divergierend sind; maßgeblich ist kind je Palette.",
+  "id": "colorbrewer",
+  "name": "ColorBrewer",
+  "authors": ["Cynthia Brewer", "Mark Harrower"],
+  "year": 2002,
+  "source_url": "https://colorbrewer2.org/",
+  "machine_source": "https://colorbrewer2.org/export/colorbrewer.json",
+  "machine_sha256": "729cb527c1edcf3267c4521df29ede5092f3e6171c5a259e2ebdd252335840b9",
+  "flags_source": "https://colorbrewer2.org/colorbrewer_schemes.js",
+  "flags_sha256": "52e6a6edbbe4bbb95467cb84fb7db8fcbb1d6d219c975851c4c9d79334f00a41",
+  "notice_source": "https://colorbrewer2.org/export/LICENSE.txt",
+  "notice_sha256": "aba881933999be3549b2171832a11a9dfad574243019df95c067ccf3d47b9649",
+  "retrieved": "2026-10-11",
+  "license": "Apache-2.0",
+  "license_note_de": "Apache-2.0-artige Lizenz, Copyright 2002 Cynthia Brewer, Mark Harrower und The Pennsylvania State University. Der Pflichtsatz steht in jedem Export mit einer ColorBrewer-Farbe und auf der Quellenseite. Der Name ColorBrewer darf nicht im eigenen Produktnamen stehen. Etiketten nur als Zitat.",
+  "license_note_en": "Apache-style license, copyright 2002 Cynthia Brewer, Mark Harrower and The Pennsylvania State University. The required notice is part of every export with a ColorBrewer color and of the sources page. The name ColorBrewer must not appear in your own product name. Labels only as quotes.",
+  "flags_note_de": "Etiketten der Website colorbrewer2.org je Klassenzahl, wörtlich nach deren Skript: 1 heißt „color blind friendly“, „print friendly“ oder „photocopy friendly“, 2 heißt „possibly not …“, 0 heißt „not …“. Farbsprache hat diese Etiketten nicht geprüft.",
+  "flags_note_en": "Labels from the website colorbrewer2.org per number of classes, worded as in its script: 1 means “color blind friendly”, “print friendly” or “photocopy friendly”, 2 means “possibly not …”, 0 means “not …”. Farbsprache has not checked these labels.",
+  "attribution": "Cynthia Brewer, Mark Harrower and The Pennsylvania State University: ColorBrewer (2002)",
+  "required_notice": "This product includes color specifications and designs developed by Cynthia Brewer (http://colorbrewer.org/).",
+  "reliability": "defined",
+  "kind": "mixed",
+  "schemes": [
+    {
+      "id": "blues",
+      "name": "Blues",
+      "kind": "sequential",
+      "classes": {
+        "3": [
+          {"hex": "#DEEBF7", "origin": {"rgb": [222, 235, 247]}},
+          {"hex": "#9ECAE1", "origin": {"rgb": [158, 202, 225]}},
+          {"hex": "#3182BD", "origin": {"rgb": [49, 130, 189]}}
+        ],
+        "4": [
+          {"hex": "#EFF3FF", "origin": {"rgb": [239, 243, 255]}},
+          {"hex": "#BDD7E7", "origin": {"rgb": [189, 215, 231]}},
+          {"hex": "#6BAED6", "origin": {"rgb": [107, 174, 214]}},
+          {"hex": "#2171B5", "origin": {"rgb": [33, 113, 181]}}
+        ],
+        "5": [
+          {"hex": "#EFF3FF", "origin": {"rgb": [239, 243, 255]}},
+          {"hex": "#BDD7E7", "origin": {"rgb": [189, 215, 231]}},
+          {"hex": "#6BAED6", "origin": {"rgb": [107, 174, 214]}},
+          {"hex": "#3182BD", "origin": {"rgb": [49, 130, 189]}},
+          {"hex": "#08519C", "origin": {"rgb": [8, 81, 156]}}
+        ],
+        "6": [
+          {"hex": "#EFF3FF", "origin": {"rgb": [239, 243, 255]}},
+          {"hex": "#C6DBEF", "origin": {"rgb": [198, 219, 239]}},
+          {"hex": "#9ECAE1", "origin": {"rgb": [158, 202, 225]}},
+          {"hex": "#6BAED6", "origin": {"rgb": [107, 174, 214]}},
+          {"hex": "#3182BD", "origin": {"rgb": [49, 130, 189]}},
+          {"hex": "#08519C", "origin": {"rgb": [8, 81, 156]}}
+        ],
+        "7": [
+          {"hex": "#EFF3FF", "origin": {"rgb": [239, 243, 255]}},
+          {"hex": "#C6DBEF", "origin": {"rgb": [198, 219, 239]}},
+          {"hex": "#9ECAE1", "origin": {"rgb": [158, 202, 225]}},
+          {"hex": "#6BAED6", "origin": {"rgb": [107, 174, 214]}},
+          {"hex": "#4292C6", "origin": {"rgb": [66, 146, 198]}},
+          {"hex": "#2171B5", "origin": {"rgb": [33, 113, 181]}},
+          {"hex": "#084594", "origin": {"rgb": [8, 69, 148]}}
+        ],
+        "8": [
+          {"hex": "#F7FBFF", "origin": {"rgb": [247, 251, 255]}},
+          {"hex": "#DEEBF7", "origin": {"rgb": [222, 235, 247]}},
+          {"hex": "#C6DBEF", "origin": {"rgb": [198, 219, 239]}},
+          {"hex": "#9ECAE1", "origin": {"rgb": [158, 202, 225]}},
+          {"hex": "#6BAED6", "origin": {"rgb": [107, 174, 214]}},
+          {"hex": "#4292C6", "origin": {"rgb": [66, 146, 198]}},
+          {"hex": "#2171B5", "origin": {"rgb": [33, 113, 181]}},
+          {"hex": "#084594", "origin": {"rgb": [8, 69, 148]}}
+        ],
+        "9": [
+          {"hex": "#F7FBFF", "origin": {"rgb": [247, 251, 255]}},
+          {"hex": "#DEEBF7", "origin": {"rgb": [222, 235, 247]}},
+          {"hex": "#C6DBEF", "origin": {"rgb": [198, 219, 239]}},
+          {"hex": "#9ECAE1", "origin": {"rgb": [158, 202, 225]}},
+          {"hex": "#6BAED6", "origin": {"rgb": [107, 174, 214]}},
+          {"hex": "#4292C6", "origin": {"rgb": [66, 146, 198]}},
+          {"hex": "#2171B5", "origin": {"rgb": [33, 113, 181]}},
+          {"hex": "#08519C", "origin": {"rgb": [8, 81, 156]}},
+          {"hex": "#08306B", "origin": {"rgb": [8, 48, 107]}}
+        ]
+      },
+      "flags_quoted": {
+        "blind": {
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1
+        },
+        "print": {
+          "3": 1,
+          "4": 2,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        },
+        "copy": {
+          "3": 1,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0
+        }
+      }
+    },
+    {
+      "id": "rdbu",
+      "name": "RdBu",
+      "kind": "diverging",
+      "classes": {
+        "3": [
+          {"hex": "#EF8A62", "origin": {"rgb": [239, 138, 98]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#67A9CF", "origin": {"rgb": [103, 169, 207]}}
+        ],
+        "4": [
+          {"hex": "#CA0020", "origin": {"rgb": [202, 0, 32]}},
+          {"hex": "#F4A582", "origin": {"rgb": [244, 165, 130]}},
+          {"hex": "#92C5DE", "origin": {"rgb": [146, 197, 222]}},
+          {"hex": "#0571B0", "origin": {"rgb": [5, 113, 176]}}
+        ],
+        "5": [
+          {"hex": "#CA0020", "origin": {"rgb": [202, 0, 32]}},
+          {"hex": "#F4A582", "origin": {"rgb": [244, 165, 130]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#92C5DE", "origin": {"rgb": [146, 197, 222]}},
+          {"hex": "#0571B0", "origin": {"rgb": [5, 113, 176]}}
+        ],
+        "6": [
+          {"hex": "#B2182B", "origin": {"rgb": [178, 24, 43]}},
+          {"hex": "#EF8A62", "origin": {"rgb": [239, 138, 98]}},
+          {"hex": "#FDDBC7", "origin": {"rgb": [253, 219, 199]}},
+          {"hex": "#D1E5F0", "origin": {"rgb": [209, 229, 240]}},
+          {"hex": "#67A9CF", "origin": {"rgb": [103, 169, 207]}},
+          {"hex": "#2166AC", "origin": {"rgb": [33, 102, 172]}}
+        ],
+        "7": [
+          {"hex": "#B2182B", "origin": {"rgb": [178, 24, 43]}},
+          {"hex": "#EF8A62", "origin": {"rgb": [239, 138, 98]}},
+          {"hex": "#FDDBC7", "origin": {"rgb": [253, 219, 199]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#D1E5F0", "origin": {"rgb": [209, 229, 240]}},
+          {"hex": "#67A9CF", "origin": {"rgb": [103, 169, 207]}},
+          {"hex": "#2166AC", "origin": {"rgb": [33, 102, 172]}}
+        ],
+        "8": [
+          {"hex": "#B2182B", "origin": {"rgb": [178, 24, 43]}},
+          {"hex": "#D6604D", "origin": {"rgb": [214, 96, 77]}},
+          {"hex": "#F4A582", "origin": {"rgb": [244, 165, 130]}},
+          {"hex": "#FDDBC7", "origin": {"rgb": [253, 219, 199]}},
+          {"hex": "#D1E5F0", "origin": {"rgb": [209, 229, 240]}},
+          {"hex": "#92C5DE", "origin": {"rgb": [146, 197, 222]}},
+          {"hex": "#4393C3", "origin": {"rgb": [67, 147, 195]}},
+          {"hex": "#2166AC", "origin": {"rgb": [33, 102, 172]}}
+        ],
+        "9": [
+          {"hex": "#B2182B", "origin": {"rgb": [178, 24, 43]}},
+          {"hex": "#D6604D", "origin": {"rgb": [214, 96, 77]}},
+          {"hex": "#F4A582", "origin": {"rgb": [244, 165, 130]}},
+          {"hex": "#FDDBC7", "origin": {"rgb": [253, 219, 199]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#D1E5F0", "origin": {"rgb": [209, 229, 240]}},
+          {"hex": "#92C5DE", "origin": {"rgb": [146, 197, 222]}},
+          {"hex": "#4393C3", "origin": {"rgb": [67, 147, 195]}},
+          {"hex": "#2166AC", "origin": {"rgb": [33, 102, 172]}}
+        ],
+        "10": [
+          {"hex": "#67001F", "origin": {"rgb": [103, 0, 31]}},
+          {"hex": "#B2182B", "origin": {"rgb": [178, 24, 43]}},
+          {"hex": "#D6604D", "origin": {"rgb": [214, 96, 77]}},
+          {"hex": "#F4A582", "origin": {"rgb": [244, 165, 130]}},
+          {"hex": "#FDDBC7", "origin": {"rgb": [253, 219, 199]}},
+          {"hex": "#D1E5F0", "origin": {"rgb": [209, 229, 240]}},
+          {"hex": "#92C5DE", "origin": {"rgb": [146, 197, 222]}},
+          {"hex": "#4393C3", "origin": {"rgb": [67, 147, 195]}},
+          {"hex": "#2166AC", "origin": {"rgb": [33, 102, 172]}},
+          {"hex": "#053061", "origin": {"rgb": [5, 48, 97]}}
+        ],
+        "11": [
+          {"hex": "#67001F", "origin": {"rgb": [103, 0, 31]}},
+          {"hex": "#B2182B", "origin": {"rgb": [178, 24, 43]}},
+          {"hex": "#D6604D", "origin": {"rgb": [214, 96, 77]}},
+          {"hex": "#F4A582", "origin": {"rgb": [244, 165, 130]}},
+          {"hex": "#FDDBC7", "origin": {"rgb": [253, 219, 199]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#D1E5F0", "origin": {"rgb": [209, 229, 240]}},
+          {"hex": "#92C5DE", "origin": {"rgb": [146, 197, 222]}},
+          {"hex": "#4393C3", "origin": {"rgb": [67, 147, 195]}},
+          {"hex": "#2166AC", "origin": {"rgb": [33, 102, 172]}},
+          {"hex": "#053061", "origin": {"rgb": [5, 48, 97]}}
+        ]
+      },
+      "flags_quoted": {
+        "blind": {
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 1
+        },
+        "print": {
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0
+        },
+        "copy": {
+          "3": 0,
+          "4": 0,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0
+        }
+      }
+    },
+    {
+      "id": "puor",
+      "name": "PuOr",
+      "kind": "diverging",
+      "classes": {
+        "3": [
+          {"hex": "#F1A340", "origin": {"rgb": [241, 163, 64]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#998EC3", "origin": {"rgb": [153, 142, 195]}}
+        ],
+        "4": [
+          {"hex": "#E66101", "origin": {"rgb": [230, 97, 1]}},
+          {"hex": "#FDB863", "origin": {"rgb": [253, 184, 99]}},
+          {"hex": "#B2ABD2", "origin": {"rgb": [178, 171, 210]}},
+          {"hex": "#5E3C99", "origin": {"rgb": [94, 60, 153]}}
+        ],
+        "5": [
+          {"hex": "#E66101", "origin": {"rgb": [230, 97, 1]}},
+          {"hex": "#FDB863", "origin": {"rgb": [253, 184, 99]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#B2ABD2", "origin": {"rgb": [178, 171, 210]}},
+          {"hex": "#5E3C99", "origin": {"rgb": [94, 60, 153]}}
+        ],
+        "6": [
+          {"hex": "#B35806", "origin": {"rgb": [179, 88, 6]}},
+          {"hex": "#F1A340", "origin": {"rgb": [241, 163, 64]}},
+          {"hex": "#FEE0B6", "origin": {"rgb": [254, 224, 182]}},
+          {"hex": "#D8DAEB", "origin": {"rgb": [216, 218, 235]}},
+          {"hex": "#998EC3", "origin": {"rgb": [153, 142, 195]}},
+          {"hex": "#542788", "origin": {"rgb": [84, 39, 136]}}
+        ],
+        "7": [
+          {"hex": "#B35806", "origin": {"rgb": [179, 88, 6]}},
+          {"hex": "#F1A340", "origin": {"rgb": [241, 163, 64]}},
+          {"hex": "#FEE0B6", "origin": {"rgb": [254, 224, 182]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#D8DAEB", "origin": {"rgb": [216, 218, 235]}},
+          {"hex": "#998EC3", "origin": {"rgb": [153, 142, 195]}},
+          {"hex": "#542788", "origin": {"rgb": [84, 39, 136]}}
+        ],
+        "8": [
+          {"hex": "#B35806", "origin": {"rgb": [179, 88, 6]}},
+          {"hex": "#E08214", "origin": {"rgb": [224, 130, 20]}},
+          {"hex": "#FDB863", "origin": {"rgb": [253, 184, 99]}},
+          {"hex": "#FEE0B6", "origin": {"rgb": [254, 224, 182]}},
+          {"hex": "#D8DAEB", "origin": {"rgb": [216, 218, 235]}},
+          {"hex": "#B2ABD2", "origin": {"rgb": [178, 171, 210]}},
+          {"hex": "#8073AC", "origin": {"rgb": [128, 115, 172]}},
+          {"hex": "#542788", "origin": {"rgb": [84, 39, 136]}}
+        ],
+        "9": [
+          {"hex": "#B35806", "origin": {"rgb": [179, 88, 6]}},
+          {"hex": "#E08214", "origin": {"rgb": [224, 130, 20]}},
+          {"hex": "#FDB863", "origin": {"rgb": [253, 184, 99]}},
+          {"hex": "#FEE0B6", "origin": {"rgb": [254, 224, 182]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#D8DAEB", "origin": {"rgb": [216, 218, 235]}},
+          {"hex": "#B2ABD2", "origin": {"rgb": [178, 171, 210]}},
+          {"hex": "#8073AC", "origin": {"rgb": [128, 115, 172]}},
+          {"hex": "#542788", "origin": {"rgb": [84, 39, 136]}}
+        ],
+        "10": [
+          {"hex": "#7F3B08", "origin": {"rgb": [127, 59, 8]}},
+          {"hex": "#B35806", "origin": {"rgb": [179, 88, 6]}},
+          {"hex": "#E08214", "origin": {"rgb": [224, 130, 20]}},
+          {"hex": "#FDB863", "origin": {"rgb": [253, 184, 99]}},
+          {"hex": "#FEE0B6", "origin": {"rgb": [254, 224, 182]}},
+          {"hex": "#D8DAEB", "origin": {"rgb": [216, 218, 235]}},
+          {"hex": "#B2ABD2", "origin": {"rgb": [178, 171, 210]}},
+          {"hex": "#8073AC", "origin": {"rgb": [128, 115, 172]}},
+          {"hex": "#542788", "origin": {"rgb": [84, 39, 136]}},
+          {"hex": "#2D004B", "origin": {"rgb": [45, 0, 75]}}
+        ],
+        "11": [
+          {"hex": "#7F3B08", "origin": {"rgb": [127, 59, 8]}},
+          {"hex": "#B35806", "origin": {"rgb": [179, 88, 6]}},
+          {"hex": "#E08214", "origin": {"rgb": [224, 130, 20]}},
+          {"hex": "#FDB863", "origin": {"rgb": [253, 184, 99]}},
+          {"hex": "#FEE0B6", "origin": {"rgb": [254, 224, 182]}},
+          {"hex": "#F7F7F7", "origin": {"rgb": [247, 247, 247]}},
+          {"hex": "#D8DAEB", "origin": {"rgb": [216, 218, 235]}},
+          {"hex": "#B2ABD2", "origin": {"rgb": [178, 171, 210]}},
+          {"hex": "#8073AC", "origin": {"rgb": [128, 115, 172]}},
+          {"hex": "#542788", "origin": {"rgb": [84, 39, 136]}},
+          {"hex": "#2D004B", "origin": {"rgb": [45, 0, 75]}}
+        ]
+      },
+      "flags_quoted": {
+        "blind": {
+          "3": 1,
+          "4": 1,
+          "5": 1,
+          "6": 1,
+          "7": 1,
+          "8": 1,
+          "9": 1,
+          "10": 1,
+          "11": 1
+        },
+        "print": {
+          "3": 1,
+          "4": 1,
+          "5": 2,
+          "6": 2,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0
+        },
+        "copy": {
+          "3": 1,
+          "4": 1,
+          "5": 0,
+          "6": 0,
+          "7": 0,
+          "8": 0,
+          "9": 0,
+          "10": 0,
+          "11": 0
+        }
+      }
+    }
+  ]
+}

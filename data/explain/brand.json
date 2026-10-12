@@ -1,0 +1,77 @@
+{
+  "_comment": "Kurz erklärt, Einträge von Paket P4 (Spezifikation 3.9). Je 60 bis 120 Wörter, kein HTML, Absätze durch Leerzeile. Wirkungsaussagen tragen die Belegstufe aus Recherche 05. Die Demo context steht in patterns/demo-context.html; demo_vars nennt die Eingabefarben der Demo für die Seite Kurz erklärt (Hex rechnet der Build).",
+  "entries": [
+    {
+      "id": "context",
+      "title_de": "Gleiche Farbe, anderer Eindruck",
+      "title_en": "Same color, different impression",
+      "level": "research",
+      "strength": "strong",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Dieselbe Farbe sieht vor einem anderen Grund anders aus. Chevreul beschrieb 1839 das Gesetz des Simultankontrasts: Zwei Farben nebeneinander wirken so verschieden wie möglich, im Farbton und in der Helligkeit. Albers zeigte 1963 mit Farbstudien, wie relativ Farbe wirkt. Eine Übersicht von 2008 bestätigt: Die Umgebung prägt stark, wie eine Fläche aussieht.\n\nIn der Demo stehen zwei gleiche graue Quadrate auf Orange und auf Blau. Auf Orange wirkt das Grau eher bläulich, auf Blau eher orangestichig. Die Brücke zeigt, dass beide Quadrate dieselbe Farbe haben.\n\nDeshalb hat jedes Muster auf dieser Seite einen eigenen, festen Grund. Prüfe deine Farben immer auf dem Grund, auf dem sie später stehen.",
+      "body_en": "The same color looks different against a different ground. In 1839 Chevreul described the law of simultaneous contrast: two colors side by side look as different as possible, in hue and in lightness. In 1963 Albers showed with color studies how relative color is. A 2008 review confirms that the surroundings strongly shape how a surface looks.\n\nIn the demo, two identical gray squares sit on orange and on blue. On orange the gray looks rather bluish, on blue rather orange-tinged. The bridge shows that both squares have the same color.\n\nThat is why every pattern on this site has its own fixed ground. Always check your colors on the ground they will stand on later.",
+      "sources": ["chevreul-1861", "albers-1963", "shevell-kingdom-2008", "few-2008"],
+      "demo": "context",
+      "demo_vars": {"ground-a": "oklch(0.70 0.18 55)", "ground-b": "oklch(0.50 0.18 260)", "sample": "oklch(0.62 0 0)"}
+    },
+    {
+      "id": "harmony",
+      "title_de": "Komplementär und Harmonie: was belegt ist",
+      "title_en": "Complementary and harmony: what is backed",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Komplementär hat vier Bedeutungen: das Gegenüber im Malerkreis, Lichter, die sich zu Weiß mischen, Farben, die sich zu Grau mischen, und das Nachbild. Für Rot ergibt der Malerkreis Grün, Munsell dagegen Blaugrün.\n\nGestützt ist: Je ähnlicher die Farbtöne eines Paares, desto harmonischer und beliebter ist es. Für die Beliebtheit zählt zudem ein Helligkeitsunterschied (Schloss und Palmer 2011). Paare mit stark gegensätzlichen Farbtönen gelten meist weder als beliebt noch als harmonisch. Als Figur vor einem Grund gefallen sie besser. Für Triade und Tetrade hat Farbsprache keine Studie gefunden, sie sind Konvention.\n\nDie Leitplanke gegen Teal-Orange im Bildprompt richtet sich gegen eine Farbkorrektur, nicht gegen eine Palette. Die Startpaletten nutzen das Paar trotzdem nicht.",
+      "body_en": "Complementary has four meanings: the opposite on the painter's wheel, lights that mix to white, colors that mix to gray, and the afterimage. For red, the painter's wheel gives green, Munsell gives blue-green.\n\nWhat is backed: the more similar the hues of a pair, the more harmonious and preferred it is. For preference, a difference in lightness also counts (Schloss and Palmer 2011). Pairs with strongly opposed hues are mostly judged neither preferred nor harmonious. As a figure on a ground, they are liked better. For triads and tetrads Farbsprache found no study, they are convention.\n\nThe guardrail against teal and orange in the image prompt targets a color grade, not a palette. The starter palettes still avoid the pair.",
+      "sources": ["schloss-palmer-2011", "munsell-1907", "chevreul-1861"],
+      "demo": null
+    },
+    {
+      "id": "60-30-10",
+      "title_de": "Stimmt 60-30-10?",
+      "title_en": "Is 60-30-10 true?",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Die Regel teilt eine Fläche in 60 Prozent Hauptfarbe, 30 Prozent Nebenfarbe und 10 Prozent Akzent. Sie ist vor allem aus der Raumgestaltung bekannt. Einen Urheber oder eine Studie dazu hat Farbsprache nicht gefunden, Ratgeber nennen auch Varianten wie 70-20-10.\n\nBrauchbar ist der Kern: Eine Farbe dominiert, der Akzent bleibt selten. Few empfiehlt für Diagramme dasselbe Prinzip: ruhige Farben für das meiste, kräftige nur für das Wichtige.\n\nNutze die Zahlen als Merkhilfe, nicht als Rezept. In Oberflächen und Diagrammen entscheiden Text, Rahmen und Datentyp über die Anteile, im Bild entscheidet am Ende das Modell.",
+      "body_en": "The rule splits an area into 60 percent main color, 30 percent secondary color and 10 percent accent. It is best known from interior design. Farbsprache found no originator and no study, and guides also name variants such as 70-20-10.\n\nThe useful core: one color dominates, the accent stays rare. Few recommends the same principle for charts: calm colors for most things, strong ones only for what matters.\n\nUse the numbers as a mnemonic, not a recipe. In interfaces and charts, text, borders and data type decide the shares, and in an image the model decides in the end.",
+      "sources": ["idealhome-60-30-10", "few-2008"],
+      "demo": null
+    },
+    {
+      "id": "meaning",
+      "title_de": "Macht Blau vertrauenswürdig?",
+      "title_en": "Does blue build trust?",
+      "level": "research",
+      "strength": "partial",
+      "own": false,
+      "myth": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Menschen verbinden Farben sehr regelmäßig mit Gefühlen, etwa Gelb mit Freude oder helle Farben mit positiven Gefühlen. Das ist gut belegt, betrifft aber Assoziationen. Ob man beim Anblick einer Farbe so fühlt, ist offen (Jonauskaite und Mohr 2025).\n\nDass blaue Logos und Läden vertrauenswürdiger wirken, ist teilweise belegt: Studien aus mehreren Laboren stützen das, es gibt aber Gegenbefunde, und das Feld gilt als jung (Elliot 2015). Eine feste Wirkung von Blau ist unbelegt.\n\nVerlässlich sind Konventionen, weil sie vereinbart sind, etwa Rot für Fehler. Prüfe, was in deiner Branche üblich ist, und weiche nur bewusst davon ab.",
+      "body_en": "People link colors to emotions very consistently, such as yellow with joy or light colors with positive feelings. This is well supported, but it concerns associations. Whether you feel that way when you look at a color is open (Jonauskaite and Mohr 2025).\n\nThat blue logos and stores seem more trustworthy is partly supported: studies from several labs back it, but there are counter-findings, and the field counts as young (Elliot 2015). A fixed effect of blue is unproven.\n\nConventions are reliable because they are agreed, such as red for errors. Check what is common in your industry and deviate from it only on purpose.",
+      "sources": ["jonauskaite-mohr-2025", "elliot-2015"],
+      "demo": null
+    },
+    {
+      "id": "color-systems",
+      "title_de": "Warum hier kein Pantone, RAL, HKS oder NCS steht",
+      "title_en": "Why there is no Pantone, RAL, HKS or NCS here",
+      "level": "convention",
+      "strength": null,
+      "own": false,
+      "normative": [],
+      "informative": [],
+      "body_de": "Pantone, RAL, HKS und NCS sind Farbsysteme für Druck, Lack und Architektur. Maßgeblich ist dort das physische Muster, nicht ein Wert am Bildschirm. RAL schreibt selbst, digitale Farbbilder seien nur eine Annäherung.\n\nDazu kommt das Recht: RAL beansprucht Rechte an den technischen Farbwerten und verlangt eine Nutzungsvereinbarung. Pantone geht gegen Kopien seiner Farbbibliotheken vor. In Deutschland schützt das Datenbankrecht wesentliche Teile einer Sammlung. Die Bedingungen von HKS und NCS hat Farbsprache nicht im Volltext geprüft.\n\nDeshalb nennt diese Seite keine Werte und rechnet nicht um. Nimm den physischen Farbfächer und frage deine Druckerei.",
+      "body_en": "Pantone, RAL, HKS and NCS are color systems for print, paint and architecture. What counts there is the physical sample, not a value on screen. RAL itself says digital color images are only an approximation.\n\nThen there is the law: RAL claims rights in the technical color values and requires a user agreement. Pantone acts against copies of its color libraries. In Germany, database law protects substantial parts of a collection. Farbsprache has not checked the terms of HKS and NCS in full.\n\nThat is why this site lists no values and converts nothing. Use the physical fan deck and ask your printer.",
+      "sources": ["fan-deck-digital", "fan-deck-values", "github-dmca-2024-11-20", "urhg-87b"],
+      "demo": null
+    }
+  ]
+}

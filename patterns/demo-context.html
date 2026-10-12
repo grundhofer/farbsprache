@@ -1,0 +1,13 @@
+<!-- Demo „Gleiche Farbe, anderer Eindruck“ (Kurz erklärt context, Spezifikation 3.9). Die Seite setzt
+--d-ground-a, --d-ground-b und --d-sample aus demo_vars in data/explain/brand.json (als Hex, beim Build
+gerechnet) und schaltet die Brücke mit data-bridge="on" am Element .demo-context (Knopf „Brücke zeigen“ mit
+aria-pressed außerhalb des Musters). Kein Blinken, keine Animation. -->
+<style>
+.demo-context { position:relative; display:grid; grid-template-columns:1fr 1fr; min-height:180px; color-scheme:light; }
+.demo-context .cx-a { background:var(--d-ground-a); display:grid; place-items:center; padding:40px 16px; }
+.demo-context .cx-b { background:var(--d-ground-b); display:grid; place-items:center; padding:40px 16px; }
+.demo-context .cx-sq { display:block; width:64px; height:64px; background:var(--d-sample); }
+.demo-context .cx-bridge { display:none; position:absolute; left:25%; right:25%; top:50%; height:14px; margin-top:-7px; background:var(--d-sample); }
+.demo-context[data-bridge="on"] .cx-bridge { display:block; }
+</style>
+<div class="cx-a"><span class="cx-sq"></span></div><div class="cx-b"><span class="cx-sq"></span></div><span class="cx-bridge"></span>

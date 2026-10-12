@@ -1,0 +1,69 @@
+{
+  "_comment": "Testaufgabe für den Rahmen (Spezifikation 8, P0 Liefert 7). Wird nie ausgeliefert. Nutzt jedes Feld aus 6.2, das ein Paket nutzen kann: zwei Modi, alle Steuerelement-Arten außer colors, Muster-Schalter, Export-Option, aufgabenspezifisches Format, bedingte Regel, Abstände mit Vergleich (mit Hex und per ID), Datensatz, Kurzergebnis, Zusatz je Paar, Blockhinweis.",
+  "id": "fixture",
+  "generator": "fixture",
+  "name_de": "Testaufgabe",
+  "name_en": "Test task",
+  "summary_de": "Prüft den Rahmen von Ende zu Ende: Rollen, Paare, Exporte, Simulation.",
+  "summary_en": "Checks the frame end to end: roles, pairs, exports, simulation.",
+  "modes": ["light", "dark"],
+  "controls": [
+    {"id": "m", "type": "chips", "values": ["light", "dark", "both"], "default": "both", "visible": true, "label_key": "ctl.view"},
+    {"id": "k", "type": "stepper", "min": 1, "max": 3, "step": 1, "default": 2, "visible": true, "label_key": "ctl.steps"},
+    {"id": "pr", "type": "toggle", "default": false, "visible": true, "label_key": "ctl.print"},
+    {"id": "tone", "type": "chips", "values": ["neutral", "tinted"], "default": "tinted", "visible": false, "label_key": "ctl.tone"},
+    {"id": "tc", "type": "color", "default": "#FFFFFF", "visible": false, "label_key": "ctl.label"}
+  ],
+  "pattern_toggles": [
+    {"id": "view", "values": ["screen", "inverted"], "default": "screen"},
+    {"id": "labels", "values": ["legend", "direct"], "default": "legend"}
+  ],
+  "presets": [
+    {"id": "petrol", "seed": "oklch(0.48 0.08 215)", "options": {}, "name_de": "Petrol", "name_en": "Petrol",
+     "note_de": "Ruhiger Akzent mit weißer Schrift", "note_en": "Calm accent with white text", "dataset": "okabe-ito",
+     "expect": ["accent-fill-low@dark", "link-low@light"]},
+    {"id": "signal", "seed": "#E63946", "options": {"k": 3}, "name_de": "Kräftiges Rot", "name_en": "Strong red",
+     "note_de": "Der Akzent wird für weiße Schrift dunkler", "note_en": "The accent gets darker for white text",
+     "expect": []},
+    {"id": "senf", "seed": "oklch(0.80 0.15 85)", "options": {"tone": "neutral", "k": 1}, "name_de": "Senf", "name_en": "Mustard",
+     "note_de": "Heller Akzent mit dunkler Schrift", "note_en": "Light accent with dark text",
+     "expect": ["accent-fill-low@light", "link-low@dark"]}
+  ],
+  "roles": [
+    {"id": "bg", "name_de": "Hintergrund", "name_en": "Background", "use_de": "Seitenfläche", "use_en": "page", "core": true, "kind": "surface"},
+    {"id": "surface", "name_de": "Fläche", "name_en": "Surface", "use_de": "Karten, Dialoge", "use_en": "cards, dialogs", "core": true, "kind": "surface"},
+    {"id": "text", "name_de": "Text", "name_en": "Text", "use_de": "Fließtext, Überschriften", "use_en": "body text, headings", "core": true, "kind": "text"},
+    {"id": "text-muted", "name_de": "Text, gedämpft", "name_en": "Muted text", "use_de": "Metadaten, Hilfetext", "use_en": "metadata, help text", "core": true, "kind": "text"},
+    {"id": "border", "name_de": "Rahmen, dezent", "name_en": "Subtle border", "use_de": "nur Trennlinien, dekorativ", "use_en": "dividers only, decorative", "core": false, "kind": "decor"},
+    {"id": "accent", "name_de": "Akzent", "name_en": "Accent", "use_de": "primäre Buttons", "use_en": "primary buttons", "core": true, "kind": "ui"},
+    {"id": "on-accent", "name_de": "Schrift für Akzent", "name_en": "Text for accent", "use_de": "Schrift auf primären Buttons", "use_en": "text on primary buttons", "core": true, "kind": "text"},
+    {"id": "accent-text", "name_de": "Akzent als Text", "name_en": "Accent as text", "use_de": "Links, Fokusring, Auswahl", "use_en": "links, focus ring, selection", "core": true, "kind": "text"},
+    {"id": "step-1", "name_de": "Stufe 1", "name_en": "Step 1", "use_de": "Linien und Symbole", "use_en": "lines and symbols", "core": false, "kind": "data"},
+    {"id": "step-2", "name_de": "Stufe 2", "name_en": "Step 2", "use_de": "Linien und Symbole", "use_en": "lines and symbols", "core": false, "kind": "data"},
+    {"id": "step-3", "name_de": "Stufe 3", "name_en": "Step 3", "use_de": "Linien und Symbole", "use_en": "lines and symbols", "core": false, "kind": "data"},
+    {"id": "chart-1", "name_de": "Diagrammserie", "name_en": "Chart series", "use_de": "Diagrammserie, mindestens 3:1 zum Hintergrund", "use_en": "chart series, at least 3:1 against the background", "core": false, "kind": "data", "export_option": "charts"}
+  ],
+  "pairs": [
+    {"fg": "text", "on": ["bg", "surface"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "text-muted", "on": ["bg", "surface"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "accent-text", "on": ["bg", "surface"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "on-accent", "on": ["accent"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "step-1", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "non-text-contrast", "group": "steps"},
+    {"fg": "step-2", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "non-text-contrast", "group": "steps"},
+    {"fg": "step-3", "on": ["bg"], "min": 3.0, "criterion": "1.4.11", "rule": "non-text-contrast", "group": "steps"}
+  ],
+  "decorative": [{"fg": "border", "on": ["bg"]}],
+  "advisory": [{"fg": "accent", "on": ["bg"], "min": 3.0, "finding": "accent-fill-low"}],
+  "distinct": [{"id": "steps", "set": ["step-1", "step-2", "step-3"], "kinds": ["normal", "deutan", "protan"], "compare": "steps-raw"},
+               {"id": "chart", "set": ["chart-1", "accent-text"], "kinds": ["normal", "deutan", "protan"], "compare": "okabe-ito-7"}],
+  "rules": ["text-contrast", "no-rounding", "non-text-contrast", "color-not-alone", "text-contrast-aaa", "fixture-many-steps"],
+  "explain": ["fixture-contrast", "fixture-modes", "fixture-steps"],
+  "pattern": "fixture",
+  "exports": {"primary": "css", "visible": ["css", "agent", "hex"], "more": ["tailwind", "dtcg", "rationale", "list"],
+              "options": [{"id": "charts", "default": false}]},
+  "related": [],
+  "siblings": [{"site": "bildsprache", "path_de": "de/", "path_en": "en/", "label_key": "sibling.bildsprache"}],
+  "datasets": ["okabe-ito"],
+  "not_checked_de": ["deine Schriftgrößen", "Transparenz, Bilder und Verläufe", "dein Bildschirm"],
+  "not_checked_en": ["your font sizes", "transparency, images and gradients", "your screen"]
+}

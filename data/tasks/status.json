@@ -1,0 +1,55 @@
+{
+  "_comment": "Aufgabe Statusfarben (Spezifikation 3.2, 4.3). Prosa steht in web/copy/status.py. Der Generator tools/gen/status.py nutzt Neutraltöne und Statusoptimierung aus tools/gen/website.py; im Browser lädt web/gen/website.js vorher (gen_deps).",
+  "id": "status",
+  "generator": "status",
+  "name_de": "Statusfarben",
+  "name_en": "Status colors",
+  "summary_de": "Fehler, Warnung, Erfolg, Info. Immer mit Icon und Wort.",
+  "summary_en": "Error, warning, success, info. Always with icon and word.",
+  "modes": ["light", "dark"],
+  "controls": [
+    {"id": "m", "type": "chips", "values": ["light", "dark", "both"], "default": "both", "visible": true, "label_key": "ctl.view"},
+    {"id": "tone", "type": "chips", "values": ["neutral", "tinted", "strong"], "default": "tinted", "visible": false, "label_key": "ctl.tone"}
+  ],
+  "presets": [
+    {"id": "grau", "seed": "oklch(0.55 0 0)", "options": {}, "name_de": "Grau", "name_en": "Gray",
+     "note_de": "Akzent ohne Farbton, neutrale Flächen", "note_en": "Accent without hue, neutral surfaces",
+     "expect": ["status-close@light"]},
+    {"id": "petrol", "seed": "oklch(0.48 0.08 215)", "options": {}, "name_de": "Petrol", "name_en": "Petrol",
+     "note_de": "Blaugrüner Akzent, leicht getönte Flächen", "note_en": "Blue-green accent, slightly tinted surfaces",
+     "expect": ["status-close@light"]},
+    {"id": "kraeftiges-rot", "seed": "#E63946", "options": {}, "name_de": "Kräftiges Rot", "name_en": "Strong red",
+     "note_de": "Akzent und Fehlerfarbe sind beide Rot", "note_en": "Accent and error color are both red",
+     "expect": ["status-close@light", "accent-error-conflict"]}
+  ],
+  "roles": [
+    {"id": "bg", "name_de": "Hintergrund", "name_en": "Background", "use_de": "Seitenfläche", "use_en": "page background", "core": false, "kind": "surface"},
+    {"id": "surface", "name_de": "Fläche", "name_en": "Surface", "use_de": "Karten, Dialoge", "use_en": "cards, dialogs", "core": false, "kind": "surface"},
+    {"id": "text", "name_de": "Text", "name_en": "Text", "use_de": "Fließtext, Überschriften", "use_en": "body text, headings", "core": false, "kind": "text"},
+    {"id": "danger", "name_de": "Fehler", "name_en": "Error", "use_de": "Fehler: Text und Icon", "use_en": "error: text and icon", "core": true, "kind": "text"},
+    {"id": "danger-subtle", "name_de": "Fehler, Fläche", "name_en": "Error surface", "use_de": "Fehler: Fläche", "use_en": "error: surface", "core": true, "kind": "surface"},
+    {"id": "warning", "name_de": "Warnung", "name_en": "Warning", "use_de": "Warnung: Text und Icon", "use_en": "warning: text and icon", "core": true, "kind": "text"},
+    {"id": "warning-subtle", "name_de": "Warnung, Fläche", "name_en": "Warning surface", "use_de": "Warnung: Fläche", "use_en": "warning: surface", "core": true, "kind": "surface"},
+    {"id": "success", "name_de": "Erfolg", "name_en": "Success", "use_de": "Erfolg: Text und Icon", "use_en": "success: text and icon", "core": true, "kind": "text"},
+    {"id": "success-subtle", "name_de": "Erfolg, Fläche", "name_en": "Success surface", "use_de": "Erfolg: Fläche", "use_en": "success: surface", "core": true, "kind": "surface"},
+    {"id": "info", "name_de": "Info", "name_en": "Info", "use_de": "Info: Text und Icon", "use_en": "info: text and icon", "core": true, "kind": "text"},
+    {"id": "info-subtle", "name_de": "Info, Fläche", "name_en": "Info surface", "use_de": "Info: Fläche", "use_en": "info: surface", "core": true, "kind": "surface"}
+  ],
+  "pairs": [
+    {"fg": "text", "on": ["bg", "surface"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast"},
+    {"fg": "danger", "on": ["bg", "surface", "danger-subtle"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast", "group": "status"},
+    {"fg": "warning", "on": ["bg", "surface", "warning-subtle"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast", "group": "status"},
+    {"fg": "success", "on": ["bg", "surface", "success-subtle"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast", "group": "status"},
+    {"fg": "info", "on": ["bg", "surface", "info-subtle"], "min": 4.5, "criterion": "1.4.3", "rule": "text-contrast", "group": "status"}
+  ],
+  "distinct": [{"id": "status", "set": ["danger", "warning", "success", "info"], "kinds": ["normal", "deutan", "protan"], "compare": "status-unoptimized"}],
+  "rules": ["color-not-alone", "text-contrast", "non-text-contrast", "status-convention", "accent-error-conflict", "dark-gray-not-black"],
+  "explain": ["color-alone", "simulation", "meaning"],
+  "pattern": "status",
+  "exports": {"primary": "css", "visible": ["css", "html", "agent"], "more": ["tailwind", "dtcg", "rationale", "hex"]},
+  "related": ["website", "charts"],
+  "gen_deps": ["website"],
+  "datasets": ["okabe-ito"],
+  "not_checked_de": ["deine Schriftgrößen", "Statusfarben auf anderen Flächen als Hintergrund, Karte und eigener Meldungsfläche", "Transparenz, Bilder und Verläufe", "dein Bildschirm", "schwache Ausprägungen von Farbsehschwäche", "ob deine Leserinnen und Leser die Farbbedeutung teilen"],
+  "not_checked_en": ["your font sizes", "status colors on surfaces other than background, card and their own message surface", "transparency, images and gradients", "your screen", "mild forms of color vision deficiency", "whether your readers share the color meanings"]
+}

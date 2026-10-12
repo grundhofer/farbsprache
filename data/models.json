@@ -1,0 +1,83 @@
+{
+  "_comment": "Bildmodelle für den Farbblock (Spezifikation 4.8.4, 5.5, 6.9). method: hex-in-prompt, palette-field, api-weights, words-only. checked ist der Stand der gelesenen Herstellerdoku unter source: das Abrufdatum, bei einer Archivfassung das Datum der Archivfassung. Die belegte Aussage und was ungeprüft blieb, stehen in data/sources/brand.json unter source_id; quote_source_id nennt die Seite des Zitats. quote wird wörtlich zitiert und ist eine Herstellerangabe. field_note steht neben dem zweiten Kopierblock (Palettenfeld, JSON), doc_note neben dem Prompt.",
+  "models": [
+    {
+      "id": "flux2",
+      "name": "FLUX.2",
+      "vendor": "Black Forest Labs",
+      "method": "hex-in-prompt",
+      "max_colors": null,
+      "quote": "precision matching — no approximation",
+      "quote_is_vendor_claim": true,
+      "quote_source_id": "bfl-flux2-overview",
+      "note_de": "Name und Hex stehen im Prompt, jeweils an einen Bildteil gebunden.",
+      "note_en": "Name and hex stand in the prompt, each bound to one part of the image.",
+      "source": "https://docs.bfl.ai/guides/usecases_t2i_hex_color_prompting",
+      "source_id": "bfl-hex-prompting",
+      "checked": "2026-10-11"
+    },
+    {
+      "id": "ideogram3",
+      "name": "Ideogram 3.0",
+      "vendor": "Ideogram",
+      "method": "palette-field",
+      "max_colors": 8,
+      "quote": "a direction, not an exact color match",
+      "quote_is_vendor_claim": true,
+      "quote_source_id": "ideogram-image-settings",
+      "note_de": "Im Prompt stehen nur Wörter, Hex-Werte versteht das Modell dort nicht.",
+      "note_en": "The prompt holds words only, the model does not read hex values there.",
+      "field_note_de": "Trage die Werte unter Advanced settings, Color palette, Custom ein. Custom gibt es ab dem Plus-Plan.",
+      "field_note_en": "Enter the values under Advanced settings, Color palette, Custom. Custom needs the Plus plan or higher.",
+      "source": "https://docs.ideogram.ai/create/image-settings",
+      "source_id": "ideogram-image-settings",
+      "checked": "2026-10-11"
+    },
+    {
+      "id": "recraft",
+      "name": "Recraft",
+      "vendor": "Recraft",
+      "method": "api-weights",
+      "max_colors": 10,
+      "quote": null,
+      "quote_is_vendor_claim": false,
+      "note_de": "Im Prompt stehen nur Wörter. Farben und Anteile gehen als controls an die API.",
+      "note_en": "The prompt holds words only. Colors and shares go to the API as controls.",
+      "field_note_de": "Laut Doku sind controls bei V4 und V4.1 nur teilweise unterstützt.",
+      "field_note_en": "According to the docs, controls are only partly supported for V4 and V4.1.",
+      "source": "https://www.recraft.ai/docs/api-reference/endpoints",
+      "source_id": "recraft-api-usage",
+      "checked": "2026-10-11"
+    },
+    {
+      "id": "midjourney",
+      "name": "Midjourney",
+      "vendor": "Midjourney",
+      "method": "words-only",
+      "max_colors": null,
+      "quote": null,
+      "quote_is_vendor_claim": false,
+      "note_de": "In der gelesenen Doku (Archivfassung der Stilreferenz) kommt keine Hex-Syntax vor.",
+      "note_en": "The docs read (archived style reference page) show no hex syntax.",
+      "doc_note_de": "Die Herstellerdoku antwortet mit HTTP 403. Gelesen ist nur die Archivfassung der Seite zur Stilreferenz, daher das ältere Datum.",
+      "doc_note_en": "The vendor docs answer with HTTP 403. Only the archived copy of the style reference page was read, hence the older date.",
+      "source": "https://web.archive.org/web/20261004205138/https://docs.midjourney.com/hc/en-us/articles/32180011136653-Style-Reference",
+      "source_id": "midjourney-style-reference",
+      "checked": "2026-10-04"
+    },
+    {
+      "id": "gpt-image",
+      "name": "gpt-image",
+      "vendor": "OpenAI",
+      "method": "words-only",
+      "max_colors": null,
+      "quote": null,
+      "quote_is_vendor_claim": false,
+      "note_de": "In den gelesenen Leitfäden kommt keine Hex-Syntax vor. Der Block bittet zusätzlich um eine natürliche Farbbalance.",
+      "note_en": "The guides read show no hex syntax. The block also asks for a natural color balance.",
+      "source": "https://developers.openai.com/api/docs/guides/image-prompting",
+      "source_id": "openai-image-guide",
+      "checked": "2026-10-11"
+    }
+  ]
+}

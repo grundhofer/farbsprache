@@ -1,0 +1,4 @@
+/* KI-Bild: Werte der Vorschläge im Slot der Steuerleiste (web/ui/ai-image.js). Nur Selektoren mit .t-ai-image. */
+.t-ai-image .ai-sug { margin-top:10px; }
+.t-ai-image .ai-sug li { font-size:14px; font-variant-numeric:tabular-nums; }
+.t-ai-image .ai-two { margin-top:8px; }
