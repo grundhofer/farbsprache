@@ -40,12 +40,12 @@ python3 -m http.server 8000 --directory docs
 | Path | Content |
 | --- | --- |
 | `build.py` | Static generator: checks, starter palettes, pages, language switch, README |
-| `pages/` | Start page, task page frame, check, explained, method, sources |
+| `pages/` | Start page, task page frame, check, explained, method, sources, legal notice |
 | `tools/color.py`, `web/color.js` | Color core in Python and JavaScript with the same test vectors |
 | `tools/export.py`, `web/export.js` | Exports: CSS, Tailwind v4, design tokens, hex list, prompt, rationale |
 | `tools/gen/`, `web/gen/` | Generators per task |
 | `tools/checks.py` | Data checks before the build |
-| `data/` | Tasks, rules, explained entries, sources, data sets, constants, test vectors |
+| `data/` | Tasks, rules, explained entries, sources, data sets, constants, test vectors, legal notice details |
 | `patterns/` | Reference patterns and mini previews |
 | `web/` | Site style, site script, theme, texts |
 | `tests/` | Python and Node tests, golden files, test task |
@@ -55,7 +55,7 @@ GitHub Actions checks everything and publishes `main` to GitHub Pages. How to co
 
 ## License
 
-Code, including `patterns/` and `.github/`: [MIT](LICENSE). Texts: [CC BY 4.0](LICENSE-CONTENT.md). Own data, starter values, calculated values and exports: [CC0](LICENSE-CONTENT.md). Colors from data sets such as Okabe-Ito, Paul Tol, ColorBrewer and viridis are excluded: they keep their own terms, and the notices are in the exports and on the sources page. Fonts in `web/fonts/` (Inter, IBM Plex Mono): SIL Open Font License 1.1. The material from CSS Color 4 in the color core keeps the W3C Software and Document License. The license texts are in `data/licenses/`. [LICENSE-CONTENT.md](LICENSE-CONTENT.md) says which license applies to which folder.
+Code, including `patterns/` and `.github/`: [MIT](LICENSE). Texts: [CC BY 4.0](LICENSE-CONTENT.md). Own data, starter values, calculated values and exports: [CC0](LICENSE-CONTENT.md). Colors from data sets such as Okabe-Ito, Paul Tol, ColorBrewer and viridis are excluded: they keep their own terms, and the notices are in the exports and on the sources page. The legal notice details in `data/legal.json` are not covered by these licenses. Fonts in `web/fonts/` (Inter, IBM Plex Mono): SIL Open Font License 1.1. The material from CSS Color 4 in the color core keeps the W3C Software and Document License. The license texts are in `data/licenses/`. [LICENSE-CONTENT.md](LICENSE-CONTENT.md) says which license applies to which folder.
 
 Sister projects: [Bildsprache](https://github.com/grundhofer/bildsprache), image styles for AI images, and [Designsprache](https://github.com/grundhofer/designsprache), a catalog of UI design languages.
 

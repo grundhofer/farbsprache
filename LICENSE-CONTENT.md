@@ -131,6 +131,10 @@ The sources page of the website shows them in full.
   (SIL Open Font License 1.1, Volltexte in `data/licenses/`). Sie lädt nichts von Google Fonts. / The site ships Inter
   and IBM Plex Mono itself (`web/fonts/`) under their own license (SIL Open Font License 1.1, full texts in
   `data/licenses/`). It loads nothing from Google Fonts.
+- **Impressum.** Die Anbieterangaben in `data/legal.json` (Name, Anschrift, E-Mail-Adresse, Umsatzsteuer-ID) sind
+  Pflichtangaben für das Impressum und stehen unter keiner der Lizenzen oben. / The provider details in
+  `data/legal.json` (name, address, email address, VAT ID) are the required details for the legal notice and are not
+  covered by the licenses above.
 - **Namen.** Normfarbsysteme, Marken und Produktnamen gehören ihren Inhabern und werden nur zur Beschreibung
   genannt. Farbsprache enthält keine Werte aus Pantone, RAL, HKS oder NCS. / Color standards, trademarks and
   product names belong to their owners and are named only to describe. Farbsprache contains no values from

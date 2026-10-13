@@ -13,9 +13,10 @@ COPY = {
    "nav.home": "Aufgaben", "nav.home.s": "Aufgaben", "nav.check": "Palette prüfen", "nav.check.s": "Prüfen",
    "nav.method": "Methode", "nav.method.s": "Methode",
    "foot_license": "© Sebastian Grundhöfer · Code MIT · Texte CC BY 4.0 · Werte und Exporte CC0 · Fremddaten je Quelle",
-   "foot.explained": "Kurz erklärt", "foot.sources": "Quellen und Lizenzen", "foot.github": "GitHub",
+   "foot.explained": "Kurz erklärt", "foot.sources": "Quellen und Lizenzen", "foot.github": "GitHub", "foot.legal": "Impressum",
    "foot_siblings": "Schwesterprojekte:",
    "page.check": "Palette prüfen", "page.explained": "Kurz erklärt", "page.method": "Methode", "page.sources": "Quellen und Lizenzen",
+   "page.legal": "Impressum",
   },
   "home": {
    "title": "Farbsprache – Farben für Website, Diagramm, Folien und mehr",
@@ -151,9 +152,10 @@ COPY = {
    "nav.home": "Tasks", "nav.home.s": "Tasks", "nav.check": "Check palette", "nav.check.s": "Check",
    "nav.method": "Method", "nav.method.s": "Method",
    "foot_license": "© Sebastian Grundhöfer · Code MIT · Texts CC BY 4.0 · Values and exports CC0 · Third-party data per source",
-   "foot.explained": "Explained briefly", "foot.sources": "Sources and licenses", "foot.github": "GitHub",
+   "foot.explained": "Explained briefly", "foot.sources": "Sources and licenses", "foot.github": "GitHub", "foot.legal": "Legal notice",
    "foot_siblings": "Sister projects:",
    "page.check": "Check palette", "page.explained": "Explained briefly", "page.method": "Method", "page.sources": "Sources and licenses",
+   "page.legal": "Legal notice",
   },
   "home": {
    "title": "Farbsprache – Colors for websites, charts, slides and more",

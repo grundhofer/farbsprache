@@ -40,12 +40,12 @@ python3 -m http.server 8000 --directory docs
 | Pfad | Inhalt |
 | --- | --- |
 | `build.py` | Statischer Generator: Prüfung, Startpaletten, Seiten, Sprachweiche, README |
-| `pages/` | Startseite, Rahmen der Aufgabenseiten, Prüfen, Kurz erklärt, Methode, Quellen |
+| `pages/` | Startseite, Rahmen der Aufgabenseiten, Prüfen, Kurz erklärt, Methode, Quellen, Impressum |
 | `tools/color.py`, `web/color.js` | Farbkern in Python und JavaScript mit denselben Testvektoren |
 | `tools/export.py`, `web/export.js` | Exporte: CSS, Tailwind v4, Design-Tokens, Hex-Liste, Prompt, Begründung |
 | `tools/gen/`, `web/gen/` | Generatoren je Aufgabe |
 | `tools/checks.py` | Datenprüfungen vor dem Build |
-| `data/` | Aufgaben, Regeln, Erklärt-Einträge, Quellen, Datensätze, Konstanten, Testvektoren |
+| `data/` | Aufgaben, Regeln, Erklärt-Einträge, Quellen, Datensätze, Konstanten, Testvektoren, Angaben des Impressums |
 | `patterns/` | Referenzmuster und Mini-Vorschauen |
 | `web/` | Seitenstil, Seitenskript, Theme, Texte |
 | `tests/` | Python- und Node-Tests, Golden-Dateien, Testaufgabe |
@@ -55,7 +55,7 @@ GitHub Actions prüft alles und veröffentlicht `main` auf GitHub Pages. Wie man
 
 ## Lizenz
 
-Code, auch `patterns/` und `.github/`: [MIT](LICENSE). Texte: [CC BY 4.0](LICENSE-CONTENT.md). Eigene Daten, Startwerte, berechnete Werte und Exporte: [CC0](LICENSE-CONTENT.md). Ausgenommen sind Farben aus Datensätzen wie Okabe-Ito, Paul Tol, ColorBrewer und viridis: Sie behalten ihre eigenen Bedingungen, die Vermerke stehen in den Exporten und auf der Quellenseite. Schriften in `web/fonts/` (Inter, IBM Plex Mono): SIL Open Font License 1.1. Das Material aus CSS Color 4 im Farbkern behält die W3C Software and Document License. Die Lizenztexte liegen in `data/licenses/`. Welche Lizenz für welchen Ordner gilt, steht in [LICENSE-CONTENT.md](LICENSE-CONTENT.md).
+Code, auch `patterns/` und `.github/`: [MIT](LICENSE). Texte: [CC BY 4.0](LICENSE-CONTENT.md). Eigene Daten, Startwerte, berechnete Werte und Exporte: [CC0](LICENSE-CONTENT.md). Ausgenommen sind Farben aus Datensätzen wie Okabe-Ito, Paul Tol, ColorBrewer und viridis: Sie behalten ihre eigenen Bedingungen, die Vermerke stehen in den Exporten und auf der Quellenseite. Die Angaben des Impressums in `data/legal.json` stehen unter keiner dieser Lizenzen. Schriften in `web/fonts/` (Inter, IBM Plex Mono): SIL Open Font License 1.1. Das Material aus CSS Color 4 im Farbkern behält die W3C Software and Document License. Die Lizenztexte liegen in `data/licenses/`. Welche Lizenz für welchen Ordner gilt, steht in [LICENSE-CONTENT.md](LICENSE-CONTENT.md).
 
 Schwesterprojekte: [Bildsprache](https://github.com/grundhofer/bildsprache), Bildstile für KI-Bilder, und [Designsprache](https://github.com/grundhofer/designsprache), ein Katalog von UI-Designsprachen.
 

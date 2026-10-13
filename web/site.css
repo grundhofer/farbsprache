@@ -208,6 +208,11 @@ data { font-variant-numeric:tabular-nums; }
 .levels div { display:grid; grid-template-columns:auto minmax(0,1fr); gap:10px; align-items:baseline; }
 .levels dd { margin:0; font-size:14.5px; color:var(--ink-2); }
 .stub .lede { margin-bottom:12px; }
+/* Impressum (pages/legal.py): Kopf ohne Lede, Abschnitte wie auf der Methode */
+.t-legal .mast .wrap { padding-bottom:clamp(20px,3vw,32px); }
+.t-legal .lg-sec { padding-top:clamp(28px,4vw,48px); max-width:72ch; }
+.t-legal .lg-sec h2 { font-size:clamp(22px,2.6vw,30px); letter-spacing:-.03em; line-height:1.1; border-top:3px solid var(--ink); padding-top:10px; margin-bottom:12px; }
+.t-legal .lg-sec p + p { margin-top:12px; }
 
 /* ---------- Belegstufen, Hinweise ---------- */
 .tag-level { display:inline-block; font-family:var(--f-mono); font-size:11px; font-weight:500; letter-spacing:.06em; text-transform:uppercase;

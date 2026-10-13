@@ -69,6 +69,9 @@ FARBSPRACHE_REQUIRE_BUILD=1 FARBSPRACHE_JS_DIR=docs/assets node --test tests/*.t
 ```
 
 `README.md` und `README.de.md` erzeugt der Build aus `web/readme.en.md` und `web/readme.de.md`; ändere nur die Vorlagen.
+Die Angaben des Impressums (Name, Anschrift, E-Mail, Umsatzsteuer-ID) stehen nur in `data/legal.json`; `pages/legal.py`
+baut daraus `de/impressum/` und `en/legal-notice/`. Jede Seite verlinkt sie: die Sprachseiten in der Fußzeile,
+Sprachweiche und 404 unter dem Inhalt. Ändere die Angaben nur dort.
 Ändern sich Aufgaben, Startpaletten oder Quellen, rendere `og.png` mit `python3 tools/og.py` neu (braucht Google Chrome;
 den Pfad setzt `CHROME` in `tools/og.py`).
 
@@ -82,6 +85,25 @@ mit fonttools beschnitten: `pyftsubset Inter-Regular.woff2 --unicodes="U+0000-00
 --name-languages='*' --flavor=woff2`, ebenso Medium und Bold. IBM Plex Mono kommt unverändert aus dem Release
 @ibm/plex-mono 2.5.0 (Teilmengen Latin1 und Pi von IBM), weil die OFL geänderte Fassungen mit dem reservierten Namen
 „Plex“ ausschließt. Kommen neue Zeichen in den Text, bilde die Teilmenge neu und prüfe `unicode-range` in `web/site.css`.
+
+Herkunft, nachgeprüft am 2026-10-12: `Inter-4.1.zip` von https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
+(SHA-256 `9883fdd4a49d4fb66bd8177ba6625ef9a64aa45899767dde3d36aa425756b11e`); mit fonttools 4.66.1 und dem Befehl oben
+entstehen aus `web/Inter-Regular.woff2`, `-Medium` und `-Bold` darin bytegleich die drei Dateien `inter-*.woff2`.
+`plex-mono-2.5.0.tgz` von https://registry.npmjs.org/@ibm/plex-mono/-/plex-mono-2.5.0.tgz (SHA-256
+`55b5ffcfcd5e9db36ef2070b2b07a573434ca02c6f3be2b921c0b88fff29acad`); die vier Dateien `IBMPlexMono-*.woff2` sind
+bytegleich mit `package/fonts/split/woff2/` darin. Die Lizenztexte in `data/licenses/` stimmen mit `LICENSE.txt` der
+beiden Pakete überein, bei Plex bis auf die Zeilenenden.
+Prüfsummen der Dateien in `web/fonts/` (`tests/test_site.py` vergleicht sie):
+
+| Datei | SHA-256 |
+| --- | --- |
+| `inter-400.woff2` | `e303b396cb67939e5afcd9f1a337f0e66ffac3e6bc8e58d037b80fc99b9f9047` |
+| `inter-500.woff2` | `54a1afa9962c1d9aad64461604dee6935d8f655c2a8379b85ce836a500bf0883` |
+| `inter-700.woff2` | `c762180c97768e5577d2e9dc1966285ebc356a099594357f18fc4d88bd3bb8af` |
+| `IBMPlexMono-Regular-Latin1.woff2` | `e8993d946649b9d01abb1ed06d574b19d8ea3e66b5c3948602db335c44c18e56` |
+| `IBMPlexMono-Regular-Pi.woff2` | `b8002770aa636f544ba43e124da6a227301769754f295eae26e16475b469c767` |
+| `IBMPlexMono-Medium-Latin1.woff2` | `41201b658a328b9d00368215c2f1102770f80b15952ab82631e4006255e6365d` |
+| `IBMPlexMono-Medium-Pi.woff2` | `92bd18415e8c43a2569f615e4e84a94b1b1c4e0377ba9d8f4d894bbf6ffcc39d` |
 
 ### Kurzanleitung für eine neue Aufgabe
 
@@ -199,6 +221,9 @@ FARBSPRACHE_REQUIRE_BUILD=1 FARBSPRACHE_JS_DIR=docs/assets node --test tests/*.t
 The build writes `README.md` and `README.de.md` from `web/readme.en.md` and `web/readme.de.md`; edit the templates
 only. If tasks, starter palettes or sources change, render `og.png` again with `python3 tools/og.py` (needs Google
 Chrome; `CHROME` in `tools/og.py` sets the path).
+The legal notice details (name, address, email, VAT ID) live only in `data/legal.json`; `pages/legal.py` builds
+`de/impressum/` and `en/legal-notice/` from them. Every page links them: the language pages in their footer, the
+language switch and 404 below the content. Change the details there only.
 
 The build stops while a task from `data/tasks/_order.json` is missing; this is how CI runs. While you work on a
 new task that is not complete yet, build with `--allow-missing`: missing tasks then become placeholders.
@@ -210,6 +235,25 @@ with fonttools: `pyftsubset Inter-Regular.woff2 --unicodes="U+0000-00FF,U+0131,U
 --name-languages='*' --flavor=woff2`, and the same for Medium and Bold. IBM Plex Mono comes unchanged from release
 @ibm/plex-mono 2.5.0 (IBM's Latin1 and Pi subsets), because the OFL rules out modified versions with the reserved name
 “Plex”. If the text gains new characters, rebuild the subset and check `unicode-range` in `web/site.css`.
+
+Origin, rechecked on 2026-10-12: `Inter-4.1.zip` from https://github.com/rsms/inter/releases/download/v4.1/Inter-4.1.zip
+(SHA-256 `9883fdd4a49d4fb66bd8177ba6625ef9a64aa45899767dde3d36aa425756b11e`); fonttools 4.66.1 and the command above turn
+its `web/Inter-Regular.woff2`, `-Medium` and `-Bold` into the three files `inter-*.woff2`, byte for byte.
+`plex-mono-2.5.0.tgz` from https://registry.npmjs.org/@ibm/plex-mono/-/plex-mono-2.5.0.tgz (SHA-256
+`55b5ffcfcd5e9db36ef2070b2b07a573434ca02c6f3be2b921c0b88fff29acad`); the four files `IBMPlexMono-*.woff2` are identical
+to `package/fonts/split/woff2/` in it, byte for byte. The license texts in `data/licenses/` match `LICENSE.txt` of
+both packages, for Plex except for the line endings.
+Checksums of the files in `web/fonts/` (`tests/test_site.py` compares them):
+
+| File | SHA-256 |
+| --- | --- |
+| `inter-400.woff2` | `e303b396cb67939e5afcd9f1a337f0e66ffac3e6bc8e58d037b80fc99b9f9047` |
+| `inter-500.woff2` | `54a1afa9962c1d9aad64461604dee6935d8f655c2a8379b85ce836a500bf0883` |
+| `inter-700.woff2` | `c762180c97768e5577d2e9dc1966285ebc356a099594357f18fc4d88bd3bb8af` |
+| `IBMPlexMono-Regular-Latin1.woff2` | `e8993d946649b9d01abb1ed06d574b19d8ea3e66b5c3948602db335c44c18e56` |
+| `IBMPlexMono-Regular-Pi.woff2` | `b8002770aa636f544ba43e124da6a227301769754f295eae26e16475b469c767` |
+| `IBMPlexMono-Medium-Latin1.woff2` | `41201b658a328b9d00368215c2f1102770f80b15952ab82631e4006255e6365d` |
+| `IBMPlexMono-Medium-Pi.woff2` | `92bd18415e8c43a2569f615e4e84a94b1b1c4e0377ba9d8f4d894bbf6ffcc39d` |
 
 ### Quick guide for a new task
 

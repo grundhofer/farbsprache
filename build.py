@@ -16,7 +16,8 @@ Quellen:
   web/copy/<modul>.py                             Texte, COPY[lang][seite][schlüssel]
   data/rules|explain|sources/*.json               Regeln, Kurz erklärt, Quellen
   data/datasets/*.json, data/comparisons.json     Datensätze und Vergleichswerte
-  pages/home.py, pages/task.py, pages/<seite>.py  Seiten (Start, Aufgabenrahmen, Prüfen, Erklärt, Methode, Quellen)
+  data/legal.json                                 Angaben des Impressums (einzige Stelle im Repo)
+  pages/home.py, pages/task.py, pages/<seite>.py  Seiten (Start, Aufgabenrahmen, Prüfen, Erklärt, Methode, Quellen, Impressum)
 
 Der Build prüft vorher alle Daten (tools/checks.py) und den Farbkern gegen data/testvectors.json, rechnet
 alle Startpaletten mit den Python-Generatoren und baut nach docs.tmp/, bevor er docs/ tauscht.
@@ -56,11 +57,12 @@ SEG = {
     "explained": {"de": "erklaert", "en": "explained"},
     "method": {"de": "methode", "en": "method"},
     "sources": {"de": "quellen", "en": "sources"},
+    "legal": {"de": "impressum", "en": "legal-notice"},
 }
 # Nur für die Testaufgabe (wird nie ausgeliefert); verschiedene Segmente prüfen PAGE_TWIN.
 FIXTURE_SEG = {"fixture": {"de": "testaufgabe", "en": "test-task"}}
-PAGES = ("check", "explained", "method", "sources")   # Seiten von P5 (pages/<name>.py)
-N_PAGES_PER_LANG = 12
+PAGES = ("check", "explained", "method", "sources", "legal")   # Seiten von P5 und das Impressum (pages/<name>.py)
+N_PAGES_PER_LANG = 13
 # Schriften liefert die Seite selbst aus (web/fonts/ nach assets/fonts/, SIL OFL 1.1), keine Anfrage an fremde Server
 # (nach Z geändert, 7.2). site.css bindet sie per @font-face ein; vorgeladen werden die drei Schnitte von Inter, die jede
 # Seite im ersten Bildschirm braucht. Die Lizenztexte liegen in data/licenses/ und gehen mit nach assets/fonts/.
@@ -417,7 +419,7 @@ class Site:
         for name in PAGES:
             f = ROOT / "pages" / f"{name}.py"
             if len(self.roots) > 1:
-                continue  # Testaufgabe: nur Kern von P0 (checks._own), Seiten von P5 als Platzhalter
+                continue  # Testaufgabe: nur Kern von P0 (checks._own), Seiten von P5 und Impressum als Platzhalter
             if f.exists():
                 try:
                     self.page_mods[name] = importlib.import_module(f"pages.{name}")
@@ -564,7 +566,7 @@ class Site:
         return f"""</main>
 <footer class="foot"><div class="wrap foot-in">
 <p>{h(ui['foot_license'])}</p>
-<p><a href="{rel(page, self.path(lang, 'explained'))}">{h(ui['foot.explained'])}</a> · <a href="{rel(page, self.path(lang, 'sources'))}">{h(ui['foot.sources'])}</a> · <a href="{REPO_URL}" rel="noopener">{h(ui['foot.github'])}</a></p>
+<p><a href="{rel(page, self.path(lang, 'explained'))}">{h(ui['foot.explained'])}</a> · <a href="{rel(page, self.path(lang, 'sources'))}">{h(ui['foot.sources'])}</a> · <a href="{REPO_URL}" rel="noopener">{h(ui['foot.github'])}</a> · <a href="{rel(page, self.path(lang, 'legal'))}">{h(ui['foot.legal'])}</a></p>
 <p>{h(ui['foot_siblings'])} {sib}</p>
 </div></footer>
 <p class="sr-only" role="status" id="status"></p>
@@ -589,6 +591,17 @@ class Site:
         return "".join(out)
 
     # ---- Sprachweiche, Fehlerseite, Assets
+    # Sprachweiche und 404 laden kein site.css und damit keine mitgelieferte Schrift; ihr Inline-CSS nennt deshalb nur
+    # Systemschriften (tests/test_site.py test_fonts_shipped).
+    def neutral_links(self, base):
+        """Impressum beider Sprachen und die Schwesterprojekte für die sprachneutralen Seiten (Sprachweiche, 404), wie in
+        der Fußzeile der übrigen Seiten. base: Pfad bis zur Wurzel von docs/ ("" oder "/farbsprache/")."""
+        legal = " · ".join(f'<a href="{base}{self.path(lang, "legal")}" hreflang="{lang}" lang="{lang}">'
+                           f'{h(self.copy[lang]["ui"]["foot.legal"])}</a>' for lang in LANGS)
+        label = " / ".join(f'<span lang="{lang}">{h(self.copy[lang]["ui"]["foot_siblings"].rstrip(":"))}</span>' for lang in LANGS)
+        sib = " · ".join(f'<a href="{url}" rel="noopener">{name}</a>' for name, url in SIBLINGS)
+        return f'<p class="meta">{legal}</p><p class="meta">{label}: {sib}</p>'
+
     def landing(self, out):
         c = self.copy["de"]["landing"]
         text = f"""<!doctype html>
@@ -633,9 +646,9 @@ class Site:
   location.replace(lang + '/' + (keep.length ? '?' + keep.join('&') : '') + location.hash);
 }})();
 </script>
-<style>{theme.css()}body{{margin:0;font:17px/1.6 Inter,Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}}a{{color:var(--accent)}}</style>
+<style>{theme.css()}body{{margin:0;font:17px/1.6 Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}}a{{color:var(--accent)}}.meta{{font-size:14px;color:var(--ink-2)}}</style>
 </head>
-<body><main><h1>Farbsprache</h1><p><a href="de/" hreflang="de" lang="de">Deutsch</a> · <a href="en/" hreflang="en" lang="en">English</a></p></main></body>
+<body><main><h1>Farbsprache</h1><p><a href="de/" hreflang="de" lang="de">Deutsch</a> · <a href="en/" hreflang="en" lang="en">English</a></p>{self.neutral_links('')}</main></body>
 </html>
 """
         (out / "index.html").write_text(text, encoding="utf-8")
@@ -645,13 +658,15 @@ class Site:
         (out / "404.html").write_text(
             f'<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
             f'<title>404 – Farbsprache</title><meta name="robots" content="noindex"><link rel="icon" href="{FAVICON}">{theme.script()}'
-            f'<style>{theme.css()}body{{margin:0;font:17px/1.6 Inter,Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);'
+            f'<style>{theme.css()}body{{margin:0;font:17px/1.6 Helvetica,Arial,sans-serif;background:var(--ground);color:var(--ink);'
             f'display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}}main{{max-width:36rem;border-top:3px solid var(--ink);padding-top:12px}}'
             f'h1{{font-size:clamp(48px,12vw,96px);line-height:1;letter-spacing:-.045em;margin:8px 0 16px}}p{{margin:0 0 10px}}'
-            f'a{{color:var(--accent);text-underline-offset:3px;white-space:nowrap}}.brand{{font:700 12px Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase}}</style></head>'
+            f'a{{color:var(--accent);text-underline-offset:3px;white-space:nowrap}}.brand{{font:700 12px sans-serif;letter-spacing:.06em;text-transform:uppercase}}'
+            f'.meta{{font-size:14px;color:var(--ink-2)}}p+.meta{{margin-top:22px}}.meta+.meta{{margin-top:0}}</style></head>'
             f'<body><main><p class="brand">Farbsprache</p><h1>404</h1>'
             f'<p lang="de">{h(de["text"])} <a href="/farbsprache/de/" hreflang="de">{h(de["link"])}</a></p>'
-            f'<p lang="en">{h(en["text"])} <a href="/farbsprache/en/" hreflang="en">{h(en["link"])}</a></p></main></body></html>',
+            f'<p lang="en">{h(en["text"])} <a href="/farbsprache/en/" hreflang="en">{h(en["link"])}</a></p>'
+            f'{self.neutral_links("/farbsprache/")}</main></body></html>',
             encoding="utf-8")
 
     def fs_const(self):

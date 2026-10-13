@@ -1,9 +1,9 @@
 """Gebaute Website (Spezifikation 7.9, Muster Bildsprache test_site und Designsprache test_explorer):
-12 Seiten je Sprache, interne Links lösen auf, eindeutige IDs, html lang, <title>, alt, genau ein h1 und ein
+13 Seiten je Sprache, interne Links lösen auf, eindeutige IDs, html lang, <title>, alt, genau ein h1 und ein
 main, og:image absolut, keine typischen deutschen Wörter im sichtbaren EN-Text, Größenbudget (7.11),
-README ohne __N_. Läuft über docs/ und die Testaufgabe; ohne Build übersprungen, außer
-FARBSPRACHE_REQUIRE_BUILD=1 (CI), dann schlägt er fehl."""
-import html, html.parser, os, re, sys, unittest
+README ohne __N_, Impressum und Schwesterprojekte von jeder Seite aus verlinkt. Läuft über docs/ und die Testaufgabe;
+ohne Build übersprungen, außer FARBSPRACHE_REQUIRE_BUILD=1 (CI), dann schlägt er fehl."""
+import hashlib, html, html.parser, json, os, re, sys, unittest
 from unittest import mock
 from pathlib import Path
 
@@ -242,7 +242,8 @@ class TestSite(unittest.TestCase):
 
     def test_fonts_shipped(self):
         """R-02/T-04: Inter 400/500/700 und IBM Plex Mono 400/500 als woff2 unter assets/fonts/, font-display:swap,
-        versioniert; die Vorladelinks zeigen auf genau die Dateien aus site.css; OFL-Texte liegen bei; Budget."""
+        versioniert; die Vorladelinks zeigen auf genau die Dateien aus site.css; OFL-Texte liegen bei; Budget;
+        Sprachweiche und 404 nennen nur Systemschriften."""
         css = shipped_css()
         faces = [d for s, d in css_rules(css) if s == "@font-face"]
         got = {(re.search(r'font-family:"([^"]+)"', d).group(1), re.search(r"font-weight:(\d+)", d).group(1)) for d in faces}
@@ -259,11 +260,22 @@ class TestSite(unittest.TestCase):
         self.assertLessEqual(total, FONT_BUDGET["all"])
         for name in build.FONT_LICENSES:
             self.assertEqual((DOCS / "assets" / "fonts" / name).read_bytes(), (ROOT / "data" / "licenses" / name).read_bytes())
+        # Herkunft: CONTRIBUTING nennt die Prüfsumme jeder mitgelieferten Datei (Abschnitt Schriften, deutsch und englisch)
+        contributing = (ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
+        for f in sorted((ROOT / "web" / "fonts").glob("*.woff2")):
+            self.assertEqual(contributing.count(f"| `{f.name}` | `{hashlib.sha256(f.read_bytes()).hexdigest()}` |"), 2, f.name)
         for page in lang_pages(DOCS):
             pre = re.findall(r'<link rel="preload" href="([^"]+)" as="font" type="font/woff2" crossorigin>', page.read_text(encoding="utf-8"))
             self.assertEqual(len(pre), len(build.PRELOAD_FONTS), str(page))
             for href in pre:
                 self.assertIn("url(fonts/" + href.split("assets/fonts/")[1] + ")", css, href)
+        # Sprachweiche und 404 laden kein site.css: Ihr Inline-CSS nennt keine Schrift, die nur site.css mitliefert
+        for site in self.sites():
+            for f in ("index.html", "404.html"):
+                text = (site / f).read_text(encoding="utf-8")
+                with self.subTest(page=str((site / f).relative_to(ROOT))):
+                    self.assertNotRegex(text, r"<link\b[^>]*stylesheet")
+                    self.assertNotRegex(" ".join(re.findall(r"<style>(.*?)</style>", text, re.S)), r"\b(Inter|IBM Plex)\b")
 
     def test_w3c_notice_shipped(self):
         """Material aus CSS Color 4 (W3C Software and Document License): Vermerk in der ersten Zeile der ausgelieferten
@@ -400,11 +412,81 @@ class TestSite(unittest.TestCase):
                         self.assertEqual("data-empty" in pk, empty, pk)
         self.assertEqual(seen, {"color", "colors", "text"})
 
+    def test_legal_notice_everywhere(self):
+        """Impressum: Jede HTML-Seite verlinkt es mit einem Klick, jede Sprachseite das ihrer Sprache, Sprachweiche und 404
+        beide, auch in der Testaufgabe. Die Seite zeigt die Angaben aus data/legal.json für Anbieter und Verantwortlichen."""
+        for site in self.sites():
+            legal = {lang: site / build.path(lang, "legal") / "index.html" for lang in ("de", "en")}
+            for page in sorted(site.rglob("*.html")):
+                got = {resolve(site, page, r) for r in parse(page).refs if r and not re.match(r"^(https?:|mailto:|data:|#)", r)}
+                first = page.relative_to(site).parts[0]
+                want = [legal[first]] if first in legal else list(legal.values())
+                with self.subTest(page=str(page.relative_to(ROOT))):
+                    for w in want:
+                        self.assertIn(w, got)
+        from web.copy import legal as LEGAL
+        L = json.loads((ROOT / "data" / "legal.json").read_text(encoding="utf-8"))
+        addr = "<br>".join(html.escape(x) for x in L["address"])
+        for lang in ("de", "en"):
+            t = (DOCS / build.path(lang, "legal") / "index.html").read_text(encoding="utf-8")
+            T = LEGAL.COPY[lang]["legal"]
+            with self.subTest(lang=lang):
+                self.assertNotIn('class="stub"', t)
+                for k in ("h.provider", "parcels", "h.contact", "h.vat", "vat", "h.responsible"):
+                    self.assertIn(html.escape(T[k]), t, k)
+                self.assertIn(f'{html.escape(T["email"])} <a href="mailto:{L["email"]}">{L["email"]}</a>', t)
+                self.assertIn(f'{html.escape(T["vat"])}<br>{L["vat_id"]}</p>', t)
+                self.assertIn(f'<p>{html.escape(L["name"])}<br>', t)
+                self.assertIn(f'<p>{html.escape(L["responsible"])}<br>', t)
+                self.assertEqual(t.count(addr), 2, "Anschrift bei Anbieter und Verantwortlichem")
+                if lang == "en":
+                    self.assertEqual(t.count(f'<span lang="de">{addr}</span>'), 2, "deutsche Anschrift mit lang")
+
+    def test_sibling_links(self):
+        """Bildsprache und Designsprache: jede Sprachseite verlinkt beide in ihrer Sprache, Sprachweiche und 404 die Startseite."""
+        for site in self.sites():
+            for page in sorted(site.rglob("*.html")):
+                refs = parse(page).refs
+                first = page.relative_to(site).parts[0]
+                with self.subTest(page=str(page.relative_to(ROOT))):
+                    for _, url in build.SIBLINGS:
+                        self.assertIn(url + (first + "/" if first in ("de", "en") else ""), refs)
+
     def test_assets_versioned(self):
         for page in lang_pages(DOCS):
             for ref in parse(page).refs:
                 if "assets/" in ref:
                     self.assertRegex(ref, r"\?v=[0-9a-f]{10}$", ref)
+
+
+class TestLegalData(unittest.TestCase):
+    def test_legal_details_only_in_data(self):
+        """Die Angaben des Impressums stehen genau einmal im Repo (data/legal.json), nicht von Hand in Seiten oder Texten."""
+        L = json.loads((ROOT / "data" / "legal.json").read_text(encoding="utf-8"))
+        unique = [L["vat_id"], L["email"], L["address"][0], L["address"][1]]
+        files = [ROOT / n for n in ("build.py", "CONTRIBUTING.md", "README.md", "README.de.md", "LICENSE", "LICENSE-CONTENT.md")]
+        for d in ("pages", "web", "tools", "data", "tests", "patterns", ".github"):
+            files += [f for f in (ROOT / d).rglob("*") if f.is_file() and f.suffix not in (".pyc", ".woff2", ".png")
+                      and "out" not in f.relative_to(ROOT / d).parts[:1]]
+        self.assertGreater(len(files), 50)
+        for f in files:
+            if f == ROOT / "data" / "legal.json":
+                continue
+            text = f.read_text(encoding="utf-8")
+            for u in unique:
+                self.assertNotIn(u, text, str(f.relative_to(ROOT)))
+
+    def test_legal_details_shape(self):
+        """pages/legal.check erkennt gekürzte Angaben (der Build bricht dann ab), ohne die Werte zu wiederholen."""
+        from pages import legal
+        L = json.loads((ROOT / "data" / "legal.json").read_text(encoding="utf-8"))
+        self.assertEqual(legal.check(L), [])
+        bad = [dict(L, address=L["address"][:i] + L["address"][i + 1:]) for i in range(len(L["address"]))]
+        bad += [dict(L, vat_id=L["vat_id"][:-1]), dict(L, email=L["email"].rsplit(".", 1)[0]),
+                dict(L, name=L["name"].split()[0]), dict(L, responsible=""), {k: v for k, v in L.items() if k != "email"}]
+        for i, d in enumerate(bad):
+            with self.subTest(case=i):
+                self.assertNotEqual(legal.check(d), [])
 
 
 class TestCompact(unittest.TestCase):
