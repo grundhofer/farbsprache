@@ -1,4 +1,4 @@
-"""Startseite (Spezifikation 2.5): eine Frage, sieben Aufgaben, Farbfeld, Vertrauensblock.
+"""Startseite: eine Frage, sieben Aufgaben, Farbfeld, Vertrauensblock.
 
 Die Kacheln entstehen aus data/tasks/_order.json. Fehlt eine Aufgabe (nur mit --allow-missing),
 steht dort eine Platzhalterkachel. Die Mini-Vorschauen sind statisch: patterns/<task>-mini.svg,
@@ -7,7 +7,7 @@ gefüllt mit Startpalette 1 über --d-*-Variablen, ohne Neuberechnung im Browser
 from tools import color as C
 
 esc = C.esc
-START = "oklch(0.48 0.08 215)"  # Startwert Petrol des Farbfelds (2.5)
+START = "oklch(0.48 0.08 215)"  # Startwert Petrol des Farbfelds
 
 
 def seed_line(c, lang, hx):

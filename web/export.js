@@ -1,6 +1,6 @@
 /* Generische Export-Renderer von Farbsprache (FS.export): CSS, Tailwind v4, DTCG, Hex-Liste,
-   Prompt für Coding-Agenten, Begründung. Rein, ohne DOM. Spiegel von tools/export.py
-   (Bauspezifikation 5.0 bis 5.7, 7.5). Die Ausgabe ist Byte für Byte gleich (tests/export.test.cjs). */
+   Prompt für Coding-Agenten, Begründung. Rein, ohne DOM. Spiegel von tools/export.py.
+   Die Ausgabe ist Byte für Byte gleich (tests/export.test.cjs). */
 (function (root, factory) {
   'use strict';
   var api = factory(root);
@@ -75,7 +75,7 @@
     return out;
   }
   function cssName(r) { return r.css_name || r.id; }
-  // Rollen-ID → Exportname (6.3): Paare in Prompt und DTCG nennen dieselben Namen wie die Tokens
+  // Rollen-ID → Exportname: Paare in Prompt und DTCG nennen dieselben Namen wie die Tokens
   function cssNames(task) { var o = {}, i; for (i = 0; i < task.roles.length; i++) { o[task.roles[i].id] = cssName(task.roles[i]); } return o; }
   function commentSafe(s) { return s.split('*/').join('* /'); }
   function modeWord(ctx, mode) { return has(ctx.core, 'mode.' + mode) ? ctx.core['mode.' + mode] : mode; }
@@ -157,7 +157,7 @@
     return mode ? t.split('{mode}').join(modeWord(ctx, mode)) : t;
   }
 
-  // ---------- CSS (5.1)
+  // ---------- CSS
   function cssBody(palette, task, ctx, lang, opts) {
     var modes = palette.modes, lines = [], width = 0, per = [], i, j, rs, ind, r, hx, ok, use, note;
     for (i = 0; i < modes.length; i++) {
@@ -197,7 +197,7 @@
     return lines.concat(cssBody(palette, task, ctx, lang, opts)).join('\n');
   }
 
-  // ---------- Tailwind v4 (5.2)
+  // ---------- Tailwind v4
   // Rollenfamilie für die Zeilen im Tailwind-Export (Spiegel von export._stem)
   function stem(name) {
     var s = name.indexOf('on-') === 0 ? name.slice(3) : name, t;
@@ -241,7 +241,7 @@
     }
     lines.push('');
     lines.push('@theme inline {');
-    // Utilities nur für Rollen, die jeder Modus definiert (5.2)
+    // Utilities nur für Rollen, die jeder Modus definiert
     for (i = 0; i < names.length; i++) {
       for (j = 0; j < seen.length; j++) { if (!seen[j][names[i]]) { break; } }
       if (j === seen.length) { lines.push('  --color-' + names[i] + ': var(--' + names[i] + ');'); }
@@ -250,7 +250,7 @@
     return lines.join('\n');
   }
 
-  // ---------- Design-Tokens nach DTCG 2025.10 (5.3)
+  // ---------- Design-Tokens nach DTCG 2025.10
   function component(b) { return dec(Math.floor((2 * b * 10000 + 255) / 510), 4); }
   function js(s) { return JSON.stringify(s); }
   // Kontrast für JSON: abgeschnitten wie fmtRatio (auch die Schwellenregel), Punkt, ohne Endnullen
@@ -301,7 +301,7 @@
     return out;
   }
 
-  // ---------- Hex-Liste (5.7)
+  // ---------- Hex-Liste
   function hexList(palette, task, ctx, lang, opts) {
     var parts = [], mi, mode, rs, width, i, rows;
     for (mi = 0; mi < palette.modes.length; mi++) {
@@ -318,7 +318,7 @@
     return parts.join('\n\n') + '\n\n' + tail.join('\n');
   }
 
-  // ---------- Prompt für Coding-Agenten (5.4)
+  // ---------- Prompt für Coding-Agenten
   function joinAnd(items, core) { return items.length === 1 ? items[0] : items.slice(0, -1).join(', ') + ' ' + core.and + ' ' + items[items.length - 1]; }
   // Normquellen derselben Norm zusammengefasst (Spiegel von export._norm_list): „WCAG 2.2, 2.4.7 und 1.4.11“
   function normList(shorts, core) {
@@ -437,7 +437,7 @@
     return out.join('\n');
   }
 
-  // ---------- Begründung (5.6)
+  // ---------- Begründung
   function rationale(palette, task, ctx, lang, opts) {
     var parts = [], list_ = ctx.text.rationale, i, e;
     for (i = 0; i < list_.length; i++) {

@@ -1,6 +1,6 @@
-"""Generator der Aufgabe Diagramm oder Dashboard (Spezifikation 3.3, 4.4). Spiegel von web/gen/charts.js.
+"""Generator der Aufgabe Diagramm oder Dashboard. Spiegel von web/gen/charts.js.
 
-Vertrag nach 7.4: build(task, inp, ctx) -> Palettenobjekt (6.14); der Rahmen setzt task, preset, input, name_de,
+Vertrag: build(task, inp, ctx) -> Palettenobjekt; der Rahmen setzt task, preset, input, name_de,
 name_en. Ein Modus („default“), der Hintergrund kommt aus der Option bg. Datentypen t: cat (Gruppen), seq
 (Verlauf), div (Abweichung), hl (eine Linie hervorheben). Familien nur innerhalb einer Familie, nie gemischt.
 Die eigene Farbe wird Serie 1 (cat) bzw. die Hervorhebung (hl), bei Linien vorher per solve_l auf 3:1 gebracht;
@@ -8,7 +8,7 @@ fiele die Hervorhebung dabei praktisch mit dem Kontextgrau zusammen, bleibt Okab
 bei seq und div bestimmt sie den Farbton der Familie „seed“. Festlegungen dieser Datei (Konvention, eigen):
 Verläufe stehen so, dass „mehr“ sich stärker vom Hintergrund abhebt (auf Weiß dunkler, auf Dunkel heller);
 bei Abweichungen steht die kühle Seite zuerst (Stufe 1 = weit darunter).
-Zusätzlich view_vars (Anzeige des Musters), exports["js"] (JS-Array, 5.8) und die generischen Exporte mit dem
+Zusätzlich view_vars (Anzeige des Musters), exports["js"] (JS-Array) und die generischen Exporte mit dem
 Zweck „nur Flächen mit Kontur“ für Serien unter 3:1.
 """
 import math
@@ -27,7 +27,7 @@ DEFAULT_FAM = {"cat": "okabe-ito", "seq": "viridis", "div": "blue-orange", "hl":
 CAT_FAM = {"okabe-ito": ("okabe-ito", "okabe-ito", ("black",)), "tol-bright": ("tol", "bright", ()),
            "tol-muted": ("tol", "muted", ())}
 CB_FAM = {"cb-blues": "blues", "cb-rdbu": "rdbu", "cb-puor": "puor"}
-DIV_HUES = (255.0, 50.0)      # blue-orange: kühle und warme Seite (4.4)
+DIV_HUES = (255.0, 50.0)      # blue-orange: kühle und warme Seite
 # Feste Daten der Kachelkarte 7 × 5 (Muster), Werte 0 bis 99, für jede Palette gleich
 TILE = [44, 62, 64, 57, 62, 83, 99, 44, 52, 45, 45, 62, 82, 86, 37, 33, 29, 41, 63, 73, 67,
         22, 15, 21, 42, 58, 56, 50, 2, 3, 21, 41, 44, 37, 40]
@@ -49,7 +49,7 @@ def _green(h):
 
 
 def red_green(h_a, h_b):
-    """Rot-Grün-Ablehnung für div mit eigener Farbe (4.4): Liegt ein Ende im Rotbereich (0–45° oder ab 345°)
+    """Rot-Grün-Ablehnung für div mit eigener Farbe: Liegt ein Ende im Rotbereich (0–45° oder ab 345°)
     und das andere im Grünbereich (120–160°), wird die Gegenseite h_b durch 255° ersetzt → (h_b, ersetzt)."""
     if (_red(h_a) and _green(h_b)) or (_green(h_a) and _red(h_b)):
         return 255.0, True
@@ -239,7 +239,7 @@ def build(task, inp, ctx):
     roles["grid"] = C.oklch_to_hex(GRID_L[bgk], 0.0, 0.0)
     rbm = {MODE: roles}
 
-    # Paare: Linien (cat lines, hl) normativ 3:1; Flächen (cat areas, seq, div) nur als Hinweis (4.4)
+    # Paare: Linien (cat lines, hl) normativ 3:1; Flächen (cat areas, seq, div) nur als Hinweis
     t2 = dict(task)
     if t == "cat" and o["mark"] == "areas":
         t2["pairs"] = [p for p in task["pairs"] if not p["fg"].startswith("series-")]
@@ -250,7 +250,7 @@ def build(task, inp, ctx):
     if low:
         findings.insert(0, {"id": "low-contrast", "mode": None, "severity": "note", "values": {"ratio": min(a["ratio"] for a in low)}})
 
-    # Abstände (4.1.8): schlechtester Fall normal, Deuteranopie, Protanopie; bei pr zusätzlich Graustufen getrennt
+    # Abstände: schlechtester Fall normal, Deuteranopie, Protanopie; bei pr zusätzlich Graustufen getrennt
     cols = [roles[r] for r in data]
     if t in ("seq", "div"):
         groups = [("steps", list(C.WORST_KINDS))] + ([("steps-gray", ["gray"])] if o["pr"] else [])
@@ -269,14 +269,14 @@ def build(task, inp, ctx):
         findings.append({"id": "near-jnd", "mode": None, "severity": "note", "values": {}})
 
     usage = {MODE: {r: _usage(roles[r], bg) for r in data}}
-    # advisory: Datenfarben ohne Normpaar (Stufen, Flächen) mit Wert; der Rahmen zeigt sie in Block C und F (3.3)
+    # advisory: Datenfarben ohne Normpaar (Stufen, Flächen) mit Wert; der Rahmen zeigt sie in Block C und F
     return {"task": task["id"], "preset": None, "input": inp, "name_de": None, "name_en": None,
             "modes": list(task["modes"]), "roles": rbm, "pairs": ev["pairs"], "decorative": ev["decorative"],
             "advisory": ev["advisory"], "distinct": distinct, "changes": changes, "findings": findings, "usage": usage,
             "extra": {"datasets": used, "summary": summary}}
 
 
-# ---- Name eines eigenen Zustands ohne eigene Farbe (nach Z geändert, 5.0)
+# ---- Name eines eigenen Zustands ohne eigene Farbe
 
 def display_name(palette, text, lang):
     """Name aus dem, was die Palette tatsächlich zeigt: Familie, Anzahl, Darstellung und Hintergrund. Nennt nie eine
@@ -322,7 +322,7 @@ def view_vars(palette, mode, toggles):
     return v
 
 
-# ---- JS-Array (5.8)
+# ---- JS-Array
 
 def _js(palette, task, ctx, lang, opts=None):
     o = palette["input"]["options"]
@@ -347,7 +347,7 @@ def _js(palette, task, ctx, lang, opts=None):
     return "\n".join(lines)
 
 
-# ---- Zweck der Datenfarben unter 3:1 (4.4): „nur Flächen mit Kontur“ statt „Linien, Punkte, Balken“
+# ---- Zweck der Datenfarben unter 3:1: „nur Flächen mit Kontur“ statt „Linien, Punkte, Balken“
 
 def _area_task(palette, task, ctx, lang):
     """Aufgabe für die Exporte, in der Serien mit usage area den Zweck use.area tragen (Text mit der Konturfarbe)."""

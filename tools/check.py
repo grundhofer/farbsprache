@@ -1,4 +1,4 @@
-"""Palette prüfen (Spezifikation 3.8, 4.9, 5.8): Scanner, Rollen, Befund-Engine, Reparatur, Ansicht und Exporte.
+"""Palette prüfen: Scanner, Rollen, Befund-Engine, Reparatur, Ansicht und Exporte.
 
 Spiegel von web/check.js (FS.check). Rein und deterministisch, ohne Datei-IO außer im Kommandozeilenteil.
 Der Build rendert damit das Beispiel der Prüfseite statisch, der Browser rendert jede eigene Eingabe mit
@@ -45,7 +45,7 @@ def _ident_after(text, i):
     return i < len(text) and bool(_IDENT.fullmatch(text[i]))
 
 
-# ---- Scanner (4.9)
+# ---- Scanner
 
 def _blocks(text):
     """Blöcke {…} mit ihrem Selektor: [(öffnet, schließt, prelude)]. Unvollständige schließen am Textende."""
@@ -324,7 +324,7 @@ def _target(fid, cfg, refs):
 
 
 def _repair_contrast(it, hexes):
-    """Reparatur nach 4.9: solve_l mit gleichem Farbton und gleicher Buntheit, weg vom Hintergrund."""
+    """Reparatur: solve_l mit gleichem Farbton und gleicher Buntheit, weg vom Hintergrund."""
     a = hexes[it["i"]]
     L, Cc, h = C.hex_to_oklch(a)
     ya = C.rel_lum(a)
@@ -380,7 +380,7 @@ def _repair_distance(fid, g1, g2, m, cfg, refs, items, hexes, members, cache):
 
 
 def analyze(sc, cfg, refs, state=None):
-    """Befund-Engine (4.9). state: {confirmed: bool, roles: [rolle|None je Farbe] | None, bgi: int | None}.
+    """Befund-Engine. state: {confirmed: bool, roles: [rolle|None je Farbe] | None, bgi: int | None}.
     → Modell {colors, ctxs, confirmed, has_names, notes}. Indizes sind global (Reihenfolge von scan)."""
     state = state or {}
     raw = sc["colors"]
@@ -948,7 +948,7 @@ def render(m, R, opts=None):
     return "".join(out)
 
 
-# ---- Exporte (5.8)
+# ---- Exporte
 
 def _sec_lines(R, m, cx, sev):
     out = []
@@ -1003,7 +1003,7 @@ def hexlist(m, R):
 
 
 def css(m, R):
-    """CSS mit Rollen (nur wenn Rollen vergeben sind), dunkler Kontext über prefers-color-scheme wie 5.1."""
+    """CSS mit Rollen (nur wenn Rollen vergeben sind), dunkler Kontext über prefers-color-scheme wie der CSS-Export in tools/export.py."""
     T, cols = R["T"], m["colors"]
     lines = ["/* " + _fill(T["hex.head"], {"date": R["date"]}), "   " + T["css.checked"], "   " + _fill(T["hex.link"], {"url": R["url"]}) + " */"]
     for k, cx in enumerate(m["ctxs"]):
@@ -1033,7 +1033,7 @@ def css(m, R):
 
 
 def has_css(m):
-    """CSS gibt es nur mit Rollen (5.9)."""
+    """CSS gibt es nur mit Rollen."""
     return any(c["role"] for c in m["colors"])
 
 
@@ -1055,7 +1055,7 @@ def export_html(m, R):
     panels = []
     for i, (f, text) in enumerate(ex):
         pid = "exp-" + f + "-0"
-        name, mime = X.filename("check", None, f), X.mime(f)  # Schema 5.0: farbsprache-check-eigen.<ext>
+        name, mime = X.filename("check", None, f), X.mime(f)  # Schema: farbsprache-check-eigen.<ext>
         panels.append(f'<div class="tabpanel{" on" if i == 0 else ""}" id="panel-{f}" role="tabpanel" aria-labelledby="tab-{f}">'
                       f'<h3 class="panel-h">{C.esc(F["fmt." + f])}</h3>'
                       f'<pre class="code" id="{pid}" tabindex="0"><code>{C.esc(text)}</code></pre>'

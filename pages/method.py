@@ -1,6 +1,6 @@
-"""Seite Methode (Spezifikation 3.10): 16 Abschnitte, Texte in web/copy/method.py.
+"""Seite Methode: 16 Abschnitte, Texte in web/copy/method.py.
 
-Jede Zahl kommt über einen Platzhalter (6.12) oder aus den Daten: Konstanten aus data/color-constants.json,
+Jede Zahl kommt über einen Platzhalter oder aus den Daten: Konstanten aus data/color-constants.json,
 Raster aus data/check.json, Theme aus web/theme.py. Die Vergleichstabelle (Abschnitt 6) und die Abweichung
 des Anzeige-Graus (Abschnitt 4) rechnet diese Datei beim Bau. [[quellen-id]] wird ein Link auf die Quellenseite.
 """
@@ -144,7 +144,7 @@ def tol_scheme(site, key):
 
 
 def comparison_table(site, lang, T):
-    """Vergleichstabelle (4.1.8, 3.10 Abschnitt 6), beim Bau aus den Datensätzen gerechnet."""
+    """Vergleichstabelle (Abschnitt 6), beim Bau aus den Datensätzen gerechnet."""
     F = site.copy[lang]["frame"]
     rows = [("okabe-ito", site.refs.get("okabe-ito-7", {}).get("colors")), ("tol-bright", tol_scheme(site, "bright")),
             ("tol-muted", tol_scheme(site, "muted")), ("naive-rainbow", site.refs.get("naive-rainbow-7", {}).get("colors"))]
@@ -166,7 +166,7 @@ def comparison_table(site, lang, T):
             v = C.render_text("{dist:" + md["a"] + "/" + md["b"] + "/" + k + "}", {}, lang, False)[0]
             cells.append(f'<td data-label="{esc(F["kind." + k])}">{v}<small>{md["a"]}/{md["b"]}</small></td>')
         body.append(f'<tr><th scope="row">{name}<span class="m-sw" aria-hidden="true">{sw}</span></th>{"".join(cells)}</tr>')
-    # eigener Name der scrollbaren Region, nicht derselbe wie der des Abschnitts (R4-16)
+    # eigener Name der scrollbaren Region, nicht derselbe wie der des Abschnitts
     return (f'<div class="cmp-wrap" role="region" tabindex="0" aria-label="{esc(TP.fill(T["tbl_l"], {"name": T["s6.h"]}))}"><table class="cmp"><thead><tr><th scope="col">{esc(T["s6.th"])}</th>{head}</tr></thead>'
             f'<tbody>{"".join(body)}</tbody></table></div>')
 
@@ -186,8 +186,8 @@ def findings_table(site, lang, T):
 
 
 def gate_state(site, T, g):
-    """Stand eines Release-Gates. Beim Gate models kommt der Stand je Bildmodell aus data/models.json (P4), beim Gate office
-    der Stand der Menüwege aus der Aufgabe slides (P3); die Office-Bezeichnungen selbst bleiben beim Stand aus COPY."""
+    """Stand eines Release-Gates. Beim Gate models kommt der Stand je Bildmodell aus data/models.json, beim Gate office
+    der Stand der Menüwege aus der Aufgabe slides; die Office-Bezeichnungen selbst bleiben beim Stand aus COPY."""
     models = (site.D.get("models") or {}).get("models") or []
     if g.get("id") == "models" and models:
         # Ist die gelesene Doku eine Archivfassung (data/models.json, checked = Datum der Archivfassung), steht das dabei

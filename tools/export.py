@@ -1,8 +1,8 @@
-"""Generische Export-Renderer von Farbsprache (Spezifikation 5.0 bis 5.7, 7.5). Spiegel von web/export.js.
+"""Generische Export-Renderer von Farbsprache. Spiegel von web/export.js.
 
 Jeder Renderer ist eine reine Funktion render(palette, task, ctx, lang, opts) und liefert einen
-String oder eine Liste von Blöcken {label, text, suffix, lang}. Quelle ist immer das Palettenobjekt
-(6.14). Jede Zahl kommt aus den Formatierern in tools/color.py. Abschnittstexte kommen aus ctx
+String oder eine Liste von Blöcken {label, text, suffix, lang}. Quelle ist immer das Palettenobjekt.
+Jede Zahl kommt aus den Formatierern in tools/color.py. Abschnittstexte kommen aus ctx
 (Texte der Seite), nie aus dem Renderer.
 
 ctx: {date, url, name, task_name, core, text, rules, sources, refs, datasets, data}
@@ -97,7 +97,7 @@ def css_name(r):
 
 
 def css_names(task):
-    """Rollen-ID → Exportname (6.3). Paare in Prompt und DTCG nennen dieselben Namen wie die Tokens."""
+    """Rollen-ID → Exportname. Paare in Prompt und DTCG nennen dieselben Namen wie die Tokens."""
     return {r["id"]: css_name(r) for r in task["roles"]}
 
 
@@ -137,7 +137,7 @@ def _show_value(cond, palette, mode):
 
 
 def show_if(cond, palette):
-    """Bedingung einer Regel (6.5) für ein Palettenobjekt. Ohne Modus gilt sie, wenn sie in einem Modus gilt.
+    """Bedingung einer Regel für ein Palettenobjekt. Ohne Modus gilt sie, wenn sie in einem Modus gilt.
     metric: cr | dist | gs | count | finding. count zählt Rollen mit Präfix a; finding prüft palette.findings."""
     if not cond:
         return True
@@ -158,7 +158,7 @@ def show_if(cond, palette):
 
 def blocks(x):
     """String oder Blockliste → Liste von {label, text, suffix, lang, note, ext}. note ist eine Vorlage aus COPY
-    (vertrauenswürdiges HTML mit Platzhaltern 6.12), die der Rahmen außerhalb des Kopiertexts zeigt. ext ist eine eigene
+    (vertrauenswürdiges HTML mit Platzhaltern), die der Rahmen außerhalb des Kopiertexts zeigt. ext ist eine eigene
     Endung des Blocks für „Als Datei speichern“ (etwa json für den Recraft-Block), sonst None."""
     if isinstance(x, str):
         return [{"label": None, "text": x, "suffix": "", "lang": None, "note": None, "ext": None}]
@@ -196,18 +196,18 @@ def _header(ctx, mode=None):
 
 
 def header(ctx, mode=None):
-    """Kopfzeile jedes Exports (5.0): „Farbsprache · {Palette} · {Aufgabe} · berechnet am {Datum}“, mit mode
+    """Kopfzeile jedes Exports: „Farbsprache · {Palette} · {Aufgabe} · berechnet am {Datum}“, mit mode
     zusätzlich der Modus. Für aufgabenspezifische Renderer (Spiegel: FS.export.header)."""
     return _header(ctx, mode)
 
 
 def notices(palette, ctx, task=None, opts=None):
-    """Lizenzpflichtige Nennungen (5.0) der Datensätze aus palette.extra.datasets, jede einmal. Gehören in den
+    """Lizenzpflichtige Nennungen der Datensätze aus palette.extra.datasets, jede einmal. Gehören in den
     Kopiertext jedes Exports, der solche Farben enthält (Spiegel: FS.export.notices)."""
     return _notices(palette, ctx, task, opts)
 
 
-# ---- CSS (5.1)
+# ---- CSS
 
 def _css_body(palette, task, ctx, lang, opts):
     modes = palette["modes"]
@@ -250,7 +250,7 @@ def css(palette, task, ctx, lang, opts=None, header=True):
     return "\n".join(lines + _css_body(palette, task, ctx, lang, opts))
 
 
-# ---- Tailwind v4 (5.2)
+# ---- Tailwind v4
 
 def _stem(name):
     """Rollenfamilie für die Zeilen im Tailwind-Export: ohne on- vorn und ohne -subtle, -strong, -muted, -text,
@@ -264,7 +264,7 @@ def _stem(name):
 
 
 def _same_line(prev, r):
-    """Gleiche Familie oder zwei Flächen hintereinander (bg, surface, surface-2) stehen in einer Zeile (5.2)."""
+    """Gleiche Familie oder zwei Flächen hintereinander (bg, surface, surface-2) stehen in einer Zeile."""
     return _stem(css_name(prev)) == _stem(css_name(r)) or (prev["kind"] == "surface" and r["kind"] == "surface")
 
 
@@ -305,7 +305,7 @@ def tailwind(palette, task, ctx, lang, opts=None):
             lines.append("}")
     lines.append("")
     lines.append("@theme inline {")
-    # Utilities nur für Rollen, die jeder Modus definiert (5.2): sonst färbt etwa bg-chart-5 hell nichts
+    # Utilities nur für Rollen, die jeder Modus definiert: sonst färbt etwa bg-chart-5 hell nichts
     for n in names:
         if all(n in s for s in seen):
             lines.append(f"  --color-{n}: var(--{n});")
@@ -313,7 +313,7 @@ def tailwind(palette, task, ctx, lang, opts=None):
     return "\n".join(lines)
 
 
-# ---- Design-Tokens nach DTCG 2025.10 (5.3)
+# ---- Design-Tokens nach DTCG 2025.10
 
 def _component(byte):
     return dec((2 * byte * 10000 + 255) // 510, 4)
@@ -373,7 +373,7 @@ def dtcg(palette, task, ctx, lang, opts=None):
     return out
 
 
-# ---- Hex-Liste (5.7)
+# ---- Hex-Liste
 
 def hex_list(palette, task, ctx, lang, opts=None):
     parts = []
@@ -387,10 +387,10 @@ def hex_list(palette, task, ctx, lang, opts=None):
     return "\n\n".join(parts) + "\n\n" + "\n".join(tail)
 
 
-hex = hex_list  # Spezifikation 7.5: FS.export.hex ↔ export.hex
+hex = hex_list  # FS.export.hex ↔ export.hex
 
 
-# ---- Prompt für Coding-Agenten (5.4)
+# ---- Prompt für Coding-Agenten
 
 def _join_and(items, core):
     """Aufzählung mit core["and"] vor dem letzten Glied: „a“, „a und b“, „a, b und c“."""
@@ -509,7 +509,7 @@ def agent(palette, task, ctx, lang, opts=None):
     return "\n".join(out)
 
 
-# ---- Begründung (5.6)
+# ---- Begründung
 
 def rationale(palette, task, ctx, lang, opts=None):
     parts = []
@@ -542,7 +542,7 @@ def render(fmt, palette, task, ctx, lang, opts=None, gen=None):
 
 
 def filename(task_id, preset, fmt, suffix="", fmts=None, ext=None):
-    """farbsprache-{task}-{preset|eigen}{suffix}.{ext} (5.0). Hat ein anderes Format aus fmts (alle Formate der
+    """farbsprache-{task}-{preset|eigen}{suffix}.{ext}. Hat ein anderes Format aus fmts (alle Formate der
     Aufgabe) dieselbe Endung, steht das Format im Namen: farbsprache-{task}-{preset|eigen}-{fmt}{suffix}.{ext}.
     ext: eigene Endung des Blocks (blocks()[i]["ext"]), sonst die des Formats."""
     ext = ext or EXT.get(fmt, "txt")

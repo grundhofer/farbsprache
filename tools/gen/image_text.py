@@ -1,7 +1,7 @@
-"""Generator der Aufgabe Text auf Bild (T6, Bauspezifikation 4.7). Spiegel von web/gen/image-text.js.
+"""Generator der Aufgabe Text auf Bild. Spiegel von web/gen/image-text.js.
 
-build(task, inp, ctx) -> Palettenobjekt (6.14) mit einem Modus „default“. Die eigene Farbe (URL-Name sc) ist die
-Schleierfarbe, tc die Schriftfarbe, tg das Ziel (3 oder 4,5). Gerechnet wird mit scrim_alpha (4.1.15) gegen den
+build(task, inp, ctx) -> Palettenobjekt mit einem Modus „default“. Die eigene Farbe (URL-Name sc) ist die
+Schleierfarbe, tc die Schriftfarbe, tg das Ziel (3 oder 4,5). Gerechnet wird mit scrim_alpha gegen den
 schlimmsten Pixel nach F83: reines Weiß hinter heller Schrift, reines Schwarz hinter dunkler. Ohne Lösung
 (selbst volle Deckkraft reicht nicht) wirft der Generator SolveError("scrim-unreachable").
 Aufgabenspezifische Exporte: Schleier-CSS, Werte und ein Prompt für Coding-Agenten, alles nur mit Hex-Werten.
@@ -9,7 +9,7 @@ Aufgabenspezifische Exporte: Schleier-CSS, Werte und ein Prompt für Coding-Agen
 from tools import color as C, export as X
 
 # Feste Referenzflächen des Musters (Pixel eines Fotos, keine Palettenrollen): reines Weiß und reines Schwarz
-# sind Pflicht (3.6), dazu Grau- und Farbtöne, die wie Himmel, Laub, Haut oder Asphalt wirken.
+# sind Pflicht, dazu Grau- und Farbtöne, die wie Himmel, Laub, Haut oder Asphalt wirken.
 REF = {"ref-white": "#FFFFFF", "ref-black": "#000000", "ref-sky": "#DCEAF4", "ref-sand": "#EFE3C8",
        "ref-leaf": "#5E7F3A", "ref-stone": "#8A8F96", "ref-night": "#141B2D", "ref-dusk": "#3A3F55",
        "ref-light": "#FFD98A", "ref-red": "#C2413B", "ref-blue": "#2F6FB0"}
@@ -36,7 +36,7 @@ def build(task, inp, ctx):
     ev = C.evaluate(t2, roles, "skip")
     worst = "white" if res["worst"] == "#FFFFFF" else "black"
     tkey = "3" if target == 3.0 else "4.5"
-    # Es zählt der kleinere Kontrast (4.7). Die Seite zeigt den 8-Bit-Wert und sagt, ob er der kleinere ist. Gleichstand
+    # Es zählt der kleinere Kontrast. Die Seite zeigt den 8-Bit-Wert und sagt, ob er der kleinere ist. Gleichstand
     # innerhalb der Rechengenauigkeit (1e-9, wie im Paritätstest) gilt als 8 Bit, in Python und JS gleich.
     low = "8bit" if res["ratio_at_percent_8bit"] <= res["ratio_at_percent"] + 1e-9 else "float"
     return {"task": task["id"], "preset": None, "input": inp, "name_de": None, "name_en": None,
@@ -91,7 +91,7 @@ def _fill(t, values):
 
 
 def _scrim_css(palette, task, ctx, lang, opts=None):
-    """Schleier-CSS (5.8): unteres Feld 0 bis 40 % voll gedeckt, Auslauf auf 0 bei 70 % (Konvention)."""
+    """Schleier-CSS: unteres Feld 0 bis 40 % voll gedeckt, Auslauf auf 0 bei 70 % (Konvention)."""
     w = _words(palette, ctx, lang)
     r, tx = w["r"], w["tx"]
     a = _alpha(w["s"]["percent"])
@@ -108,7 +108,7 @@ def _scrim_css(palette, task, ctx, lang, opts=None):
 
 
 def _values(palette, task, ctx, lang, opts=None):
-    """Werte (5.8): Schrift, Schleier, Mindestdeckkraft, Kontrast beim schlimmsten Pixel, Ziel."""
+    """Werte: Schrift, Schleier, Mindestdeckkraft, Kontrast beim schlimmsten Pixel, Ziel."""
     w = _words(palette, ctx, lang)
     r, s, tx = w["r"], w["s"], w["tx"]
     low = min(s["ratio"], s["ratio_8bit"])
@@ -129,7 +129,7 @@ def _values(palette, task, ctx, lang, opts=None):
 
 
 def _agent(palette, task, ctx, lang, opts=None):
-    """Prompt für Coding-Agenten (5.4, Variante Text auf Bild): nur Hex-Werte, keine CSS-Variablen."""
+    """Prompt für Coding-Agenten (Variante Text auf Bild): nur Hex-Werte, keine CSS-Variablen."""
     w = _words(palette, ctx, lang)
     r, s, tx, core = w["r"], w["s"], w["tx"], ctx["core"]
     a = _alpha(s["percent"])

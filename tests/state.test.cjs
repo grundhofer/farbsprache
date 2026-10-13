@@ -1,5 +1,5 @@
 'use strict';
-// URL-Zustand (Spezifikation 2.3, 7.9): je Aufgabe Rundlauf URL → Zustand → URL, Sprachlink mit allen
+// URL-Zustand: je Aufgabe Rundlauf URL → Zustand → URL, Sprachlink mit allen
 // Parametern, c schlägt p, ungültige Werte fallen weg, farbsprache.color wird nie automatisch angewandt,
 // gesperrter Speicher wirft nicht. Die Aufgaben kommen aus den gebauten Seiten (#task-data).
 const assert = require('node:assert/strict');
@@ -83,7 +83,7 @@ for (const file of pages()) {
           if (id) st.o[id] = v;
           const q = S.state.write(task, st);
           const back = S.state.read(task, q);
-          // preset_control ohne c: Ein Wert, den die Startpalette nicht hat, wählt seine Startpalette (2.3, wie beim Klick).
+          // preset_control ohne c: Ein Wert, den die Startpalette nicht hat, wählt seine Startpalette (wie beim Klick).
           // Das Ergebnis ist genau bekannt: p der Startpalette dieses Werts, der Wert selbst fällt als Standard weg.
           const pc = task.preset_control, to = pc && !c && id === pc ? task.presets.find((x) => x.options[pc] === v) : null;
           if (to && task.presets.find((x) => x.id === (p || task.presets[0].id)).options[pc] !== v) {
@@ -120,7 +120,7 @@ for (const file of pages()) {
   });
 
   if (task.controls.some((c) => c.type === 'colors')) {
-    test(`Farbliste f steht kommagetrennt in der URL, ohne %2C (2.3, T-19): ${rel}`, () => {
+    test(`Farbliste f steht kommagetrennt in der URL, ohne %2C: ${rel}`, () => {
       const ctl = task.controls.find((c) => c.type === 'colors');
       const q = S.state.write(task, { c: null, p: null, o: { [ctl.id]: ['#1B3A76', '#F6F3ED', '#D13B2F'] }, t: {} });
       assert.equal(q, ctl.id + '=1B3A76,F6F3ED,D13B2F');
@@ -137,7 +137,7 @@ for (const file of pages()) {
     assert.equal(r.state.p, null);
     assert.deepEqual(plain(r.state.o), {});
     assert.equal(S.state.write(task, r.state), '');
-    // Nicht dekodierbare Teile fallen weg und die URL wird bereinigt (T-13), gültige Teile bleiben
+    // Nicht dekodierbare Teile fallen weg und die URL wird bereinigt, gültige Teile bleiben
     for (const bad of [`${sp}=%ZZ`, '%ZZ=1', `${sp}=%E0%A4%A`]) {
       const b = S.state.read(task, bad + '&p=' + task.presets[task.presets.length - 1].id);
       assert.equal(b.dirty, true, bad);
@@ -201,7 +201,7 @@ for (const file of pages()) {
     assert.equal(S.storage(throwing).set('a', 'b'), false);
   });
 
-  // Eigenes ist nie die Startpalette (5.0, 5.4): preset null, Name „{Startpalette}, angepasst“ bei geänderten Optionen,
+  // Eigenes ist nie die Startpalette: preset null, Name „{Startpalette}, angepasst“ bei geänderten Optionen,
   // „Eigene Farbe“ mit c, „Eigene Farben“ mit einem colors-Steuerelement; der Link im Export trägt kein erzwungenes p.
   test(`Eigene Zustände: Name, preset null und Link ohne Startpalette: ${rel}`, () => {
     const pr = task.presets[1] || task.presets[0];
@@ -210,7 +210,7 @@ for (const file of pages()) {
       const ctl = task.controls.find((x) => x.id === id);
       if (id === 'm' || ctl.view || id === task.seed_control || id === task.preset_control) continue;
       const st = { c: null, p: pr.id, o: { [id]: v }, t: {} };
-      // Mit Namenshaken (gen.displayName, nach Z geändert) steht statt der Startpalette, was die Palette zeigt
+      // Mit Namenshaken (gen.displayName) steht statt der Startpalette, was die Palette zeigt
       cases.push([st, ctl.type === 'colors' ? (l) => data.custom_names_colors[l] : (l, pal) => data.adjusted_names[l].replace('{palette}',
         data.name_text ? gen.displayName(pal, data.name_text[l], l) : pr['name_' + l])]);
     }

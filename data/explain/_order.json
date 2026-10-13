@@ -1,4 +1,4 @@
 {
-  "_comment": "Reihenfolge der Einträge auf der Seite Kurz erklärt (Spezifikation 3.9). Die Einträge selbst liefern die Pakete in data/explain/<owner>.json. Jeder Eintrag muss hier stehen, jede ID hier braucht einen Eintrag.",
+  "_comment": "Reihenfolge der Einträge auf der Seite Kurz erklärt. Die Einträge selbst stehen in data/explain/<owner>.json. Jeder Eintrag muss hier stehen, jede ID hier braucht einen Eintrag.",
   "order": ["contrast", "borders", "links", "color-alone", "oklch", "dark-mode", "simulation", "categories", "data-types", "rainbow", "projector", "scrim", "context", "harmony", "60-30-10", "meaning", "color-systems"]
 }

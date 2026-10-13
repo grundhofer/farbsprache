@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Schreibt tests/out/parity.json für den Paritätstest (Spezifikation 7.9).
+"""Schreibt tests/out/parity.json für den Paritätstest.
 
     python3 tools/parity.py
 
@@ -10,7 +10,7 @@ rechnet dieselben Eingaben mit FS.gen[<aufgabe>].build und vergleicht: Hex exakt
 Toleranz 1e-9. Eine SolveError wird als Fehlerschlüssel festgehalten; JS muss denselben Schlüssel werfen.
 Hat der Generator einen Namenshaken (display_name, JS displayName), steht dessen Name je Sprache unter names.
 
-Format (Vertrag nach P0): {"version": 1, "tasks": {id: {"site", "task", "gen_js": [Pfade], "custom_names",
+Format: {"version": 1, "tasks": {id: {"site", "task", "gen_js": [Pfade], "custom_names",
 "data": {name: Inhalt der Datei aus data_files}, "name_text"?: {lang: {name.*: Text}},
 "cases": [{"label", "preset", "inp", "ok", "palette" | "error", "names"?}]}}}
 """

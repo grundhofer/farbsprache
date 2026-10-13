@@ -1,5 +1,5 @@
 {
-  "_comment": "Bildmodelle für den Farbblock (Spezifikation 4.8.4, 5.5, 6.9). method: hex-in-prompt, palette-field, api-weights, words-only. checked ist der Stand der gelesenen Herstellerdoku unter source: das Abrufdatum, bei einer Archivfassung das Datum der Archivfassung. Die belegte Aussage und was ungeprüft blieb, stehen in data/sources/brand.json unter source_id; quote_source_id nennt die Seite des Zitats. quote wird wörtlich zitiert und ist eine Herstellerangabe. field_note steht neben dem zweiten Kopierblock (Palettenfeld, JSON), doc_note neben dem Prompt.",
+  "_comment": "Bildmodelle für den Farbblock. method: hex-in-prompt, palette-field, api-weights, words-only. checked ist der Stand der gelesenen Herstellerdoku unter source: das Abrufdatum, bei einer Archivfassung das Datum der Archivfassung. Die belegte Aussage und was ungeprüft blieb, stehen in data/sources/brand.json unter source_id; quote_source_id nennt die Seite des Zitats. quote wird wörtlich zitiert und ist eine Herstellerangabe. field_note steht neben dem zweiten Kopierblock (Palettenfeld, JSON), doc_note neben dem Prompt.",
   "models": [
     {
       "id": "flux2",

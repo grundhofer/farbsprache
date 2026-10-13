@@ -1,6 +1,6 @@
 'use strict';
 // Laufzeit der gebauten Seiten im kleinen DOM (tests/dom.cjs): Zustand aus der URL, Klicks und Eingaben wie im Browser,
-// mit den ausgelieferten Skripten. Belegt das Verhalten des Rahmens aus 2.3, 3.0 und 5.0, das kein reiner Test sieht:
+// mit den ausgelieferten Skripten. Belegt das Verhalten des Rahmens, das kein reiner Test sieht:
 // Meldung beim ersten Lauf mit unlösbarem Zustand (auch nach dem Sprachwechsel), Hinweis und Fehler unter dem Farbfeld,
 // Leeren der eigenen Farben, gedrückte Chips bei f, Optionen beim Wechsel der Startpalette (preset_control), c als Ersatz
 // für seed_param, Namen, Dateinamen und Links eigener Zustände. Dazu je Aufgabenseite ein Lauf ohne Ausnahme.
@@ -109,7 +109,7 @@ if (built) {
       const ins = p.$$('[data-ctl="f"] input');
       ins[0].value = '#112233';
       p.input(ins[1], '#FFEEDD');
-      assert.equal(p.search(), '?f=112233,FFEEDD', 'Komma unkodiert wie auf der Prüfseite (T-19)');
+      assert.equal(p.search(), '?f=112233,FFEEDD', 'Komma unkodiert wie auf der Prüfseite');
       assert.deepEqual(pressed(p, '[data-preset]'), [], `ui=${!noUi}: f gilt vor p`);
       ins[0].value = '';
       p.input(ins[1], '');
@@ -123,7 +123,7 @@ if (built) {
     }
   });
 
-  test('Eigene Farben: Jedes Feld behält seine Rolle, eine Lücke vor einem gefüllten Feld wird gemeldet statt aufgerückt (T-02)', () => {
+  test('Eigene Farben: Jedes Feld behält seine Rolle, eine Lücke vor einem gefüllten Feld wird gemeldet statt aufgerückt', () => {
     for (const rel of ['de/ki-bild', 'en/ai-image']) {
       const p = open(file(rel), '');
       const ins = p.$$('[data-ctl="f"] input'), err = p.$('[data-ctl="f"] .err');
@@ -154,7 +154,7 @@ if (built) {
     assert.equal(p.search(), '?p=cat-okabe&pr=1&bg=dark&mark=areas');
     p.click('[data-ctl="t"] [data-val="seq"]');
     assert.equal(p.search(), '?p=seq-viridis&pr=1&bg=dark&mark=areas', 'n und fam legt die Startpalette fest');
-    // Mit c wählt t keine Startpalette; „Zurücksetzen“ kehrt zur Startpalette dieses Werts zurück (2.3)
+    // Mit c wählt t keine Startpalette; „Zurücksetzen“ kehrt zur Startpalette dieses Werts zurück
     const q = open(file('de/diagramm'), 'c=E63946&bg=dark');
     q.click('[data-ctl="t"] [data-val="seq"]');
     assert.equal(q.search(), '?c=E63946&t=seq&bg=dark');
@@ -176,8 +176,8 @@ if (built) {
   });
 
   test('Eigene Zustände ohne c nennen die Startpalette nur als „angepasst“, mit f „Eigene Farben“; Dateiname eigen, Link ohne p', () => {
-    // Diagramm (gen.displayName, nach Z geändert): Der Name nennt Familie, Anzahl und Hintergrund der gezeigten Farben,
-    // nie die Familie einer anderen Startpalette; t ohne p wählt die Startpalette des Datentyps (2.3)
+    // Diagramm (gen.displayName): Der Name nennt Familie, Anzahl und Hintergrund der gezeigten Farben,
+    // nie die Familie einer anderen Startpalette; t ohne p wählt die Startpalette des Datentyps
     const cases = [['en/charts', 't=div&fam=cb-rdbu', 'RdBu, 5 steps on white, adjusted', 'Okabe-Ito, lines on white'],
       ['en/charts', 'p=div-blue-orange&fam=cb-rdbu&n=9', 'RdBu, 9 steps on white, adjusted', 'Blue-orange, 5 steps'],
       ['de/diagramm', 'p=seq-viridis&fam=cb-blues&n=9', 'Blues, 9 Stufen auf Weiß, angepasst', 'viridis, 5 Stufen'],
@@ -202,7 +202,7 @@ if (built) {
     }
   });
 
-  test('preset_control: t ohne passendes p wählt die Startpalette des Datentyps, Kopiertexte nennen keine fremde Familie (T-11)', () => {
+  test('preset_control: t ohne passendes p wählt die Startpalette des Datentyps, Kopiertexte nennen keine fremde Familie', () => {
     const cases = [['de/diagramm', 't=seq&fam=okabe-ito', '?p=seq-viridis', 'viridis, 5 Stufen', 'Okabe-Ito'],
       ['en/charts', 't=div', '?p=div-blue-orange', 'Blue-orange, 5 steps', 'Okabe-Ito'],
       ['de/diagramm', 'p=cat-okabe&t=hl', '?p=hl-gray', 'Grau mit Blau hervorgehoben', 'Linien auf Weiß'],
@@ -220,7 +220,7 @@ if (built) {
   });
 
   test('Kurz erklärt: Demo context mit Farben aus demo_vars, Knopf „Brücke zeigen“ schaltet aria-pressed und data-bridge', () => {
-    // Eingaben aus data/explain/*.json (P4), Hex rechnet der Bau; hier gegengerechnet mit color.js
+    // Eingaben aus data/explain/*.json, Hex rechnet der Bau; hier gegengerechnet mit color.js
     const entry = ['brand', 'website', 'charts', 'slides'].map((f) => jload('data/explain/' + f + '.json').entries)
       .reduce((a, b) => a.concat(b), []).find((e) => e.id === 'context');
     const C = load(['color.js']).FS.color;
@@ -241,7 +241,7 @@ if (built) {
     }
   });
 
-  test('Als Datei speichern: Recraft-JSON als .json, Design-Tokens als application/design-tokens+json (M-10)', () => {
+  test('Als Datei speichern: Recraft-JSON als .json, Design-Tokens als application/design-tokens+json', () => {
     for (const [rel, q] of [['de/ki-bild', 'mdl=recraft'], ['en/ai-image', 'p=gruen&mdl=recraft&f=1B3A76,F6F3ED,D13B2F']]) {
       const p = open(file(rel), q);
       const b = p.$('[data-download="#exp-prompt-1"]');
@@ -263,19 +263,19 @@ if (built) {
     }
   });
 
-  test('Fehlerzustand: nichts kopierbar, was nicht zur Eingabe passt; Meldung neben dem Hauptknopf und in der Kopierleiste (R4-04, T-01)', () => {
+  test('Fehlerzustand: nichts kopierbar, was nicht zur Eingabe passt; Meldung neben dem Hauptknopf und in der Kopierleiste', () => {
     const css = fs.readFileSync(path.join(DOCS, 'assets', 'site.css'), 'utf8');
     assert.match(css, /#task\[data-error\] \[data-main\], #task\[data-error\] \[data-main-bar\], #task\[data-error\] #pal-roles \[data-copy\],\n#task\[data-error\] #kopieren > :not\(h2\):not\(\.exp-err\) \{ display:none !important; \}/);
     const state = (p) => ({ err: p.$('#task').hasAttribute('data-error'), msgs: p.$$('[data-pal-msg]').map((a) => (shown(a) ? a.textContent : null)),
       cmp: shown(p.$('.pal-cmp')) ? p.$('.pal-cmp').textContent : null, exp: shown(p.$('.exp-err')) });
-    // von der Startseite mit Rot auf Text auf Bild (R4-04): kein Lauf ergab je eine Palette, verglichen wird mit der Startpalette
+    // von der Startseite mit Rot auf Text auf Bild: kein Lauf ergab je eine Palette, verglichen wird mit der Startpalette
     for (const rel of ['de/text-auf-bild', 'en/text-on-image']) {
       const p = open(file(rel), 'c=E63946');
       const F = p.data.frame, s = state(p);
       assert.deepEqual(s, { err: true, msgs: [F['pal_msg.err'], F['pal_msg.err']], cmp: F['pal_msg.cmp'].replace('{name}', p.data.palettes[p.data.first]['name_' + p.data.lang]), exp: true }, rel);
       assert.equal(p.$('.exp-err').textContent, F['pal_msg.exp']);
     }
-    // gültig, dann unlösbar getippt (T-01): verglichen wird mit der vorigen eigenen Palette, ihre Farbe steht dabei
+    // gültig, dann unlösbar getippt: verglichen wird mit der vorigen eigenen Palette, ihre Farbe steht dabei
     const p = open(file('de/text-auf-bild'), 'sc=333333');
     assert.equal(state(p).err, false);
     p.input('#seed', '#FF00FF');
@@ -283,11 +283,11 @@ if (built) {
     assert.deepEqual(state(p), { err: true, msgs: [p.data.frame['pal_msg.err'], p.data.frame['pal_msg.err']], cmp: p.data.frame['pal_msg.cmp'].replace('{name}', 'Eigene Farbe, #333333'), exp: true });
     p.input('#seed', '#333333');
     assert.deepEqual(state(p), { err: false, msgs: [null, null], cmp: null, exp: false }, 'wieder lösbar: alles zurück');
-    // KI-Bild mit eigenen Farben ohne Lösung (dritter Fall aus T-01)
+    // KI-Bild mit eigenen Farben ohne Lösung (dritter Fall)
     assert.equal(state(open(file('de/ki-bild'), 'f=1B3A76')).err, true);
   });
 
-  test('Eigene Farbe verändert: Zeile „{n} Werte angepasst ↓“ neben dem Hauptknopf und in der Kopierleiste, Link auf die Hinweise (R4-05)', () => {
+  test('Eigene Farbe verändert: Zeile „{n} Werte angepasst ↓“ neben dem Hauptknopf und in der Kopierleiste, Link auf die Hinweise', () => {
     for (const rel of tasks()) {
       for (const q of ['', 'c=E63946', 'c=F2A900']) {
         const p = open(file(rel), q);
@@ -306,7 +306,7 @@ if (built) {
     }
   });
 
-  test('Farbfeld: Fehler erst nach einer Pause oder beim Verlassen, Kurzformen warten, eine Entprellung (R4-06, T-12)', () => {
+  test('Farbfeld: Fehler erst nach einer Pause oder beim Verlassen, Kurzformen warten, eine Entprellung', () => {
     const p = open(file('de/website'), '');
     const seed = p.$('#seed'), err = p.$('#seed-err'), strip = () => p.$('#pal-strip').innerHTML, before = strip();
     const type = (v, ms) => { seed.value = v; seed.dispatchEvent({ type: 'input', bubbles: true, preventDefault() {}, stopPropagation() {} }); p.tick(ms); };
@@ -332,7 +332,7 @@ if (built) {
     assert.equal(p.search(), '?c=EE6633');
   });
 
-  test('Live-Meldungen: #pal-notes ohne aria-live und nur bei neuem Inhalt geschrieben, je Ergebnis eine Meldung (R4-06)', () => {
+  test('Live-Meldungen: #pal-notes ohne aria-live und nur bei neuem Inhalt geschrieben, je Ergebnis eine Meldung', () => {
     const p = open(file('de/website'), 'c=E63946');
     const notes = p.$('#pal-notes');
     assert.equal(notes.hasAttribute('aria-live'), false);
@@ -352,7 +352,7 @@ if (built) {
     assert.deepEqual(hs.filter((s) => s), [i18n(home).carried], 'Startseite meldet die mitgenommene Farbe einmal');
   });
 
-  test('Zurücksetzen lässt den Fokus am Knopf (R4-15)', () => {
+  test('Zurücksetzen lässt den Fokus am Knopf', () => {
     const p = open(file('de/website'), 'c=E63946');
     const reset = p.$('[data-seed-reset]');
     reset.focus();
@@ -361,7 +361,7 @@ if (built) {
     assert.ok(p.doc.activeElement === reset, 'Fokus bleibt am Knopf, nicht im Textfeld (Tastatur auf dem Handy)');
   });
 
-  test('Farbsteuerelemente: ungültige Eingabe mit Text und aria-invalid, leerer Wähler ohne Farbe (T-07, T-20)', () => {
+  test('Farbsteuerelemente: ungültige Eingabe mit Text und aria-invalid, leerer Wähler ohne Farbe', () => {
     const k = open(file('de/ki-bild'), '');
     const ins = k.$$('[data-ctl="f"] input'), er = k.$('#ctl-f-err');
     ins[0].value = '#1B3A76';
@@ -383,7 +383,7 @@ if (built) {
     assert.equal(pk.hasAttribute('data-empty'), true, 'geleert: wieder ohne Farbe');
   });
 
-  test('Bildteile b1–b3: höchstens 200 Zeichen, längerer Text verschwindet nicht still (T-06)', () => {
+  test('Bildteile b1–b3: höchstens 200 Zeichen, längerer Text verschwindet nicht still', () => {
     const p = open(file('en/ai-image'), '');
     const b1 = p.$('#ctl-b1');
     assert.equal(b1.getAttribute('maxlength'), '200');
@@ -394,13 +394,13 @@ if (built) {
     assert.ok(p.$('#exp-prompt-0').textContent.includes('Y'.repeat(200)));
   });
 
-  test('Nicht dekodierbare URL-Teile fallen aus der Adresszeile (T-13)', () => {
+  test('Nicht dekodierbare URL-Teile fallen aus der Adresszeile', () => {
     assert.equal(open(file('de/website'), 'c=%ZZ&m=dark').search(), '?m=dark');
     assert.equal(open(file('de/website'), '%ZZ=1').search(), '');
     assert.equal(open(file('de'), 'c=%ZZ').search(), '');
   });
 
-  test('Palette prüfen: Live-Meldung mit Einzahl (R4-14)', () => {
+  test('Palette prüfen: Live-Meldung mit Einzahl', () => {
     for (const [rel, n1] of [['de/pruefen', 'Palette geprüft: 1 Befund.'], ['en/check', 'Palette checked: 1 finding.']]) {
       const p = open(file(rel), '');
       p.$('#chk-input').value = '#777777 #FFFFFF';

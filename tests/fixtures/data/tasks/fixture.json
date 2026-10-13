@@ -1,5 +1,5 @@
 {
-  "_comment": "Testaufgabe für den Rahmen (Spezifikation 8, P0 Liefert 7). Wird nie ausgeliefert. Nutzt jedes Feld aus 6.2, das ein Paket nutzen kann: zwei Modi, alle Steuerelement-Arten außer colors, Muster-Schalter, Export-Option, aufgabenspezifisches Format, bedingte Regel, Abstände mit Vergleich (mit Hex und per ID), Datensatz, Kurzergebnis, Zusatz je Paar, Blockhinweis.",
+  "_comment": "Testaufgabe für den Rahmen. Wird nie ausgeliefert. Nutzt jedes Feld von data/tasks/<aufgabe>.json, das eine Aufgabe nutzen kann: zwei Modi, alle Steuerelement-Arten außer colors, Muster-Schalter, Export-Option, aufgabenspezifisches Format, bedingte Regel, Abstände mit Vergleich (mit Hex und per ID), Datensatz, Kurzergebnis, Zusatz je Paar, Blockhinweis.",
   "id": "fixture",
   "generator": "fixture",
   "name_de": "Testaufgabe",

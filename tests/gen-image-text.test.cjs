@@ -1,5 +1,5 @@
 'use strict';
-// Fachfälle der Aufgabe Text auf Bild in JS (Paket P3): Schleier-Erwartungen 42 / 54 / 66 / 46 / 85 % mit Nachprüfung in
+// Fachfälle der Aufgabe Text auf Bild in JS: Schleier-Erwartungen 42 / 54 / 66 / 46 / 85 % mit Nachprüfung in
 // Gleitkomma und 8 Bit, schlimmster Pixel, SolveError ohne Lösung, viewVars, keine CSS-Variablen im Agent-Prompt und
 // Byte-Gleichheit der Exporte scrim, values und agent mit Python für alle Startpaletten und Ziele.
 const assert = require('node:assert/strict');
@@ -93,7 +93,7 @@ test('Exporte und Paletten JS = Python für Startpaletten, beide Ziele und Fehle
   for (const [sc, tc] of [['#E63946', '#FFFFFF'], ['#E63946', '#000000'], ['#FFD98A', '#1B1B1B'], ['#808080', '#FFFFFF'], ['#FFFFFF', '#FFFFFF']]) {
     cases.push({ seed: sc, options: { tc, tg: '4.5' } });
   }
-  // M-04: Gleichstand von Gleitkomma und 8 Bit (Mischfarbe genau #5A5A5A); Python liegt dort 1 ulp höher als JS
+  // Gleichstand von Gleitkomma und 8 Bit (Mischfarbe genau #5A5A5A); Python liegt dort 1 ulp höher als JS
   for (const sc of ['#FAFAFA', '#787878', '#7D7D7D']) cases.push({ seed: sc, options: { tc: '#000000', tg: '3' } });
   const r = spawnSync('python3', ['-c', PY, JSON.stringify(cases)], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
   assert.equal(r.status, 0, r.stderr);

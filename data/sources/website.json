@@ -1,5 +1,5 @@
 {
-  "_comment": "Quellen der Regeln und Erklärt-Einträge von P1 (Spezifikation 6.7). Jede URL am 2026-10-11 mit curl abgerufen (HTTP 200) und die Aussage im abgerufenen Text nachgelesen. claim_* darf Zahlen der Quelle zitieren. Die WCAG-Techniken, Failures und Understanding-Texte sind informativ (normative: false). Hinweis für die Zusammenführung: wcag22-2-4-7, wcag22-c40, wcag22-understanding-1-4-11 und wcag22-understanding-2-4-7 könnten auch andere Pakete anlegen; gleiche IDs müssen dann zusammengelegt werden.",
+  "_comment": "Quellen der Regeln und Erklärt-Einträge der Aufgaben Website oder App und Statusfarben. Jede URL am 2026-10-11 mit curl abgerufen (HTTP 200) und die Aussage im abgerufenen Text nachgelesen. claim_* darf Zahlen der Quelle zitieren. Die WCAG-Techniken, Failures und Understanding-Texte sind informativ (normative: false).",
   "sources": [
     {
       "id": "wcag22-understanding-2-4-7",

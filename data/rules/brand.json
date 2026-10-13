@@ -1,5 +1,5 @@
 {
-  "_comment": "Regeln von Paket P4 (Logo und Marke, KI-Bild). Texte mit Platzhaltern, nie mit Messzahlen. Belegstufen nach Spezifikation 6.5 und 6.13; Herstellerdokus sind Forschung mit Stärke teilweise, weil sie die Wirkung nicht messen.",
+  "_comment": "Regeln der Aufgaben Logo und Marke sowie KI-Bild. Texte mit Platzhaltern, nie mit Messzahlen. Belegstufen wie auf der Seite Methode; Herstellerdokus sind Forschung mit Stärke teilweise, weil sie die Wirkung nicht messen.",
   "rules": [
     {
       "id": "brand-text-variant",

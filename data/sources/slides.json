@@ -1,5 +1,5 @@
 {
-  "_comment": "Quellen der Aufgaben Präsentation und Text auf Bild (Paket P3). Jede URL am 2026-10-11 abgerufen und die Aussage im Text nachgelesen. Zahlen der Quellen stehen nur in claim_*. Die Microsoft-, Apple- und Google-Seiten belegen die Menüwege in data/tasks/slides.json (menu_paths).",
+  "_comment": "Quellen der Aufgaben Präsentation und Text auf Bild. Jede URL am 2026-10-11 abgerufen und die Aussage im Text nachgelesen. Zahlen der Quellen stehen nur in claim_*. Die Microsoft-, Apple- und Google-Seiten belegen die Menüwege in data/tasks/slides.json (menu_paths).",
   "sources": [
     {
       "id": "ti-dlpa088",

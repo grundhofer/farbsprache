@@ -1,6 +1,6 @@
-"""Gebaute Website (Spezifikation 7.9, Muster Bildsprache test_site und Designsprache test_explorer):
+"""Gebaute Website (Muster Bildsprache test_site und Designsprache test_explorer):
 13 Seiten je Sprache, interne Links lösen auf, eindeutige IDs, html lang, <title>, alt, genau ein h1 und ein
-main, og:image absolut, keine typischen deutschen Wörter im sichtbaren EN-Text, Größenbudget (7.11),
+main, og:image absolut, keine typischen deutschen Wörter im sichtbaren EN-Text, Größenbudget,
 README ohne __N_, Impressum und Schwesterprojekte von jeder Seite aus verlinkt. Läuft über docs/ und die Testaufgabe;
 ohne Build übersprungen, außer FARBSPRACHE_REQUIRE_BUILD=1 (CI), dann schlägt er fehl."""
 import hashlib, html, html.parser, json, os, re, sys, unittest
@@ -19,12 +19,12 @@ GERMAN_WORDS = {"und", "der", "die", "das", "nicht", "mit", "für"}
 GERMAN_WORDS |= {w.capitalize() for w in GERMAN_WORDS}
 WORD = re.compile(r"[A-Za-zÄÖÜäöüß]+")
 VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"}
-# task nach Z von 200 auf 240 KB angehoben (Spezifikation 7.11): #task-data ist schon auf die Felder gekürzt, die
+# task von 200 auf 240 KB angehoben: #task-data ist schon auf die Felder gekürzt, die
 # site.js liest, die größte Seite (Website) läge sonst nur rund 5 % unter der Grenze.
 BUDGET = {"task": 240 * 1024, "home": 80 * 1024, "js": 160 * 1024, "css": 40 * 1024}
 
 
-# Selbst ausgelieferte Schriften (R-02/T-04): je Datei höchstens 32 KB, zusammen höchstens 160 KB
+# Selbst ausgelieferte Schriften: je Datei höchstens 32 KB, zusammen höchstens 160 KB
 FONT_BUDGET = {"file": 32 * 1024, "all": 160 * 1024}
 
 
@@ -134,7 +134,7 @@ class TestSite(unittest.TestCase):
         self.assertEqual(missing[:20], [])
 
     def test_internal_fragments_resolve(self):
-        """Sprungziele interner Links gibt es auf der Zielseite, etwa #regel-<id> aus „Zitiert in“ (T-11). Nur die echte
+        """Sprungziele interner Links gibt es auf der Zielseite, etwa #regel-<id> aus „Zitiert in“. Nur die echte
         Website: Im Fixture-Bau sind Kurz erklärt und Quellen Platzhalter ohne Einträge."""
         missing, n = [], 0
         for site in (DOCS,):
@@ -156,14 +156,14 @@ class TestSite(unittest.TestCase):
         self.assertEqual(missing[:20], [])
 
     def test_no_internal_notes_shipped(self):
-        """R-12, T-06: research/ wird nicht veröffentlicht. Keine Seite und kein Skript verweist auf die Spezifikation
-        oder interne Arbeitspakete, auch nicht in eingebetteten Daten (_comment fällt beim Bau weg)."""
-        bad = re.compile(r"Spezifikation \d|Bauspezifikation|specification \d|build specification|Arbeitspaket|"
+        """research/ wird nicht veröffentlicht. Keine Seite und kein Skript verweist auf die Spezifikation
+        oder interne Pakete, auch nicht in eingebetteten Daten (_comment fällt beim Bau weg)."""
+        bad = re.compile(r"Spezifikation \d|Bau[s]pezifikation|specification \d|build [s]pecification|Arbeits[p]aket|"
                          r"[Ww]ork package|Eigentümer P\d|\bP0\b|\"_comment\"")
         for f in sorted(DOCS.rglob("*.html")) + sorted(DOCS.rglob("*.js")):
             m = bad.search(f.read_text(encoding="utf-8"))
             self.assertIsNone(m, f"{f.relative_to(ROOT)}: {m and m.group(0)}")
-        # nur Skripte: nackte Abschnittsnummern wie „(4.1.7)“ und Paketnamen (im HTML stehen legitime WCAG-Nummern)
+        # nur Skripte: nackte Abschnittsnummern in Klammern und Paketnamen (im HTML stehen legitime WCAG-Nummern)
         for f in sorted(DOCS.rglob("*.js")):
             m = re.search(r"\(\d\.\d+(\.\d+)?\)|\bPaket\b", f.read_text(encoding="utf-8"))
             self.assertIsNone(m, f"{f.relative_to(ROOT)}: {m and m.group(0)}")
@@ -225,7 +225,7 @@ class TestSite(unittest.TestCase):
                 self.assertNotIn("__N_", f.read_text(encoding="utf-8"), str(f))
 
     def test_no_requests_to_other_hosts(self):
-        """R-02/T-04: Keine Seite lädt etwas von fremden Servern, auch keine Schrift (Links zum Folgen sind erlaubt)."""
+        """Keine Seite lädt etwas von fremden Servern, auch keine Schrift (Links zum Folgen sind erlaubt)."""
         bad = []
         for site in self.sites():
             for page in sorted(site.rglob("*.html")):
@@ -241,7 +241,7 @@ class TestSite(unittest.TestCase):
         self.assertEqual(bad[:10], [])
 
     def test_fonts_shipped(self):
-        """R-02/T-04: Inter 400/500/700 und IBM Plex Mono 400/500 als woff2 unter assets/fonts/, font-display:swap,
+        """Inter 400/500/700 und IBM Plex Mono 400/500 als woff2 unter assets/fonts/, font-display:swap,
         versioniert; die Vorladelinks zeigen auf genau die Dateien aus site.css; OFL-Texte liegen bei; Budget;
         Sprachweiche und 404 nennen nur Systemschriften."""
         css = shipped_css()
@@ -289,7 +289,7 @@ class TestSite(unittest.TestCase):
             self.assertEqual(SOURCES.COPY[lang]["sources"]["lic.wcag.sw"], build.WCAG_NOTICE, lang)
 
     def test_buttons_hidden_without_js(self):
-        """R4-12/T-17: Ohne JS tut kein Knopf etwas (alle sind type=button); site.css blendet sie, die Reiterleiste und die
+        """Ohne JS tut kein Knopf etwas (alle sind type=button); site.css blendet sie, die Reiterleiste und die
         leere Steuerleiste aus. Palette und Exporte bleiben lesbar."""
         hidden = {s.strip() for sel, d in css_rules(shipped_css()) if "display:none" in d.replace(" ", "") for s in sel.split(",")}
         for sel in ("html:not(.js) button", "html:not(.js) .tabs", "html:not(.js) .task-bar", "html:not(.js) .js-only"):
@@ -299,7 +299,7 @@ class TestSite(unittest.TestCase):
             self.assertEqual(re.findall(r'<button(?![^>]*type="button")[^>]*>', text), [], f"{page}: Knopf ohne type=button")
 
     def test_disclosure_marker_not_in_name(self):
-        """R4-07/M-01: Jeder Aufklapper mit eigener Darstellung zeigt + und −; das Zeichen hat einen leeren Alternativtext,
+        """Jeder Aufklapper mit eigener Darstellung zeigt + und −; das Zeichen hat einen leeren Alternativtext,
         damit es nicht im zugänglichen Namen landet."""
         rules = css_rules(shipped_css())
         flex = {re.sub(r"\s*>\s*", " > ", s.strip()) for sel, d in rules if re.search(r"display:\s*(inline-)?flex", d) for s in sel.split(",") if "summary" in s and "::" not in s}
@@ -312,7 +312,7 @@ class TestSite(unittest.TestCase):
             self.assertTrue(any(m.startswith(base) for m in marked), f"{s}: kein + / −")
 
     def test_target_sizes(self):
-        """R4-08/T-08, Spezifikation 2.2 und 11: Trefferflächen mindestens 44 px, auch in der Kopfleiste unter 600 px, für Chips,
+        """Trefferflächen mindestens 44 px, auch in der Kopfleiste unter 600 px, für Chips,
         „Mehr dazu →“, Fußzeilen-, Inhaltsverzeichnis- und Quellenlinks und die Brotkrumen."""
         rules = css_rules(shipped_css())
         self.assertEqual([s for s, d in rules if re.search(r"min-(height|width):\s*(\d|[1-3]\d|4[0-3])px", d)], [], "keine Mindestgröße unter 44 px")
@@ -328,15 +328,15 @@ class TestSite(unittest.TestCase):
         self.assertIn("position:relative", crumbs)
 
     def test_placeholder_contrast(self):
-        """R4-11: Platzhalter in --ink-3 (tests/test_theme.py: 4,5:1 in beiden Themes), ohne abgeschwächte Deckkraft."""
+        """Platzhalter in --ink-3 (tests/test_theme.py: 4,5:1 in beiden Themes), ohne abgeschwächte Deckkraft."""
         ph = [d for s, d in css_rules(shipped_css()) if s.strip() == "::placeholder"]
         self.assertEqual(len(ph), 1)
         self.assertIn("color:var(--ink-3)", ph[0].replace(" ", ""))
         self.assertIn("opacity:1", ph[0].replace(" ", ""))
 
     def test_form_fields_16px(self):
-        """T-09, Spezifikation 7.7: Eingaben 16 px (kein Zoom auf iOS). Felder: input, select, textarea und jede Klasse, die
-        der Rahmen oder ein Paket einem solchen Element gibt (auch per JS gerendert, etwa select.rl-sel)."""
+        """Eingaben 16 px (kein Zoom auf iOS). Felder: input, select, textarea und jede Klasse, die
+        der Rahmen oder eine Aufgabe einem solchen Element gibt (auch per JS gerendert, etwa select.rl-sel)."""
         classes = set()
         for f in list((ROOT / "web").rglob("*.js")) + list((ROOT / "pages").glob("*.py")) + list((ROOT / "tools").glob("*.py")):
             for m in re.finditer(r"<(?:input|select|textarea)\b[^>]*?class=\\?[\"']([^\"'\\]+)", f.read_text(encoding="utf-8")):
@@ -355,13 +355,13 @@ class TestSite(unittest.TestCase):
         self.assertEqual(bad, [])
 
     def test_patterns_have_no_controls(self):
-        """R4-13/M-01: Muster sind Vorschauen; keine Links, Knöpfe, Felder oder Tabstopps darin."""
+        """Muster sind Vorschauen; keine Links, Knöpfe, Felder oder Tabstopps darin."""
         for f in sorted((ROOT / "patterns").glob("*.html")):
             text = f.read_text(encoding="utf-8")
             self.assertEqual(re.findall(r"<(a|button|input|select|textarea)\b|tabindex", text), [], f.name)
 
     def test_heading_levels_without_gaps(self):
-        """R4-16: Auf keiner Seite springt die Überschriftenebene nach unten um mehr als eins (h2 → h4)."""
+        """Auf keiner Seite springt die Überschriftenebene nach unten um mehr als eins (h2 → h4)."""
         for site in self.sites():
             for page in lang_pages(site):
                 text = page.read_text(encoding="utf-8")
@@ -372,7 +372,7 @@ class TestSite(unittest.TestCase):
                     self.assertEqual(jumps, [])
 
     def test_region_names_unique(self):
-        """R4-16: Regionen tragen eindeutige Namen (eine Tabelle heißt nicht wie ihr Abschnitt)."""
+        """Regionen tragen eindeutige Namen (eine Tabelle heißt nicht wie ihr Abschnitt)."""
         for page in lang_pages(DOCS):
             text = page.read_text(encoding="utf-8")
             names = []
@@ -386,8 +386,8 @@ class TestSite(unittest.TestCase):
                 self.assertEqual(dup, [])
 
     def test_color_and_text_controls(self):
-        """T-06: Textfelder höchstens 200 Zeichen. T-07: Farbsteuerelemente mit Fehlerzeile, die das Feld beschreibt.
-        T-20: Ein leeres Farbsteuerelement zeigt im Wähler keine Farbe (data-empty)."""
+        """Textfelder höchstens 200 Zeichen. Farbsteuerelemente mit Fehlerzeile, die das Feld beschreibt.
+        Ein leeres Farbsteuerelement zeigt im Wähler keine Farbe (data-empty)."""
         seen = set()
         for page in lang_pages(DOCS):
             text = page.read_text(encoding="utf-8")
@@ -490,7 +490,7 @@ class TestLegalData(unittest.TestCase):
 
 
 class TestCompact(unittest.TestCase):
-    """T-15: ausgelieferte Skripte und site.css werden kompaktiert (7.11); dabei fällt nur Leerraum und Kommentar weg."""
+    """Ausgelieferte Skripte und site.css werden kompaktiert (Größenbudget); dabei fällt nur Leerraum und Kommentar weg."""
     CASES = [("var a = b - -c;", "var a=b- -c;"), ("x = y + +z;", "x=y+ +z;"), ("i++ + 1", "i++ +1"),
              ("if (a < !b) { c = d-- > e; }", "if(a< !b){c=d-- >e;}"), ("return /a b/.test(s);", "return /a b/.test(s);"),
              ("s.replace(/[ /]+/g, ' ')", "s.replace(/[ /]+/g,' ')"), ("var t = 'a  b'; // x  y", "var t='a  b'; // x  y"),

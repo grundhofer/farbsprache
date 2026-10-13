@@ -1,5 +1,5 @@
 {
-  "_comment": "Quellen der Seiten Palette prüfen und Methode (Spezifikation 6.7, Eigentümer P5). Jede URL am 2026-10-11 aufgerufen (HTTP 200) und die belegte Aussage im abgerufenen Text nachgelesen. claim_* darf Zahlen der Quelle zitieren. Was nicht geprüft wurde, steht in unverified_*. few-2008 und daltonlens-review legen auch P2 (und P4 few-2008) an, mit derselben ID und URL: Bei der Zusammenführung bleibt ein Eintrag, die Aussagen hier umfassen die der anderen Pakete. ottosson-oklab (P1), medlineplus-cvd (P2), ti-dlpa088 und wcag22-f83 (P3) zitiert die Methode, legt sie aber nicht selbst an.",
+  "_comment": "Quellen der Seiten Palette prüfen und Methode. Jede URL am 2026-10-11 aufgerufen (HTTP 200) und die belegte Aussage im abgerufenen Text nachgelesen. claim_* darf Zahlen der Quelle zitieren. Was nicht geprüft wurde, steht in unverified_*. Auch andere Aufgaben zitieren few-2008 und daltonlens-review, deshalb stehen sie in core.json. ottosson-oklab (website.json), medlineplus-cvd (charts.json), ti-dlpa088 und wcag22-f83 (slides.json) zitiert die Methode, legt sie aber nicht selbst an.",
   "sources": [
     {
       "id": "css-color-4-gamut-mapping",

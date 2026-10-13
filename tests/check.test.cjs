@@ -1,5 +1,5 @@
 'use strict';
-// Palette prüfen (Spezifikation 3.8, 4.9, 5.8): web/check.js gegen tools/check.py und gegen die gebaute Seite.
+// Palette prüfen: web/check.js gegen tools/check.py und gegen die gebaute Seite.
 // 1. Parität: tools/check.py --dump rechnet dieselben Eingaben; Modell mit Toleranz 1e-9, HTML und Exporte Byte für Byte.
 // 2. Die statischen Blöcke von docs/<lang>/pruefen|check/ (Beispiel) gleichen der JS-Ausgabe Byte für Byte.
 // 3. Fachregeln in JS: Kontexte hell/dunkel, Befundstufen, URL-Zustand.
@@ -37,11 +37,11 @@ const CASES = [
   { text: '#FFFFFF #0F172B #E69F00 #56B4E9' },
   { text: '#000000 #F0E442 #FFFF66 #777777' },
   { text: CK.stateText(['#111111', '#FFFFFF', '#E69F00', '#FFFFFF80'], ['-', '-', '-.d', '-.d']) },
-  // M-03: zwei Farben mit derselben Rolle bzw. demselben Namen im Block
+  // zwei Farben mit derselben Rolle bzw. demselben Namen im Block
   { text: CK.stateText(['#FFFFFF', '#0A0A0A', '#FAFAFA', '#F5F5F5', '#171717', '#737373'], ['bg', 'text', 'surface', 'surface', 'accent', 'text-muted']),
     state: { roles: ['bg', 'text', 'surface', 'surface', 'accent', 'text-muted'], confirmed: true, bgi: null } },
   { text: ':root { --surface: #FAFAFA; }\n:root { --surface: #F5F5F5; --bg: #FFFFFF; --text: #0A0A0A; }' },
-  // T-02/R4-14: genau ein weiterer Befund und genau eine weggelassene Farbe (Einzahl in Python und JS)
+  // genau ein weiterer Befund und genau eine weggelassene Farbe (Einzahl in Python und JS)
   { text: '#222 #fff #E63946 #bbb #ccc' },
   { text: Array.from({ length: 13 }, (_, i) => '#' + [17, 53, 91].map((k) => ((i + 1) * k % 256).toString(16).padStart(2, '0')).join('')).join(' ') },
   { text: 'nichts' }
@@ -140,7 +140,7 @@ test('Befundstufen: Verfehlt nur mit bestätigten Rollen, Konventionen nur als H
   }
 });
 
-test('CSS-Export: jede geprüfte Farbe eindeutig adressierbar, auch nach dem Teilen über den Link (M-03)', () => {
+test('CSS-Export: jede geprüfte Farbe eindeutig adressierbar, auch nach dem Teilen über den Link', () => {
   const refs = ctx.FS.color.referenceValues(jload('data/comparisons.json'), { 'okabe-ito': jload('data/datasets/okabe-ito.json') });
   const R = { lang: 'de', T: { 'hex.head': 'Kopf {date}', 'css.checked': 'geprüft', 'hex.link': 'Link {url}', 'ctx.light': 'Hell', 'ctx.dark': 'Dunkel' },
     cfg: CFG, url: 'https://example.org/', date: '2026-10-11' };
@@ -163,7 +163,7 @@ test('CSS-Export: jede geprüfte Farbe eindeutig adressierbar, auch nach dem Tei
   assert.deepEqual(plain(m.colors.map((c) => c.role)), ['bg', 'text', 'surface', 'surface', 'accent', 'text-muted']);
 });
 
-test('Scanner und Parser bleiben bei langen Leerraumfolgen linear (T-18), Trimmen und !important wie zuvor', () => {
+test('Scanner und Parser bleiben bei langen Leerraumfolgen linear, Trimmen und !important wie zuvor', () => {
   const C = ctx.FS.color, sp = ' '.repeat(200000);
   let t0 = Date.now();
   CK.scan(':root{--a:' + sp + 'x' + sp + 'y}', CFG);

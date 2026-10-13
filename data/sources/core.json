@@ -1,5 +1,5 @@
 {
-  "_comment": "Quellen der Kernregeln und des Farbkerns (Spezifikation 6.7, Eigentümer P0). Alle URLs am 2026-10-11 aufgerufen (HTTP 200), die belegten Aussagen im Volltext nachgelesen. claim_* darf Zahlen der Quelle zitieren. short_de/short_en ist die Kurzangabe in Regeln und Exporten. Am Ende stehen die Quellen, die mehrere Pakete zitieren (bei der Zusammenführung Z aus den Paketdateien hierher verschoben und zu je einer Fassung zusammengeführt).",
+  "_comment": "Quellen der Kernregeln und des Farbkerns. Alle URLs am 2026-10-11 aufgerufen (HTTP 200), die belegten Aussagen im Volltext nachgelesen. claim_* darf Zahlen der Quelle zitieren. short_de/short_en ist die Kurzangabe in Regeln und Exporten. Am Ende stehen die Quellen, die mehrere Aufgaben oder Seiten zitieren, je in einer Fassung.",
   "sources": [
     {
       "id": "wcag22-1-4-1",

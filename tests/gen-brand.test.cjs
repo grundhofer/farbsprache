@@ -1,5 +1,5 @@
 'use strict';
-// Paket P4 (Logo und Marke, KI-Bild): JS-Generatoren und JS-Exporte gegen Python, über alle Fälle aus
+// Aufgaben Logo und Marke sowie KI-Bild: JS-Generatoren und JS-Exporte gegen Python, über alle Fälle aus
 // tests/test_gen_brand.py (Startpaletten, eigene Farben, zweite Markenfarbe, alle fünf Bildmodelle, eigene Farben f,
 // Bildteile), beide Sprachen, alle Formate der Aufgaben, Hinweise neben den Blöcken eingeschlossen. Hex und Texte exakt,
 // Gleitkomma mit Toleranz 1e-9. Dazu Farbnamen auf einem Raster von 4.096 Farben. Startet python3 selbst (PYTHON

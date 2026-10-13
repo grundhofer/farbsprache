@@ -1,8 +1,8 @@
-"""Ehrlichkeitstest (Spezifikation 7.9): Jede gebaute Seite wird geparst. Jedes <data class="num"> wird mit
+"""Ehrlichkeitstest: Jede gebaute Seite wird geparst. Jedes <data class="num"> wird mit
 tools/color.py aus seinen data-*-Attributen nachgerechnet und der angezeigte Text mit dem Formatierer
 verglichen. Im sichtbaren Text steht keine „x:1“-Angabe außerhalb von <data>, außer den erlaubten
 Schwellen, und nirgends „ΔE“. Ausgenommen von der x:1-Prüfung ist nur Text in Elementen mit dem Attribut
-data-claim: die belegten Aussagen der Quellen (Quellenseite), die Zahlen der Quelle zitieren dürfen (6.0, 6.7),
+data-claim: die belegten Aussagen der Quellen (Quellenseite), die Zahlen der Quelle zitieren dürfen,
 wie claim_* in tools/checks.py. Kopiertexte in <pre> prüft tests/test_exports.py.
 Läuft über docs/ und tests/out/fixtures/docs/; ohne Build übersprungen, außer FARBSPRACHE_REQUIRE_BUILD=1."""
 import html.parser, os, re, sys, unittest

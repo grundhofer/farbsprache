@@ -1,9 +1,9 @@
-"""Texte der Aufgabe Diagramm oder Dashboard (Spezifikation 3.3). COPY[lang]["charts"][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach Spezifikation 6.12. Keine Messzahlen von Hand.
+"""Texte der Aufgabe Diagramm oder Dashboard. COPY[lang]["charts"][schlüssel],
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahlen von Hand.
 Eigene Token der Exporte: {type} im Kopf des JS-Arrays, {text} und {list} in js.low, {text} in use.area
 (setzt tools/gen/charts.py ein).
 Texte ui.* liest der DOM-Haken web/ui/charts.js aus #task-data. Texte name.* bilden den Namen eigener Zustände
-ohne eigene Farbe (display_name in tools/gen/charts.py), ColorBrewer steht nach 9.4 nicht im Namen."""
+ohne eigene Farbe (display_name in tools/gen/charts.py), ColorBrewer steht nicht im Namen."""
 
 COPY = {
  "de": {

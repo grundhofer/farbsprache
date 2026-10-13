@@ -1,5 +1,5 @@
 {
-  "_comment": "Kurz erklärt, Einträge von P1 (Spezifikation 6.6): contrast, borders, links, color-alone, oklch, dark-mode. Je 60 bis 120 Wörter, kein HTML, nur Hex-Literale in Platzhaltern.",
+  "_comment": "Kurz erklärt: contrast, borders, links, color-alone, oklch, dark-mode. Je 60 bis 120 Wörter, kein HTML, nur Hex-Literale in Platzhaltern.",
   "entries": [
     {
       "id": "contrast",

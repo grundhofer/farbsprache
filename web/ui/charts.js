@@ -1,4 +1,4 @@
-/* DOM-Haken der Aufgabe Diagramm (FS.ui.charts, Spezifikation 3.3).
+/* DOM-Haken der Aufgabe Diagramm (FS.ui.charts).
    - blendet Anzahl bei „Eine Linie hervorheben“ aus (dort fest), Darstellung außer bei Gruppen und Familie bei Hervorhebung
    - zeigt beim Versuch, über acht Farben zu gehen, den Weg „Eine Linie hervorheben“ (Stepper bietet höchstens acht)
    - bietet bei Verlauf und Abweichung mit eigener Farbe den Knopf „Verlauf aus deiner Farbe“ an

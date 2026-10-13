@@ -1,4 +1,4 @@
-/* Palette prüfen: DOM-Anbindung (Spezifikation 3.8, 4.9). Rechnen und Rendern übernimmt FS.check (web/check.js);
+/* Palette prüfen: DOM-Anbindung. Rechnen und Rendern übernimmt FS.check (web/check.js);
    hier stehen nur Eingabe, Zustand in der URL (f, r, bgi), Knöpfe und Live-Region. Kopieren, Speichern und
    Umbrechen erledigt site.js über data-copy, data-copy-from, data-download und data-wrap. */
 (function (root) {

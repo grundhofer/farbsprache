@@ -1,5 +1,5 @@
-"""Datensätze Paul Tol, ColorBrewer, viridis (Spezifikation 6.8, 9.4, Abnahme P2).
-Schema 6.8 je Datei, Spot-Checks gegen die Primärdateien (Werte aus tol_colors.py, colorbrewer.json und colormaps.py,
+"""Datensätze Paul Tol, ColorBrewer, viridis.
+Schema je Datei, Spot-Checks gegen die Primärdateien (Werte aus tol_colors.py, colorbrewer.json und colormaps.py,
 abgerufen am 2026-10-11; die Prüfsummen der gelesenen Dateien stehen in machine_sha256), Pflichtsatz wörtlich und
 das Importskript tools/datasets.py auf kleinen Beispielen der Quellformate (ohne Netz).
 Den vollständigen Abgleich mit den Primärdateien macht python3 -I tools/datasets.py … --check (nicht in der CI)."""
@@ -23,7 +23,7 @@ def load(name):
 
 
 class TestSchema(unittest.TestCase):
-    def test_fields_6_8(self):
+    def test_fields(self):
         for name in ("tol", "colorbrewer", "viridis"):
             ds = load(name)
             with self.subTest(ds=name):
@@ -44,7 +44,7 @@ class TestSchema(unittest.TestCase):
     def test_colorbrewer_notice_and_flags(self):
         ds = load("colorbrewer")
         self.assertEqual(ds["required_notice"], CB_NOTICE)
-        self.assertEqual([s["id"] for s in ds["schemes"]], ["blues", "rdbu", "puor"], "nur Blues, RdBu, PuOr (9.4)")
+        self.assertEqual([s["id"] for s in ds["schemes"]], ["blues", "rdbu", "puor"], "nur Blues, RdBu, PuOr")
         self.assertEqual([s["kind"] for s in ds["schemes"]], ["sequential", "diverging", "diverging"])
         self.assertEqual(ds["kind"], "mixed", "verschiedene Arten je Palette, oben deshalb mixed")
         for s in ds["schemes"]:

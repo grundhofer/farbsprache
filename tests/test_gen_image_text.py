@@ -1,4 +1,4 @@
-"""Fachfälle der Aufgabe Text auf Bild (Paket P3, Bauspezifikation 4.1.15, 4.7, 5.8, 8 Abnahme P3).
+"""Fachfälle der Aufgabe Text auf Bild.
 
 Schleier-Erwartungen 42 / 54 / 66 / 46 / 85 % mit Nachprüfung in Gleitkomma und 8 Bit (bei 65 % nur 6,97:1, bei
 84 % nur 4,46:1), schlimmster Pixel nach F83, Schleier-CSS, Werte und Agent-Prompt nur mit Hex-Werten, keine
@@ -58,7 +58,7 @@ class TestScrim(unittest.TestCase):
         self.assertEqual(dark_text["extra"]["summary"], ["summary.alpha.4.5", "summary.low.8bit", "summary.worst.black"])
 
     def test_smaller_ratio_named(self):
-        """4.7: Es zählt der kleinere Kontrast aus Gleitkomma und 8 Bit; das Kurzergebnis sagt, welcher es ist."""
+        """Es zählt der kleinere Kontrast aus Gleitkomma und 8 Bit; das Kurzergebnis sagt, welcher es ist."""
         for sc, tc, tg in (("#000000", "#FFFFFF", "4.5"), ("#FFFFFF", "#000000", "4.5"), ("oklch(0.48 0.08 215)", "#FFFFFF", "4.5"),
                            ("#000000", "#FFFFFF", "3"), ("#FFFF00", "#000000", "4.5"), ("#000000", "#808080", "4.5")):
             pal = build(sc, tc=tc, tg=tg)
@@ -69,7 +69,7 @@ class TestScrim(unittest.TestCase):
         self.assertEqual(build("#000000")["extra"]["summary"][1], "summary.low.float")  # 4,58:1 in Gleitkomma, 4,60:1 mit 8 Bit
 
     def test_checked_pair_names_8bit(self):
-        """R-13: Badge und Prüfbericht zeigen den Kontrast der 8-Bit-Mischfarbe (das Hex, das <data> nachrechnet) und sagen
+        """Badge und Prüfbericht zeigen den Kontrast der 8-Bit-Mischfarbe (das Hex, das <data> nachrechnet) und sagen
         das; der kleinere Gleitkommawert steht im Kurzergebnis und im Format „Werte“."""
         from pages import task as P
         from web.copy import core as copy_core, image_text as copy_it
@@ -86,7 +86,7 @@ class TestScrim(unittest.TestCase):
                 self.assertIn(C.fmt_ratio(C.contrast(pal["roles"]["default"]["text"], pal["roles"]["default"]["composite"]), lang), row)
 
     def test_tie_counts_as_8bit(self):
-        """M-04: Fällt die Mischfarbe genau auf einen 8-Bit-Wert, sind beide Kontraste gleich. Ein Unterschied im letzten Bit
+        """Fällt die Mischfarbe genau auf einen 8-Bit-Wert, sind beide Kontraste gleich. Ein Unterschied im letzten Bit
         (Python 1 ulp größer als JS) darf den Satz nicht kippen: Gleichstand bis 1e-9 heißt „8 Bit“, in Python wie in JS."""
         for sc in ("#FAFAFA", "#787878", "#7D7D7D"):
             pal = build(sc, tc="#000000", tg="3")

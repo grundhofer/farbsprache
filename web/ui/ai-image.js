@@ -1,7 +1,7 @@
 /* DOM-Haken der Aufgabe KI-Bild (FS.ui['ai-image']): Rollen an den vier Feldern „Eigene Farben“, Werte der drei
-   Vorschläge aus der eigenen Farbe (kleinster Abstand normal, Rot-Grün, Graustufen; Spezifikation 4.8.2) und der
+   Vorschläge aus der eigenen Farbe (kleinster Abstand normal, Rot-Grün, Graustufen) und der
    Hinweis auf feste Anteile 80 · 20 bei zwei Farben. Lücken in „Eigene Farben“ meldet der Haken, statt Felder nachrücken zu
-   lassen (jedes Feld hat seine Rolle). Eigene Farben (f) gehen vor Vorschlag und Startpalette (2.3):
+   lassen (jedes Feld hat seine Rolle). Eigene Farben (f) gehen vor Vorschlag und Startpalette:
    Solange f gilt, drückt der Rahmen keinen Chip dieser beiden Reihen; wer einen Vorschlag wählt, verlässt f.
    Gerechnet wird mit FS.gen['ai-image'] und FS.color, ohne Startpaletten neu zu rechnen. Alle eingesetzten Werte sind
    Zahlen oder geprüfte Hex-Werte. */
@@ -19,7 +19,7 @@
       slot.innerHTML = '<div class="ai-sug" hidden><p class="ctl-label">' + C.esc(txt(api, 'ui.sug_h')) + '</p><ul class="plain"></ul>' +
         '<p class="hint">' + C.esc(txt(api, 'ui.sug_note')) + '</p></div><p class="hint ai-two" hidden>' + C.esc(txt(api, 'ui.w_two')) + '</p>';
       for (i = 0; i < inp.length && i < ROLES.length; i++) { inp[i].setAttribute('aria-label', txt(api, 'ui.f_' + ROLES[i])); }
-      // Jedes Feld behält seine Rolle (3.7): Bleibt ein Feld vor einem gefüllten leer, rücken die Farben nicht nach.
+      // Jedes Feld behält seine Rolle: Bleibt ein Feld vor einem gefüllten leer, rücken die Farben nicht nach.
       // Die Seite meldet die Lücke und hält die Änderung an, bevor der Rahmen f setzt (Fangphase vor seinem Handler).
       var box = document.querySelector('[data-ctl="f"]'), err;
       if (box) {

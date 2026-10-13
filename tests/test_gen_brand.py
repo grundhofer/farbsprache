@@ -1,7 +1,7 @@
-"""Fachfälle der Aufgabe Logo und Marke (Spezifikation 3.5, 4.6, 5.8) und gemeinsamer Export-Abzug von Paket P4.
+"""Fachfälle der Aufgabe Logo und Marke und gemeinsamer Export-Abzug der Aufgaben Logo und Marke sowie KI-Bild.
 
     python3 -m unittest tests.test_gen_brand
-    python3 tests/test_gen_brand.py --dump     JSON aller P4-Exportfälle (für tests/gen-brand.test.cjs)
+    python3 tests/test_gen_brand.py --dump     JSON aller Exportfälle dieser beiden Aufgaben (für tests/gen-brand.test.cjs)
 
 Geprüft: Schriftfarbe ist der höhere Kontrast, Textvarianten erreichen 4,5:1 bei gleichem Farbton, die Markenfarbe
 bleibt unverändert, Änderungshinweise genau dann, wenn eine Variante abweicht, AAA-Hinweis nur unter 7:1, zweite Farbe
@@ -75,7 +75,7 @@ CASES = [
 
 
 def dump():
-    """Alle P4-Fälle mit Eingabe, Kontexten und Python-Ergebnis (Palette und Exportblöcke je Format und Sprache)."""
+    """Alle Fälle von Logo und Marke sowie KI-Bild mit Eingabe, Kontexten und Python-Ergebnis (Palette und Exportblöcke je Format und Sprache)."""
     s = site()
     out = []
     for tid, preset, seed, opts in CASES:
@@ -85,7 +85,7 @@ def dump():
                 "custom_names": s.custom_names(), "exports": {}}
         for lang in ("de", "en"):
             c = ectx(tid, pal, lang, pr["id"] if pr else None)
-            case["exports"][lang] = {"ctx": dict(c, datasets={}, sources={}), "blocks": {}}  # beide ungenutzt in P4-Formaten
+            case["exports"][lang] = {"ctx": dict(c, datasets={}, sources={}), "blocks": {}}  # beide ungenutzt in den Formaten dieser Aufgaben
             for fmt in t["exports"]["visible"] + (t["exports"].get("more") or []):
                 case["exports"][lang]["blocks"][fmt] = X.render(fmt, pal, t, c, lang, {}, s.gens[tid])
         out.append(case)

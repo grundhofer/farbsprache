@@ -1,5 +1,5 @@
 /* Generator der Testaufgabe (FS.gen.fixture). Spiegel von tests/fixtures/tools/gen/fixture.py.
-   Vertrag nach Spezifikation 7.4: build(task, inp, ctx) -> Palettenobjekt (6.14). */
+   Vertrag: build(task, inp, ctx) -> Palettenobjekt. */
 (function (root, factory) {
   'use strict';
   var api = factory(root);

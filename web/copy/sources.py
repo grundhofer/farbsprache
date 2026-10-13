@@ -1,9 +1,9 @@
-"""Texte der Seite Quellen und Lizenzen (Spezifikation 3.11, 9.4). Vertrauenswürdiges HTML (CC BY 4.0).
+"""Texte der Seite Quellen und Lizenzen. Vertrauenswürdiges HTML (CC BY 4.0).
 
 Quellen, Datensätze und Pflichtsätze kommen aus data/sources/*.json und data/datasets/*.json, die Lizenzvolltexte
 aus data/licenses/*.txt (SPDX License List und apache.org, abgerufen am 2026-10-11). Die Inhaberzeilen für BSD-3-Clause
 (tol_colors.py) und die ColorBrewer-Lizenz sind in den Primärdateien nachgelesen. calc.<quellen-id> ist die eigene
-Rechnung neben einer Quellzahl (6.7), nur mit Platzhaltern; sie gilt, solange die Quelle selbst kein calc_* trägt.
+Rechnung neben einer Quellzahl, nur mit Platzhaltern; sie gilt, solange die Quelle selbst kein calc_* trägt.
 """
 
 COPY = {

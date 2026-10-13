@@ -1,7 +1,7 @@
-"""Texte der Seite Palette prüfen (Spezifikation 3.8, 4.9, 5.8). Vertrauenswürdiges HTML (CC BY 4.0).
+"""Texte der Seite Palette prüfen. Vertrauenswürdiges HTML (CC BY 4.0).
 
 COPY[lang]["check"]. Token ohne Doppelpunkt wie {a}, {b}, {ratio}, {min}, {d} setzt tools/check.py bzw.
-web/check.js ein (Hex als <code>, Zahlen als <data> aus den Platzhaltern 6.12). Keine Messzahl von Hand.
+web/check.js ein (Hex als <code>, Zahlen als <data> aus den Platzhaltern des Farbkerns). Keine Messzahl von Hand.
 """
 
 COPY = {

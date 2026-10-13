@@ -1,5 +1,5 @@
 """Texte der Testaufgabe (Muster für web/copy/<aufgabe>.py). COPY[lang][<aufgaben-id>][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach Spezifikation 6.12. Keine Messzahlen von Hand."""
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahlen von Hand."""
 
 COPY = {
  "de": {

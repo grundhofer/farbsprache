@@ -1,6 +1,6 @@
-"""Texte der Seite Methode (Spezifikation 3.10). Vertrauenswürdiges HTML (CC BY 4.0).
+"""Texte der Seite Methode. Vertrauenswürdiges HTML (CC BY 4.0).
 
-Zahlen nur über Platzhalter (6.12) oder über Token, die pages/method.py aus den Daten einsetzt:
+Zahlen nur über Platzhalter oder über Token, die pages/method.py aus den Daten einsetzt:
 {version} {jnd} {eps} {powerless} {lin_t} {gam_t} {wcag} aus data/color-constants.json, {native} {white_lx}
 {dim_lx} {normal_lx} {bright_lx} aus dessen Beamer-Konstanten, {grid_from} {grid_to} {grid_step} aus
 data/check.json, {gray_dev1} {gray_dev2} (beim Bau berechnet), {th_*} aus web/theme.py, {reserve} {dark_c}

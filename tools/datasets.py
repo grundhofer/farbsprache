@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Einmaliger Import der Datensätze Paul Tol, ColorBrewer und viridis aus den Primärdateien (Spezifikation 6.8, 9.4).
+"""Einmaliger Import der Datensätze Paul Tol, ColorBrewer und viridis aus den Primärdateien.
 
     python3 -I tools/datasets.py --tol tol_colors.py --colorbrewer colorbrewer.json \\
         --colorbrewer-js colorbrewer_schemes.js --colorbrewer-license LICENSE.txt --viridis colormaps.py \\
@@ -23,7 +23,7 @@ import argparse, ast, datetime, hashlib, json, math, pathlib, re, sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 OUT = ROOT / "data" / "datasets"
-CB_SCHEMES = ("Blues", "RdBu", "PuOr")          # 9.4: nur diese drei
+CB_SCHEMES = ("Blues", "RdBu", "PuOr")          # nur diese drei
 CB_IDS = {"Blues": "blues", "RdBu": "rdbu", "PuOr": "puor"}
 CB_KIND = {"seq": "sequential", "div": "diverging"}
 TOL_SETS = ("bright", "muted")
@@ -41,7 +41,7 @@ def text(path):
 
 
 def quantize(x):
-    """Wie tools/color.quantize (4.1.4): floor(clamp(x, 0, 1) · 255 + 0.5)."""
+    """Wie tools/color.quantize: floor(clamp(x, 0, 1) · 255 + 0.5)."""
     return int(math.floor(min(max(x, 0.0), 1.0) * 255 + 0.5))
 
 
@@ -164,7 +164,7 @@ def colorbrewer_dataset(path, js_path, lic_path, retrieved):
             cls[c] = [{"hex": hex_of(v), "origin": {"rgb": v}} for v in rgbs]
         schemes.append({"id": CB_IDS[name], "name": name, "kind": CB_KIND[d["type"]], "classes": cls, "flags_quoted": flags})
     return {
-        "_comment": ("ColorBrewer, nur Blues, RdBu und PuOr mit allen Klassenstufen (Spezifikation 9.4). Werte per "
+        "_comment": ("ColorBrewer, nur Blues, RdBu und PuOr mit allen Klassenstufen. Werte per "
                      "tools/datasets.py aus colorbrewer.json übernommen und gegen colorbrewer_schemes.js abgeglichen, nicht "
                      "abgetippt. Reihenfolge wie in der Quelle (Blues hell nach dunkel, RdBu rot nach blau, PuOr orange nach "
                      "lila). flags_quoted sind Etiketten der Website colorbrewer2.org, keine Aussage von Farbsprache. kind auf "

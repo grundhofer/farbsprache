@@ -1,4 +1,4 @@
-"""Rahmen der Aufgabenseiten nach der Zusammenführung Z (Spezifikation 3.0, 5.0, 5.4, 11): Zählformen im Prüfbericht,
+"""Rahmen der Aufgabenseiten: Zählformen im Prüfbericht,
 Sentence case im Englischen (Hauptknopf, Badge), zusammengefasste Normquellen im Agent-Prompt, Codespannen auf der
 Seite, eindeutige Dateinamen und dieselbe Quellenmenge für die Export-Renderer in Python und im Browser.
 Die Prüfungen auf den gebauten Seiten brauchen docs/ (python3 build.py)."""
@@ -66,7 +66,7 @@ class TestFrameHelpers(unittest.TestCase):
         self.assertEqual(X.filename("brand", None, "dtcg", "-light", fmts), "farbsprache-brand-eigen-light.tokens.json")
         self.assertEqual(X.filename("ai-image", None, "prompt", "-palette", ["prompt", "hex"]), "farbsprache-ai-image-eigen-prompt-palette.txt")
         self.assertEqual(X.filename("check", None, "report"), "farbsprache-check-eigen.md")
-        # M-10: eigene Endung eines Blocks (Recraft-JSON) und DTCG mit dem Medientyp aus DTCG 2025.10 §4.1
+        # eigene Endung eines Blocks (Recraft-JSON) und DTCG mit dem Medientyp aus DTCG 2025.10 §4.1
         self.assertEqual(X.filename("ai-image", "dunkelblau", "prompt", "-controls", ["prompt", "hex"], "json"),
                          "farbsprache-ai-image-dunkelblau-controls.json")
         self.assertEqual((X.mime("prompt", "json"), X.mime("prompt"), X.mime("dtcg"), X.mime("css")),
@@ -144,7 +144,7 @@ class TestFramePages(unittest.TestCase):
         for lang, f, html in self.pages:
             names = re.findall(r'data-filename="([^"]+)"', html)
             self.assertEqual(len(names), len(set(names)), f"{f}: {names}")
-            # Endung und Medientyp passen zueinander, Design-Tokens als application/design-tokens+json (M-10)
+            # Endung und Medientyp passen zueinander, Design-Tokens als application/design-tokens+json
             for name, mime in re.findall(r'data-filename="([^"]+)" data-mime="([^"]+)"', html):
                 want = {"css": "text/css", "md": "text/markdown", "txt": "text/plain", "js": "text/javascript", "html": "text/html",
                         "json": "application/design-tokens+json" if name.endswith(".tokens.json") else "application/json"}

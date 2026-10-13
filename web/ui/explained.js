@@ -1,5 +1,5 @@
-/* Leseseiten von P5 (Kurz erklärt, Methode, Quellen): Der Sprachlink nimmt das Sprungziel (#anker) mit, denn die
-   Anker sind in beiden Sprachen gleich (2.3). Dazu der Knopf „Brücke zeigen“ im Demo context (Spezifikation 3.9):
+/* Leseseiten (Kurz erklärt, Methode, Quellen): Der Sprachlink nimmt das Sprungziel (#anker) mit, denn die
+   Anker sind in beiden Sprachen gleich. Dazu der Knopf „Brücke zeigen“ im Demo context:
    Er schaltet aria-pressed und data-bridge am Muster um; patterns/demo-context.html zeigt die Brücke über
    [data-bridge="on"]. Kein Blinken, keine Animation. */
 (function (root) {

@@ -77,7 +77,7 @@ data { font-variant-numeric:tabular-nums; }
   .tb-nav { order:3; width:100%; margin-left:-9px; }
 }
 @media (max-width:600px) {
-  /* zwei Zeilen zu 44 px: Marke, Sprachkürzel und Theme, darunter die Navigation; jede Trefferfläche 44 px (nach Z geändert, 2.2) */
+  /* zwei Zeilen zu 44 px: Marke, Sprachkürzel und Theme, darunter die Navigation; jede Trefferfläche 44 px */
   .topbar-in { gap:0 4px; } .tb-end { gap:4px; }
   .tb-nav a { padding:0 9px; }
   .tb-nav .nl, .tb-lang .nl { display:none; } .tb-nav .ns, .tb-lang .ns { display:inline; }
@@ -164,7 +164,7 @@ data { font-variant-numeric:tabular-nums; }
 .swatch { display:block; width:40px; height:40px; border:1px solid var(--rule); flex:none; }
 .swatch.big { width:48px; height:48px; }
 .seed-line { font-size:14.5px; color:var(--ink-2); }
-/* Handy: die berechnete Zeile erscheint erst mit einer gültigen eigenen Farbe (2.5) */
+/* Handy: die berechnete Zeile erscheint erst mit einer gültigen eigenen Farbe */
 @media (max-width:959px) { .seedbox:not([data-has-color]) .seed-result { display:none; } }
 @media (min-width:960px) {
   .seed-result { grid-template-columns:minmax(0,1fr); }

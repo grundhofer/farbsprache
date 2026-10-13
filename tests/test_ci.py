@@ -1,6 +1,6 @@
-"""CI (Spezifikation 7.10, nach Z geändert): Rechte nach dem Muster der offiziellen Pages-Vorlage, Schreibrechte für Pages und
+"""CI: Rechte nach dem Muster der offiziellen Pages-Vorlage, Schreibrechte für Pages und
 das OIDC-Token nur im Deploy-Job; die Gruppe pages nur am Deployment, damit ein Lauf eines Pull Requests kein wartendes
-Deployment von main abbricht (T-14). Ohne YAML-Bibliothek: Blöcke nach Einzug."""
+Deployment von main abbricht. Ohne YAML-Bibliothek: Blöcke nach Einzug."""
 import re, unittest
 from pathlib import Path
 

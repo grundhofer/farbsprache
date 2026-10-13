@@ -1,6 +1,6 @@
 """Tests für den Farbkern tools/color.py: alle Testvektoren aus data/testvectors.json, Formatierer,
-Löser, pick_distinct, Simulation, Graustufen, Parser, Paarbewertung, Platzhalter, Daten des Pakets
-und der Grep-Test gegen Rundungsfunktionen (Spezifikation 4.1.9, 7.9)."""
+Löser, pick_distinct, Simulation, Graustufen, Parser, Paarbewertung, Platzhalter, Daten des Farbkerns
+und der Grep-Test gegen Rundungsfunktionen."""
 import json, math, random, re, sys, unittest
 from pathlib import Path
 
@@ -443,7 +443,7 @@ class TestRenderText(unittest.TestCase):
         self.assertEqual(C.find_placeholders("x {cr:a/b@light} {date}"), [("cr", "a/b@light"), ("date", None)])
 
 
-# ---- Daten des Pakets
+# ---- Daten des Farbkerns
 
 FORBIDDEN = {"contrast", "ratio", "kontrast", "delta", "distance", "abstand", "result", "ergebnis", "pass", "cr"}
 
@@ -510,9 +510,9 @@ class TestData(unittest.TestCase):
             self.assertIsNotNone(C.parse(s), s)
 
 
-# ---- API-Tabelle 7.3
+# ---- API des Farbkerns
 
-API_73 = ["parse", "lin", "gam", "hex_to_srgb", "srgb_to_hex", "quantize", "srgb_to_oklab", "oklab_to_srgb", "oklab_to_oklch",
+API = ["parse", "lin", "gam", "hex_to_srgb", "srgb_to_hex", "quantize", "srgb_to_oklab", "oklab_to_srgb", "oklab_to_oklch",
           "oklch_to_oklab", "p3_to_srgb", "gamut_map", "oklch_to_hex", "hex_to_oklch", "rel_lum", "contrast", "gray_value",
           "gray_hex", "gray_distance", "sim_oklab", "sim_hex", "distance", "worst_distance", "min_distance", "fmt_ratio",
           "fmt_dist", "fmt_pct_up", "fmt_L", "fmt_count", "fmt_lum", "shortest_oklch", "solve_l", "SolveError", "pick_distinct",
@@ -520,13 +520,13 @@ API_73 = ["parse", "lin", "gam", "hex_to_srgb", "srgb_to_hex", "quantize", "srgb
 
 
 class TestApi(unittest.TestCase):
-    def test_table_73(self):
-        for name in API_73:
+    def test_complete(self):
+        for name in API:
             self.assertTrue(callable(getattr(C, name, None)), name)
         self.assertEqual(C.JND_DISTANCE, 2.0)
 
 
-# ---- Grep-Test (4.1.9, MUSS)
+# ---- Grep-Test
 
 class TestNoRounding(unittest.TestCase):
     def test_python_files(self):

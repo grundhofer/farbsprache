@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe Website oder App (Spezifikation 3.1, 4.2, 4.3). Prosa steht in web/copy/website.py. Hex-Werte entstehen im Generator tools/gen/website.py, die Golden-Datei hält sie fest.",
+  "_comment": "Aufgabe Website oder App. Prosa steht in web/copy/website.py. Hex-Werte entstehen im Generator tools/gen/website.py, die Golden-Datei hält sie fest.",
   "id": "website",
   "generator": "website",
   "name_de": "Website oder App",

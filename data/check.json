@@ -1,5 +1,5 @@
 {
-  "_comment": "Palette prüfen (Spezifikation 3.8, 4.9, Eigentümer P5): Rollen-Regex, Paare und Befundarten. Nur Eingaben und Schwellen, keine Messergebnisse. Die Rollen-Regex sind die aus 4.9, je Rolle nach Priorität aufgeteilt (die erste Liste gewinnt, etwa muted-foreground vor muted), damit shadcn-Blöcke richtig geraten werden. Jede Regel und jeder Erklärt-Eintrag, der hier als Zeichenkette steht, gilt beim strengen Bau als verwendet (tools/checks.py, Waisenprüfung).",
+  "_comment": "Palette prüfen: Rollen-Regex, Paare und Befundarten. Nur Eingaben und Schwellen, keine Messergebnisse. Die Rollen-Regex sind je Rolle nach Priorität aufgeteilt (die erste Liste gewinnt, etwa muted-foreground vor muted), damit shadcn-Blöcke richtig geraten werden. Jede Regel und jeder Erklärt-Eintrag, der hier als Zeichenkette steht, gilt beim strengen Bau als verwendet (tools/checks.py, Waisenprüfung).",
   "max_colors": 12,
   "open_findings": 5,
   "example": "#0F172B #F8FAFC #E69F00",

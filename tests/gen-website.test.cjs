@@ -1,7 +1,7 @@
 'use strict';
-// Fachfälle der Aufgaben Website oder App und Statusfarben im Browser-Generator (Spezifikation 4.2, 4.3, 5.8).
+// Fachfälle der Aufgaben Website oder App und Statusfarben im Browser-Generator.
 // Lädt web/color.js, web/export.js, web/gen/website.js und web/gen/status.js unverändert in node:vm.
-// Die Parität zu Python prüft tests/parity.test.cjs; hier stehen die Erwartungswerte der Spezifikation.
+// Die Parität zu Python prüft tests/parity.test.cjs; hier stehen feste Erwartungswerte.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -24,7 +24,7 @@ function build(tid, seed, opts) { return plain((tid === 'website' ? W : S).build
 const cr = (a, b) => C.fmtRatio(C.contrast(a, b), 'de').slice(0, -2);
 const dist = (d) => C.fmtDist(d, 'de');
 
-test('Petrol hell und dunkel wie Spezifikation 4.2', () => {
+test('Petrol hell und dunkel: Rollenfarben und Kontraste', () => {
   const p = build('website', 'oklch(0.48 0.08 215)');
   const l = p.roles.light, d = p.roles.dark;
   assert.deepEqual([l.bg, l.text, l['text-muted'], l.border, l['border-strong'], l.accent, l['accent-text'], l['on-accent']],
@@ -45,7 +45,7 @@ test('Kräftiges Rot #E63946: weiße Schrift 4,16:1, Akzent wird #DF3141 mit 4,5
   assert.equal(C.fmtRatio(ch.values.after, 'de'), '4,51:1');
 });
 
-test('Statusfarben Petrol wie Spezifikation 4.3, in beiden Aufgaben', () => {
+test('Statusfarben Petrol: Farben und kleinste Abstände, in beiden Aufgaben', () => {
   for (const tid of ['website', 'status']) {
     const p = build(tid, 'oklch(0.48 0.08 215)');
     const l = p.roles.light;
@@ -128,7 +128,7 @@ test('CSS mit Diagrammfarben: Hinweis genau in Blöcken mit weniger als fünf Fa
     assert.equal(stripped, ctx.FS.export.css(pal, data.task, e, 'de', { charts: true }));
   }
 });
-// M-01: Jeder Export mit den Diagrammfarben nennt die Lücke je Modus (Zählform bei einer Farbe), Tailwind legt Utilities nur
+// Jeder Export mit den Diagrammfarben nennt die Lücke je Modus (Zählform bei einer Farbe), Tailwind legt Utilities nur
 // für Rollen an, die jeder Modus definiert; Python und JS liefern dieselben Bytes.
 test('Diagrammfarben: Hinweis in CSS, Tailwind, Prompt, Hex-Liste und Design-Tokens, Utilities nur für Rollen jedes Modus', (t) => {
   if (!fs.existsSync(PAGE)) { if (REQUIRE) assert.fail('docs/ fehlt'); t.skip('docs/ fehlt'); return; }

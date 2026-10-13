@@ -1,4 +1,4 @@
-"""Seite Quellen und Lizenzen (Spezifikation 3.11, 9.4): Quellen nach Art, Datensätze, Pflichtvermerke,
+"""Seite Quellen und Lizenzen: Quellen nach Art, Datensätze, Pflichtvermerke,
 Lizenzvolltexte (data/licenses/, auch die der mitgelieferten Schriften) und die Lizenzen dieses Projekts.
 
 „Zitiert in“ entsteht invers aus den Regeln, den Erklärt-Einträgen, den Verweisen [[id]] der Methode und Quellen-IDs,
@@ -48,10 +48,10 @@ THRESHOLDS = ("3:1", "4,5:1", "4.5:1", "7:1", "21:1")
 
 
 def claim_html(site, lang, s):
-    """Belegte Aussage der Quelle. Verhältnisse, die keine Schwelle sind, zitieren eine Zahl der Quelle (6.0 erlaubt das
+    """Belegte Aussage der Quelle. Verhältnisse, die keine Schwelle sind, zitieren eine Zahl der Quelle (erlaubt
     in claim_*): Sie stehen als <q class="qnum">, damit sie sich von den berechneten Zahlen der Seite (<data>)
     unterscheiden. Die ganze Aussage steht in einem Element mit data-claim; nur dort nimmt tests/test_honesty.py
-    Quellzahlen von der x:1-Prüfung aus. Die eigene Rechnung daneben (6.7, Platzhalter 6.12) kommt aus
+    Quellzahlen von der x:1-Prüfung aus. Die eigene Rechnung daneben (Platzhalter) kommt aus
     calc_de/calc_en der Quelle oder, wenn die Quelle keine trägt, aus calc.<id> in web/copy/sources.py."""
     T = site.copy[lang]["sources"]
     html = foreign(s["claim_" + lang], lang)
@@ -195,7 +195,7 @@ def notices_html(site, lang):
     T = site.copy[lang]["sources"]
     E = site.copy[lang]["export"]
     out = []
-    # Der Pflichtsatz steht immer wörtlich da (9.4), aus dem Datensatz oder, solange er fehlt, aus tools/checks.py.
+    # Der Pflichtsatz steht immer wörtlich da, aus dem Datensatz oder, solange er fehlt, aus tools/checks.py.
     cb = site.datasets.get("colorbrewer")
     notice = checks.COLORBREWER_NOTICE
     if cb is not None and cb.get("required_notice") != notice:

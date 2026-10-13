@@ -1,6 +1,6 @@
 /* Generator der Aufgabe Statusfarben (FS.gen.status). Spiegel von tools/gen/status.py.
-   T2 nach Spezifikation 4.3 auf den Neutraltönen von T1 (4.2); nutzt FS.gen.website (gen_deps).
-   Eigenes Format: HTML-Snippet mit vier Meldungen, Icon und Wort (5.8). */
+   Statusfarben auf den Neutraltönen der Aufgabe Website oder App; nutzt FS.gen.website (gen_deps).
+   Eigenes Format: HTML-Snippet mit vier Meldungen, Icon und Wort. */
 (function (root, factory) {
   'use strict';
   var api = factory(root);
@@ -33,7 +33,7 @@
       distinct: distinct, changes: [], findings: findings, usage: {}, extra: { summary: ['sum.gray'] } };
   }
 
-  // HTML-Snippet (5.8): vier Meldungen mit Icon und Wort, dazu die Regeln .msg-<status>
+  // HTML-Snippet: vier Meldungen mit Icon und Wort, dazu die Regeln .msg-<status>
   function html(palette, task, ctx, lang, opts) {
     var T = ctx.text, x = X(), head, out, i, st = W().STATUS, sid;
     head = [x.header(ctx), T['html.needs']].concat(x.notices(palette, ctx, task, opts), [x.presub(ctx.core.link, ctx)]);

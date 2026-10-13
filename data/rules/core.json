@@ -1,5 +1,5 @@
 {
-  "_comment": "Kernregeln des Rahmens (Spezifikation 6.5, Eigentümer P0). Texte mit Platzhaltern, nie mit Messzahlen. Schwellen wie 4,5:1 stehen direkt im Text.",
+  "_comment": "Kernregeln des Rahmens. Texte mit Platzhaltern, nie mit Messzahlen. Schwellen wie 4,5:1 stehen direkt im Text.",
   "rules": [
     {
       "id": "text-contrast",

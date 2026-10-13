@@ -1,5 +1,5 @@
-"""Texte der Aufgabe Website oder App (Spezifikation 3.1, 4.2, 5.4, 5.6). COPY[lang]["website"][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach 6.12. Keine Messzahlen von Hand.
+"""Texte der Aufgabe Website oder App. COPY[lang]["website"][schlüssel],
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahlen von Hand.
 
 Welches Statuspaar bei welcher Sichtweise am engsten liegt, hängt von der Farbe ab. Den Hinweis dazu setzen
 die Renderer agent und rationale in tools/gen/website.py aus den Vorlagen weak.status und why.status zusammen

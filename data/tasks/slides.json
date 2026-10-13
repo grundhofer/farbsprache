@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe Präsentation (Bauspezifikation 3.4, 4.5, 5.7). Ein Modus „default“: Der Folienhintergrund bg wählt die Spalte hell oder dunkel. Das Raumlicht room wirkt nur auf den projizierten Kontrast und die Ansicht „Beamer“. Prosa steht in web/copy/slides.py. menu_paths: Wege für PowerPoint, Keynote und Google Slides, geprüft gegen die Hilfeseiten der Hersteller (checked = Abrufdatum, url = Quelle unter source).",
+  "_comment": "Aufgabe Präsentation. Ein Modus „default“: Der Folienhintergrund bg wählt die Spalte hell oder dunkel. Das Raumlicht room wirkt nur auf den projizierten Kontrast und die Ansicht „Beamer“. Prosa steht in web/copy/slides.py. menu_paths: Wege für PowerPoint, Keynote und Google Slides, geprüft gegen die Hilfeseiten der Hersteller (checked = Abrufdatum, url = Quelle unter source).",
   "id": "slides",
   "generator": "slides",
   "name_de": "Präsentation",

@@ -1,7 +1,7 @@
-"""Generator der Aufgabe Präsentation (T4, Bauspezifikation 4.5). Spiegel von web/gen/slides.js.
+"""Generator der Aufgabe Präsentation. Spiegel von web/gen/slides.js.
 
-build(task, inp, ctx) -> Palettenobjekt (6.14) mit einem Modus „default“. Der Folienhintergrund (bg) wählt die
-Spalte hell oder dunkel aus 4.5, das Raumlicht (room) wirkt nur auf den projizierten Kontrast (4.1.14) und
+build(task, inp, ctx) -> Palettenobjekt mit einem Modus „default“. Der Folienhintergrund (bg) wählt die
+Werte für hell oder dunkel, das Raumlicht (room) wirkt nur auf den projizierten Kontrast und
 die Ansicht „Beamer“ (view_vars). Textrollen bekommen 10 % Reserve (7,7 statt 7, 3,3 statt 3), Diagrammfarben
 kommen aus Okabe-Ito mit mindestens 3:1 auf der Folie und starten mit dem Akzent (pick_distinct).
 Aufgabenspezifische Exporte: Hex-Liste in der Reihenfolge des Office-Farbschemas und Begründung mit dem
@@ -9,23 +9,23 @@ projizierten Kontrast beim gewählten Raumlicht.
 """
 from tools import color as C, export as X
 
-LIGHT_T = 7.7    # 7:1 plus 10 % Reserve (4.1.17), als Literal wegen 7.0 * 1.1
+LIGHT_T = 7.7    # 7:1 plus 10 % Reserve, als Literal wegen 7.0 * 1.1
 LINE_T = 3.3
-DARK_C = 0.85    # Buntheit des Akzents im dunklen Modus (4.1.17), wie DARK_C in tools/gen/website.py
+DARK_C = 0.85    # Buntheit des Akzents im dunklen Modus, wie DARK_C in tools/gen/website.py
 OFFICE = ("dk1", "lt1", "dk2", "lt2", "accent1", "accent2", "accent3", "accent4", "accent5", "accent6", "hlink",
           "folHlink")
 CHARTS = ("chart-1", "chart-2", "chart-3", "chart-4")
 
 
 def _tint(cs):
-    """Tönung t wie T1 „tinted“ (4.2)."""
+    """Tönung t wie „tinted“ in der Aufgabe Website oder App."""
     return min(max(0.1 * cs, 0.004), 0.012)
 
 
 def _solve(c, h, against, target, direction, l0):
     """solve_l mit Startwert L0; liegt die Startfarbe auf der falschen Seite der Flächen (mixed-sides), startet
-    die Suche bei L 0,5. Das Ergebnis ist dieselbe Grenze, nur der Startpunkt wandert (Abweichung, begründet
-    im Bericht P3: sehr helle bzw. sehr dunkle eigene Farben bleiben so lösbar)."""
+    die Suche bei L 0,5. Das Ergebnis ist dieselbe Grenze, nur der Startpunkt wandert (so bleiben sehr helle
+    bzw. sehr dunkle eigene Farben lösbar)."""
     try:
         return C.solve_l(c, h, against, target, direction, l0)
     except C.SolveError as e:
@@ -41,7 +41,7 @@ def okabe_colors(ctx):
 
 
 def _office(roles):
-    """Office-Plätze dk1 … folHlink → Rollen (5.7). Akzent 2 bis 4 sind die Diagrammfarben ohne den Akzent;
+    """Office-Plätze dk1 … folHlink → Rollen. Akzent 2 bis 4 sind die Diagrammfarben ohne den Akzent;
     fehlt eine, steht dort text-2."""
     extra = [rid for rid in CHARTS if rid in roles and roles[rid] != roles["accent"]][:3]
     while len(extra) < 3:
@@ -135,7 +135,7 @@ def build(task, inp, ctx):
 
 
 def view_vars(palette, mode, toggles):
-    """Muster-Schalter „Beamer“: jede Farbe nach dem Beamer-Modell (4.1.14) beim gewählten Raumlicht. Die
+    """Muster-Schalter „Beamer“: jede Farbe nach dem Beamer-Modell beim gewählten Raumlicht. Die
     Modellbeschriftung bleibt in den Bildschirmfarben (cap-text auf cap-bg), damit sie auch im hellen Raum lesbar ist."""
     if toggles.get("view") != "projector":
         return {}
@@ -161,7 +161,7 @@ def _menu_note(task, ctx, lang):
 
 
 def _hex(palette, task, ctx, lang, opts=None):
-    """Hex-Liste in der Reihenfolge des Office-Farbschemas (5.7)."""
+    """Hex-Liste in der Reihenfolge des Office-Farbschemas."""
     tx = ctx["text"]
     roles = palette["roles"]["default"]
     by_id = {r["id"]: r for r in task["roles"]}
@@ -181,7 +181,7 @@ def _hex(palette, task, ctx, lang, opts=None):
 
 
 def _rationale(palette, task, ctx, lang, opts=None):
-    """Begründung (5.6) mit dem Folienhintergrund und dem projizierten Kontrast beim gewählten Raumlicht."""
+    """Begründung mit dem Folienhintergrund und dem projizierten Kontrast beim gewählten Raumlicht."""
     tx = ctx["text"]
     o = palette["input"]["options"]
     rc = X.rctx(palette, None, None, ctx)

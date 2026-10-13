@@ -1,5 +1,5 @@
 'use strict';
-// Lädt die reinen UMD-Module aus web/ unverändert in einen node:vm-Kontext (Spezifikation 7.9).
+// Lädt die reinen UMD-Module aus web/ unverändert in einen node:vm-Kontext.
 // FARBSPRACHE_JS_DIR=docs/assets lädt stattdessen die ausgelieferten, kompaktierten Dateien (gleiche Pfade unter web/).
 // FS_CONST entsteht wie im Build: color-constants ∪ cvd ∪ {css_names}.
 const fs = require('node:fs');

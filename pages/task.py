@@ -1,6 +1,6 @@
-"""Rahmen jeder Aufgabenseite: Blöcke A bis J aus Spezifikation 3.0, Kopierleiste und #task-data.
+"""Rahmen jeder Aufgabenseite: Blöcke A bis J, Kopierleiste und #task-data.
 
-Die Aufgabenpakete liefern nur Aufgabendaten, Generator, Muster und Texte (7.4). Die dynamischen
+Die Aufgaben liefern nur Aufgabendaten, Generator, Muster und Texte. Die dynamischen
 Teile (Farbstreifen, Änderungshinweise, Rollen, Prüfbericht, Regeln, Exporte) baut web/site.js mit
 denselben Funktionen neu (FS.site.render). tests/export.test.cjs vergleicht beide Ausgaben für
 Startpalette 1 Byte für Byte; Änderungen hier gehören deshalb immer auch in site.js.
@@ -326,7 +326,7 @@ def demo_vars(R, pal, mode, view_vars=None, toggles=None):
     return "".join(f"--d-{k}:{v};" for k, v in roles.items())
 
 
-# ---- #task-data: nur, was site.js und export.js lesen (Budget 7.11; tests/export.test.cjs belegt die Gleichheit)
+# ---- #task-data: nur, was site.js und export.js lesen (Größenbudget; tests/export.test.cjs belegt die Gleichheit)
 
 def _strings(o):
     """Alle Zeichenketten eines JSON-Baums (für Quellen, die eine Aufgabe direkt nennt)."""
@@ -566,7 +566,7 @@ def page(site, lang, task):
                   + "".join(preset_chip(p, i == 0, lang) for i, p in enumerate(task["presets"])) + "</div></div>")
     vis, more, mctl = _controls(site, R, task, page_path, opts)
     sctl = next((c for c in task["controls"] if c["id"] == task.get("seed_control")), None)
-    if sctl:  # Vorschläge aus der eigenen Farbe (3.7): site.js tauscht sie gegen die Startpaletten, solange c gesetzt ist
+    if sctl:  # Vorschläge aus der eigenen Farbe: site.js tauscht sie gegen die Startpaletten, solange c gesetzt ist
         pchips += f'<div class="ctl-seedvar js-only" data-seed-ctl hidden>{control_html(R, sctl, opts.get(sctl["id"]))}</div>'
     crossref = tc.get("crossref")
     if crossref:

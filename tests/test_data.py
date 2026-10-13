@@ -1,6 +1,6 @@
-"""Datenprüfungen (Spezifikation 7.8, 7.9): check_all ist grün, und jede wichtige Prüfung schlägt an, wenn man
+"""Datenprüfungen: check_all ist grün, und jede wichtige Prüfung schlägt an, wenn man
 eine Kopie der Daten gezielt kaputt macht (Mutationstests nach dem Muster von Designsprache). Die Kopie im
-Temp-Verzeichnis enthält nur die Dateien von P0 und die Testaufgabe, damit sie nicht von Paketen abhängt."""
+Temp-Verzeichnis enthält nur die Dateien des Kerns und die Testaufgabe, damit sie nicht von den Aufgaben abhängt."""
 import json, shutil, sys, tempfile, unittest
 from pathlib import Path
 
@@ -10,7 +10,7 @@ import build  # noqa: E402
 from tools import checks  # noqa: E402
 
 SEG = dict(build.SEG, **build.FIXTURE_SEG)
-P0_FILES = ["data/color-constants.json", "data/cvd.json", "data/css-names.json", "data/testvectors.json",
+CORE_FILES = ["data/color-constants.json", "data/cvd.json", "data/css-names.json", "data/testvectors.json",
             "data/comparisons.json", "data/datasets/okabe-ito.json", "data/rules/core.json", "data/sources/core.json",
             "web/copy/core.py", "web/readme.de.md", "web/readme.en.md", "tools/blocklist.txt"]
 
@@ -20,12 +20,12 @@ def twin(lang, page):
 
 
 class Sandbox:
-    """P0-Dateien und tests/fixtures/ in einem Temp-Verzeichnis; mutate(rel, fn) ändert eine Datei."""
+    """Dateien des Kerns und tests/fixtures/ in einem Temp-Verzeichnis; mutate(rel, fn) ändert eine Datei."""
 
     def __init__(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.root = Path(self.tmp.name)
-        for rel in P0_FILES:
+        for rel in CORE_FILES:
             (self.root / rel).parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ROOT / rel, self.root / rel)
         for sub in ("data", "web", "patterns", "tools"):
@@ -65,18 +65,18 @@ PATTERN = "patterns/fixture.html"
 
 class TestProjectData(unittest.TestCase):
     def test_check_all_passes(self):
-        """check_all() == [] (fehlende Aufgaben anderer Pakete nur als WARNUNG, wie beim Bau mit --allow-missing)."""
+        """check_all() == [] (fehlende Aufgaben nur als WARNUNG, wie beim Bau mit --allow-missing)."""
         warns = []
         self.assertEqual(checks.check_all(ROOT, allow_missing=True, warnings=warns), [])
 
     def test_no_short_imperatives_in_project(self):
-        """T-01: Die Projekttexte enthalten keinen Kurzimperativ, auch nicht nach einem Komma (Agent-Prompt „frag nach“)."""
+        """Die Projekttexte enthalten keinen Kurzimperativ, auch nicht nach einem Komma (Agent-Prompt „frag nach“)."""
         warns = []
         checks.check_all(ROOT, allow_missing=True, warnings=warns)
         self.assertEqual([w for w in warns if "Kurzimperativ" in w], [])
 
-    def test_strict_only_misses_packages(self):
-        """Ohne --allow-missing nennt die Prüfung nur fehlende Teile anderer Pakete, sonst nichts."""
+    def test_strict_only_misses_tasks(self):
+        """Ohne --allow-missing nennt die Prüfung nur fehlende Teile von Aufgaben, sonst nichts."""
         errs = checks.check_all(ROOT)
         order = json.loads((ROOT / "data" / "tasks" / "_order.json").read_text(encoding="utf-8"))["order"]
         if all((ROOT / "data" / "tasks" / f"{t}.json").exists() for t in order):
@@ -89,12 +89,12 @@ class TestProjectData(unittest.TestCase):
     def test_fixture_overlay_passes(self):
         self.assertEqual(checks.check_all(ROOT, [build.FIXTURES], allow_missing=True, seg=SEG, twin=twin), [])
 
-    def test_fixture_overlay_ignores_package_data(self):
-        """Die Testaufgabe liegt nur über dem Kern von P0. Aufgaben, Regeln, Texte und Prüfungen der Pakete im
+    def test_fixture_overlay_ignores_task_data(self):
+        """Die Testaufgabe liegt nur über dem Kern. Aufgaben, Regeln, Texte und eigene Prüfungen im
         Projekt (hier absichtlich kaputt) dürfen den Fixture-Bau nicht stören."""
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
-            for rel in P0_FILES:
+            for rel in CORE_FILES:
                 (root / rel).parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(ROOT / rel, root / rel)
             (root / "data" / "tasks").mkdir(parents=True)
@@ -103,9 +103,9 @@ class TestProjectData(unittest.TestCase):
             (root / "data" / "rules" / "website.json").write_text('{"rules": [{"id": "verwaist"}]}', encoding="utf-8")
             (root / "data" / "explain").mkdir(parents=True)
             (root / "data" / "explain" / "website.json").write_text('{"entries": [{"id": "contrast"}]}', encoding="utf-8")
-            (root / "web" / "copy" / "website.py").write_text("raise RuntimeError('Paket')\n", encoding="utf-8")
-            (root / "tools" / "checks_website.py").write_text("def check(D, warn):\n    return ['Paketprüfung im Fixture-Bau']\n", encoding="utf-8")
-            self.assertTrue(checks.check_all(root, allow_missing=True, seg=SEG, twin=twin), "ohne Überlagerung zählen die Paketdateien")
+            (root / "web" / "copy" / "website.py").write_text("raise RuntimeError('Aufgabe')\n", encoding="utf-8")
+            (root / "tools" / "checks_website.py").write_text("def check(D, warn):\n    return ['eigene Prüfung im Fixture-Bau']\n", encoding="utf-8")
+            self.assertTrue(checks.check_all(root, allow_missing=True, seg=SEG, twin=twin), "ohne Überlagerung zählen die Dateien der Aufgaben")
             self.assertEqual(checks.check_all(root, [build.FIXTURES], allow_missing=True, seg=SEG, twin=twin), [])
 
     def test_seg_and_page_twin(self):
@@ -230,7 +230,7 @@ class TestMutations(unittest.TestCase):
         self.assertTrue(any("Kurzimperativ „kopier“" in w for w in warns), warns)
 
     def test_missing_rule_and_explain_ids_warn_with_allow_missing(self):
-        """Regeln und Erklärt-Einträge anderer Pakete: streng ein FEHLER, mit --allow-missing nur eine WARNUNG."""
+        """Fehlende Regeln und Erklärt-Einträge: streng ein FEHLER, mit --allow-missing nur eine WARNUNG."""
         self.sb.json(TASK, lambda d: (d["rules"].append("fremde-regel"), d["explain"].append("fremder-eintrag"),
                                       d["pairs"][0].update(rule="fremde-paarregel")))
         self.assertError("Regel fremde-regel gibt es nicht")
@@ -351,15 +351,15 @@ class TestMutations(unittest.TestCase):
         self.sb.text("web/readme.de.md", "__N_TASKS__", "__N_AUFGABEN__")
         self.assertError("unbekannter Platzhalter __N_AUFGABEN__")
 
-    def test_package_checks_are_loaded(self):
-        self.sb.write("tools/checks_fixture.py", "def check(D, warn):\n    warn('Paketprüfung lief')\n    return ['Paket: ' + ','.join(sorted(D['tasks']))]\n")
+    def test_own_checks_are_loaded(self):
+        self.sb.write("tools/checks_fixture.py", "def check(D, warn):\n    warn('eigene Prüfung lief')\n    return ['Aufgaben: ' + ','.join(sorted(D['tasks']))]\n")
         warns = []
         errs = self.sb.errors(False, warns)
-        self.assertIn("Paket: fixture", errs)
-        self.assertIn("Paketprüfung lief", warns)
+        self.assertIn("Aufgaben: fixture", errs)
+        self.assertIn("eigene Prüfung lief", warns)
 
     def test_short_imperative_after_comma(self):
-        """T-01: „Fehlt eine Rolle, frag nach“ ist ein Kurzimperativ nach einem Komma, „Frag“ auch am Satzanfang."""
+        """„Fehlt eine Rolle, frag nach“ ist ein Kurzimperativ nach einem Komma, „Frag“ auch am Satzanfang."""
         self.sb.text(COPY, '"pattern.title": "Musterseite"', '"pattern.title": "Fehlt eine Rolle, frag nach. Frag vorher."')
         warns = []
         self.assertEqual(self.sb.errors(False, warns), [])
@@ -367,7 +367,7 @@ class TestMutations(unittest.TestCase):
         self.assertTrue(any("Kurzimperativ „Frag“" in w for w in warns), warns)
 
     def test_typography_by_language(self):
-        """T-12, T-07: Prozent im Deutschen mit U+202F, Anführungszeichen nach der Sprache des Satzes."""
+        """Prozent im Deutschen mit U+202F, Anführungszeichen nach der Sprache des Satzes."""
         self.sb.json(TASK, lambda d: d.update(summary_de="Etwa 8 % der Fläche, „Fläche“ genannt”.", summary_en="Called „Fläche“ in German."))
         self.assertError("Prozent mit normalem Leerzeichen")
         self.assertError("deutsche Anführungszeichen im englischen Text")
@@ -376,7 +376,7 @@ class TestMutations(unittest.TestCase):
         self.assertEqual(self.sb.errors(), [])
 
     def test_short_lang_only_for_untranslated_labels(self):
-        """R4-10: short_lang nennt die Sprache einer unübersetzten Kurzangabe; eine übersetzte hat keine eigene Sprache."""
+        """short_lang nennt die Sprache einer unübersetzten Kurzangabe; eine übersetzte hat keine eigene Sprache."""
         src = "data/sources/fixture.json"
         self.sb.json(src, lambda d: d["sources"][0].update(short_lang="en"))
         self.assertError("short_lang (de oder en) gibt es nur, wenn short_de und short_en gleich sind")
@@ -386,7 +386,7 @@ class TestMutations(unittest.TestCase):
         self.assertEqual(sb2.errors(), [])
 
     def test_source_language(self):
-        """T-07, R4-10: title_lang passt zum Titel, Sprachmarken [en]/[de] nur in Quellentexten und vollständig."""
+        """title_lang passt zum Titel, Sprachmarken [en]/[de] nur in Quellentexten und vollständig."""
         src = "data/sources/fixture.json"
         self.sb.json(src, lambda d: d["sources"][0].update(claim_de="Zitat „[en]as is[/en]“ und „[en]offen“.", claim_en="Says [en]x[/en]."))
         self.assertError("claim_de hat unvollständige Sprachmarken")
@@ -401,7 +401,7 @@ class TestMutations(unittest.TestCase):
         self.assertTrue(any("Sprachmarke [en]/[de] gibt es nur in claim_* und unverified_*" in e for e in sb2.errors()))
 
     def test_own_settings_are_conventions(self):
-        """R-06: Eine Festlegung von Farbsprache trägt die Stufe Konvention; nennt der Text eine Festlegung, ist own wahr."""
+        """Eine Festlegung von Farbsprache trägt die Stufe Konvention; nennt der Text eine Festlegung, ist own wahr."""
         rules = "data/rules/fixture.json"
         self.sb.json(rules, lambda d: d["rules"][0].update(level="research", strength="partial"))
         self.assertError("own: true (Festlegung von Farbsprache) trägt die Stufe convention")
@@ -411,13 +411,13 @@ class TestMutations(unittest.TestCase):
         self.assertTrue(any("nennt eine Festlegung, die Regel hat aber own: false" in e for e in sb2.errors()))
 
     def test_ral_names_are_not_preset_names(self):
-        """R-05: Keine Startpalette heißt wie eine RAL-Classic-Farbe der Signal-Reihe (Signalrot ist RAL 3001)."""
+        """Keine Startpalette heißt wie eine RAL-Classic-Farbe der Signal-Reihe (Signalrot ist RAL 3001)."""
         self.sb.json(TASK, lambda d: d["presets"][1].update(name_de="Signalrot", name_en="Signal red"))
         self.assertError("enthält das Sperrwort „Signalrot“")
         self.assertError("enthält das Sperrwort „Signal red“")
 
     def test_control_lang_only_for_text(self):
-        """R4-10: lang beschreibt die Sprache eines Textfelds und gibt es nur dort."""
+        """lang beschreibt die Sprache eines Textfelds und gibt es nur dort."""
         self.sb.json(TASK, lambda d: d["controls"][0].update(lang="en"))
         self.assertError("Steuerelement m: lang gibt es nur bei type text")
 

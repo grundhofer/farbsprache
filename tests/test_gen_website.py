@@ -1,4 +1,4 @@
-"""Fachfälle der Aufgaben Website oder App und Statusfarben (Spezifikation 4.2, 4.3, 5.4, 5.6, 5.8, 8 P1).
+"""Fachfälle der Aufgaben Website oder App und Statusfarben.
 Erwartungswerte stehen nur hier im Test, nie in Daten oder Texten. Formatiert wird mit den Formatierern des
 Kerns, also abgeschnitten wie auf der Seite."""
 import itertools, re, sys, unittest
@@ -45,7 +45,7 @@ class Base(unittest.TestCase):
 
 
 class TestWebsite(Base):
-    def test_petrol_light_42(self):
+    def test_petrol_light(self):
         r = self.pal("website", "petrol")["roles"]["light"]
         want = {"bg": "#F8FBFB", "text": "#182123", "text-muted": "#60696B", "border": "#D2D9DB", "border-strong": "#838C8F",
                 "accent": "#11697A", "accent-text": "#11697A", "on-accent": "#FFFFFF"}
@@ -57,7 +57,7 @@ class TestWebsite(Base):
         self.assertEqual(cr(r["on-accent"], r["accent"]), "6,31")
         self.assertEqual(cr(r["accent-text"], r["text"]), "2,59")
 
-    def test_petrol_dark_42(self):
+    def test_petrol_dark(self):
         r = self.pal("website", "petrol")["roles"]["dark"]
         want = {"bg": "#101516", "text": "#E8ECED", "accent": "#276876", "on-accent": "#E8ECED", "accent-text": "#4E8D9C"}
         self.assertEqual({k: r[k] for k in want}, want)
@@ -65,7 +65,7 @@ class TestWebsite(Base):
         self.assertEqual([cr(r["accent-text"], r[b]) for b in ("bg", "surface", "text", "surface-2")], ["4,92", "4,50", "3,14", "4,03"])
         self.assertEqual(cr(r["accent"], r["bg"]), "2,91")
 
-    def test_signal_red_accent_42(self):
+    def test_signal_red_accent(self):
         p = self.custom("website", "#E63946")
         self.assertEqual(p["roles"]["light"]["accent"], "#DF3141")
         ch = next(c for c in p["changes"] if c["role"] == "accent" and c["mode"] == "light")
@@ -90,9 +90,9 @@ class TestWebsite(Base):
         self.assertEqual(gray["bg"], "#FAFAFA")
 
     def test_change_cases(self):
-        """Farbe bleibt, dunkle Schrift, Farbe angepasst (dunkler und heller), Grenzfälle ohne Lösung ab L_s (8, P1)."""
+        """Farbe bleibt, dunkle Schrift, Farbe angepasst (dunkler und heller), Grenzfälle ohne Lösung ab L_s."""
         petrol = self.pal("website", "petrol")
-        # dunkel: Linkfarbe #4E8D9C statt des dunklen Kandidaten #276876, mit Hinweis (M-08, 3.0 C)
+        # dunkel: Linkfarbe #4E8D9C statt des dunklen Kandidaten #276876, mit Hinweis (Block C)
         self.assertEqual([(c["key"], c["mode"], c["from"], c["to"]) for c in petrol["changes"]],
                          [("accent-text-lighter", "dark", "#276876", "#4E8D9C")])
         self.assertEqual(petrol["extra"]["summary"], ["sum.light.keep-light", "sum.dark.keep-light"])
@@ -135,7 +135,7 @@ class TestWebsite(Base):
             self.assertNotRegex(re.sub(r"\{[^{}]*\}", "", tc["change.accent-text-lighter"]).replace("4,5:1", "").replace("4.5:1", ""), r"\d")
 
     def test_link_color_never_changes_silently(self):
-        """M-08: Weicht die Linkfarbe von ihrer Ausgangsfarbe ab (hell die eigene Farbe, dunkel der dunkle Kandidat
+        """Weicht die Linkfarbe von ihrer Ausgangsfarbe ab (hell die eigene Farbe, dunkel der dunkle Kandidat
         oklch(L, 0,85·C, h)), steht in jedem Modus ein Änderungshinweis mit den Werten davor und danach."""
         seeds = ["oklch(0.48 0.08 215)", "oklch(0.45 0.15 265)", "oklch(0.80 0.15 85)", "#E63946", "#FFFFFF", "#000000",
                  "#111827", "#F0E442", "#2CA02C", "#808080", "#0000FF", "#FFFF00", "#7F00FF", "#00A0A0"]
@@ -179,7 +179,7 @@ class TestWebsite(Base):
         self.assertEqual(fs, [])
 
     def test_link_window(self):
-        """Link-Fenster 4.1.13: leer bei #333333 auf Weiß, sonst Hinweis link-underline."""
+        """Link-Fenster: leer bei #333333 auf Weiß, sonst Hinweis link-underline."""
         self.assertTrue(C.link_window("#333333", ["#FFFFFF"])["empty"])
         r = self.pal("website", "petrol")["roles"]["light"]
         self.assertFalse(C.link_window(r["text"], [r["bg"], r["surface"]])["empty"])
@@ -206,7 +206,7 @@ class TestWebsite(Base):
             self.assertIn("Okabe", on)
             self.assertEqual(off, X.css(pal, t, ctx, lang, {"charts": False}))
 
-    def test_agent_format_54(self):
+    def test_agent_format(self):
         pal = self.pal("website", "petrol")
         t = self.task("website")
         text = W.agent(pal, t, self.ectx("website", pal, "de", "petrol"), "de", {})
@@ -262,11 +262,11 @@ class TestWebsite(Base):
                     if tid == "status":
                         self.assertIn(kind, rat)
                         self.assertIn(ctx["text"]["st." + d["a"]] + (" and " if lang == "en" else " und ") + ctx["text"]["st." + d["b"]], rat)
-                    else:  # wie 5.6: Sichtweise in der Satzmitte, ohne Paarnamen
+                    else:  # Sichtweise in der Satzmitte, ohne Paarnamen
                         self.assertIn(kind[:1].lower() + kind[1:], rat)
 
-    def test_rationale_sentences_56(self):
-        """5.6: 4 bis 6 Sätze vor der Quellenzeile, auch mit der bedingten Konfliktregel und ohne Hinweis status-close."""
+    def test_rationale_sentences(self):
+        """4 bis 6 Sätze vor der Quellenzeile, auch mit der bedingten Konfliktregel und ohne Hinweis status-close."""
         cases = [(tid, p["id"], None) for tid in ("website", "status") for p in self.task(tid)["presets"]]
         cases += [("website", None, "#E63946"), ("status", None, "#E63946"), ("website", None, "#808080")]
         for tid, pid, seed in cases:
@@ -294,13 +294,13 @@ class TestWebsite(Base):
 
 
 class TestStatus(Base):
-    def test_status_light_43(self):
+    def test_status_light(self):
         r = self.pal("website", "petrol")["roles"]["light"]
         self.assertEqual([r[s] for s in ("danger", "warning", "success", "info")], ["#B6433C", "#723F00", "#007329", "#004D9A"])
         st = self.pal("status", "petrol")["roles"]["light"]
         self.assertEqual([st[s] for s in ("danger", "warning", "success", "info")], ["#B6433C", "#723F00", "#007329", "#004D9A"])
 
-    def test_distances_43(self):
+    def test_distances(self):
         for tid in ("website", "status"):
             d = {x["mode"]: x for x in self.pal(tid, "petrol")["distinct"]}
             self.assertEqual((C.fmt_dist(d["light"]["value"], "de"), d["light"]["a"], d["light"]["b"], d["light"]["kind"]),
@@ -353,7 +353,7 @@ class TestStatus(Base):
         self.assertEqual(set(petrol), {"bg", "surface", "text", "danger", "danger-subtle", "warning", "warning-subtle",
                                        "success", "success-subtle", "info", "info-subtle"})
 
-    def test_html_snippet_58(self):
+    def test_html_snippet(self):
         t = self.task("status")
         pal = self.pal("status", "grau")
         for lang, words in (("de", ["Fehler:", "Warnung:", "Erledigt:", "Hinweis:"]), ("en", ["Error:", "Warning:", "Done:", "Note:"])):

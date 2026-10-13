@@ -1,6 +1,6 @@
 'use strict';
 // Farbkern web/color.js: dieselben Testvektoren wie tests/test_color.py, Formatierer, Parser,
-// Invarianten und der Grep-Test gegen toFixed( und Math.round( (Spezifikation 4.1.9, 7.9).
+// Invarianten und der Grep-Test gegen toFixed( und Math.round(.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -61,7 +61,7 @@ function assertLch(got, exp, tol, label) {
   }
 }
 
-test('Vektoren srgb_oklch (CSS Color 4 über Recherche 02 §11.1)', () => {
+test('Vektoren srgb_oklch (CSS Color 4)', () => {
   const sec = TV.srgb_oklch; const tol = sec.tol;
   assert.equal(sec.vectors.length, 18);
   let checked = 0; let unchecked = 0;
@@ -108,7 +108,7 @@ test('Vektoren ottosson, wcag, gamut, cvd_display', () => {
   }
 });
 
-test('Parser: Leerraum am Rand wird linear getrimmt, auch Unicode-Leerraum (T-18)', () => {
+test('Parser: Leerraum am Rand wird linear getrimmt, auch Unicode-Leerraum', () => {
   for (const w of [' ', '\t', '\n', '\r', '\f', '\v', '\u00a0', '\u1680', '\u2003', '\u2028', '\u202f', '\u3000', '\ufeff']) {
     assert.equal(C.parse(w + w + '#E63946' + w).hex, '#E63946', JSON.stringify(w));
     assert.equal(C.parse('rgb(' + w + '1 2 3' + w + ')').hex, '#010203', JSON.stringify(w));
@@ -145,7 +145,7 @@ test('Vektoren format', () => {
   for (const vec of TV.format.vectors) assert.equal(call(vec.fn, vec.args), vec.expect, vec.fn + ' ' + JSON.stringify(vec.args));
 });
 
-test('Vektoren cases (Fachfälle 4.1.6–4.1.15, 4.2)', () => {
+test('Vektoren cases (Fachfälle)', () => {
   for (const c of TV.cases.vectors) {
     if (c.raises) {
       assert.throws(() => runCase(c), (e) => e instanceof C[c.raises] && e.key === c.key, c.id);
@@ -156,7 +156,7 @@ test('Vektoren cases (Fachfälle 4.1.6–4.1.15, 4.2)', () => {
   }
 });
 
-test('Vektoren placeholders (6.12)', () => {
+test('Vektoren placeholders', () => {
   for (const vec of TV.placeholders.vectors) {
     const r = C.renderText(vec.template, {}, vec.lang);
     assert.equal(r.tags.length, 1);
@@ -263,7 +263,7 @@ test('Daten: CSS-Namen, Okabe-Ito, Seeds', () => {
   for (const s of seeds) assert.notEqual(C.parse(s), null, s);
 });
 
-test('API-Tabelle 7.3 vollständig', () => {
+test('API des Farbkerns vollständig', () => {
   const names = ['parse', 'lin', 'gam', 'hexToSrgb', 'srgbToHex', 'quantize', 'srgbToOklab', 'oklabToSrgb', 'oklabToOklch',
     'oklchToOklab', 'p3ToSrgb', 'gamutMap', 'oklchToHex', 'hexToOklch', 'relLum', 'contrast', 'grayValue', 'grayHex',
     'grayDistance', 'simOklab', 'simHex', 'distance', 'worstDistance', 'minDistance', 'fmtRatio', 'fmtDist', 'fmtPctUp',
@@ -274,7 +274,7 @@ test('API-Tabelle 7.3 vollständig', () => {
   assert.equal(ctx.FS.color, C);
 });
 
-test('Grep: kein toFixed( und kein Math.round( außerhalb von // quantize (4.1.9)', () => {
+test('Grep: kein toFixed( und kein Math.round( außerhalb von // quantize', () => {
   const files = [path.join(ROOT, 'web', 'color.js'), path.join(ROOT, 'web', 'export.js')];
   const gen = path.join(ROOT, 'web', 'gen');
   if (fs.existsSync(gen)) for (const f of fs.readdirSync(gen).sort()) if (f.endsWith('.js')) files.push(path.join(gen, f));

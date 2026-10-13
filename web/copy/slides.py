@@ -1,5 +1,5 @@
-"""Texte der Aufgabe Präsentation (Bauspezifikation 3.4, 4.5, 5.7). COPY[lang]["slides"][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach 6.12. Keine Messzahl von Hand: Kontraste und projizierte Kontraste
+"""Texte der Aufgabe Präsentation. COPY[lang]["slides"][schlüssel],
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahl von Hand: Kontraste und projizierte Kontraste
 kommen über {cr:…} und {proj:…}. Die Office-Bezeichnungen stehen unter office.<platz>, die Menüwege in
 data/tasks/slides.json (menu_paths)."""
 

@@ -1,6 +1,6 @@
-"""Texte der Aufgabe KI-Bild (Spezifikation 3.7, 4.8, 5.5). COPY[lang]["ai-image"][schlüssel], vertrauenswürdiges
-HTML, Platzhalter nach 6.12. Die Bausteine des Farbblocks (pr.*) sind immer englisch, auch auf deutschen Seiten
-(5.5); sie stehen deshalb einmal in PROMPT und gehen unverändert in beide Sprachen. {c}, {w}, {p}, {a} und {b} setzt
+"""Texte der Aufgabe KI-Bild. COPY[lang]["ai-image"][schlüssel], vertrauenswürdiges
+HTML, Platzhalter des Farbkerns. Die Bausteine des Farbblocks (pr.*) sind immer englisch, auch auf deutschen Seiten;
+sie stehen deshalb einmal in PROMPT und gehen unverändert in beide Sprachen. {c}, {w}, {p}, {a} und {b} setzt
 tools/gen/ai_image.py ein (Farbe, Anteil, Bildteil, Textfarbe, Textgrund). Keine Messzahlen von Hand."""
 
 PROMPT = {

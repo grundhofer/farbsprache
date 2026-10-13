@@ -1,4 +1,4 @@
-/* DOM-Haken der Testaufgabe (FS.ui.fixture): zeigt, wie ein Paket eigene Bedienteile in einen Slot hängt.
+/* DOM-Haken der Testaufgabe (FS.ui.fixture): zeigt, wie eine Aufgabe eigene Bedienteile in einen Slot hängt.
    init(api) einmal nach dem Laden, render(palette, state, api) nach jeder Neuberechnung. */
 (function (root) {
   'use strict';

@@ -1,5 +1,5 @@
 {
-  "_comment": "Regeln der Aufgaben Website oder App und Statusfarben (Spezifikation 6.5, Eigentümer P1). Texte mit Platzhaltern, nie mit Messzahlen. Rollen-Platzhalter tragen @light oder @dark, weil beide Aufgaben zwei Modi haben. Kernregeln (text-contrast, non-text-contrast, color-not-alone) stehen in core.json und werden nur referenziert.",
+  "_comment": "Regeln der Aufgaben Website oder App und Statusfarben. Texte mit Platzhaltern, nie mit Messzahlen. Rollen-Platzhalter tragen @light oder @dark, weil beide Aufgaben zwei Modi haben. Kernregeln (text-contrast, non-text-contrast, color-not-alone) stehen in core.json und werden nur referenziert.",
   "rules": [
     {
       "id": "input-border",

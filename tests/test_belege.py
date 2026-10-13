@@ -2,7 +2,7 @@
 gekennzeichnet, DE und EN mit denselben Einschränkungen, Lizenzen für jede Datei, keine Verweise auf die nicht
 veröffentlichte Spezifikation, fremdsprachige Stellen mit lang. Die Datentests laufen ohne Build, die Seitentests
 brauchen docs/ (FARBSPRACHE_REQUIRE_BUILD=1 erzwingt ihn, sonst übersprungen)."""
-import html, json, os, re, sys, unittest
+import html, json, os, re, subprocess, sys, unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -58,9 +58,43 @@ def visible(t):
     return html.unescape(re.sub(r"<[^>]+>", " ", t))
 
 
+# Ausschlüsse wie in .gitignore (dazu .git): an der Wurzel, überall, und tests/out/
+SKIP_ROOT = {".git", "docs", "docs.tmp", "research", "og.html"}
+SKIP_ANY = {"__pycache__", ".DS_Store"}
+BINARY = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".pdf", ".woff", ".woff2", ".ttf", ".otf", ".pyc"}
+
+
+def source_files():
+    """Alle versionierten und neuen Dateien wie git ls-files -co --exclude-standard. Ohne git (etwa in einem Archiv)
+    dieselbe Auswahl über das Dateisystem mit den Ausschlüssen aus .gitignore. Schriften, Bilder und PDF sind kein Text."""
+    try:
+        out = subprocess.run(["git", "ls-files", "-co", "--exclude-standard", "-z"], cwd=ROOT, capture_output=True, check=True)
+        rels = [r for r in out.stdout.decode("utf-8").split("\0") if r]
+    except (OSError, subprocess.CalledProcessError):
+        rels = []
+        for d, dirs, names in os.walk(ROOT):
+            rel = Path(d).relative_to(ROOT)
+            skip = SKIP_ANY | (SKIP_ROOT if rel == Path(".") else set())
+            dirs[:] = [x for x in dirs if x not in skip and rel / x != Path("tests", "out")]
+            rels += [(rel / n).as_posix() for n in names if n not in skip]
+    return [ROOT / r for r in sorted(rels) if (ROOT / r).is_file() and Path(r).suffix not in BINARY]
+
+
+# Abschnittsnummern haben keinen Teil 0 und keine führende Null; Versionen wie 3.1.0 und Zahlen im Code wie 0.27 oder
+# 3.0 fallen so heraus. WCAG 2.2: höchste Nummer je Richtlinie. Nur diese dreiteiligen Nummern dürfen allein in
+# Klammern stehen; jede andere ist eine Abschnittsnummer. Zweiteilige zählen allein oder als Liste in Klammern (nicht
+# als Argument eines Aufrufs) und nach einem Verweiswort wie „nach“ oder „wie“, nicht vor :1 und nicht als Teil einer
+# dreiteiligen. Ein Zahlentupel im Code aus lauter solchen Zahlen meldet der Test ebenfalls.
+WCAG_SC = {f"{g}.{n}" for g, top in {"1.1": 1, "1.2": 9, "1.3": 6, "1.4": 13, "2.1": 4, "2.2": 6, "2.3": 3, "2.4": 13,
+                                     "2.5": 8, "3.1": 6, "3.2": 6, "3.3": 9, "4.1": 3}.items() for n in range(1, top + 1)}
+SECTION = re.compile(r"\(([1-9]\.[1-9]\d?\.[1-9]\d?)[),;]|(?<![\w.])([1-9]\.[1-9]\d?\.[1-9]\d?)\)")
+SECTION_2 = re.compile(r"(?<![\w\])])\([1-9]\d?\.[1-9]\d?(?:(?:[,;] ?|–)[1-9]\d?\.[1-9]\d?)*\)|"
+                       r"\b(?:nach|wie|aus|siehe|laut|vgl\.|Budget) [1-9]\d?\.[1-9]\d?\b(?![.,]\d|:1)")
+
+
 class TestSourcesFaithful(unittest.TestCase):
     def test_ti_room_levels_follow_the_source(self):
-        """R-04: TI nennt die 100 lx einen gedimmten Besprechungsraum („minimum, dimmed light level“). Die Seite darf sie
+        """TI nennt die 100 lx einen gedimmten Besprechungsraum („minimum, dimmed light level“). Die Seite darf sie
         nicht „normal, Licht an“ nennen; 5 und 300 lx sind als Annahmen von Farbsprache erkennbar."""
         ti = SOURCES_D["ti-dlpa088"]
         self.assertIn("minimum, dimmed light level", ti["claim_de"])
@@ -86,7 +120,7 @@ class TestSourcesFaithful(unittest.TestCase):
             self.assertIn(dimmed, m7)
 
     def test_unproven_entries_do_not_call_themselves_supported(self):
-        """R-07: „Unbelegt“ heißt keine auffindbare Quelle oder widerlegt (6.13). Ein Eintrag, der sich selbst „teilweise
+        """„Unbelegt“ heißt keine auffindbare Quelle oder widerlegt. Ein Eintrag, der sich selbst „teilweise
         belegt“ nennt, trägt Forschung. Elliot 2015 stützt Blau und Vertrauen mit Studien aus mehreren Laboren."""
         for kind, items, field in (("rules", RULES, "text_"), ("explain", EXPLAIN, "body_")):
             for i, it in items.items():
@@ -102,7 +136,7 @@ class TestSourcesFaithful(unittest.TestCase):
         self.assertNotIn("single studies", m["body_en"])
 
     def test_own_settings_are_marked(self):
-        """R-06: Auf Dunkel heller = mehr ist eine Festlegung gegen die Empfehlung von Schloss et al. 2019. Sie steht als
+        """Auf Dunkel heller = mehr ist eine Festlegung gegen die Empfehlung von Schloss et al. 2019. Sie steht als
         eigene Regel mit Stufe Konvention, im Kurzergebnis als Festlegung und in Methode §11."""
         for rid, r in RULES.items():
             if r["own"]:
@@ -119,7 +153,7 @@ class TestSourcesFaithful(unittest.TestCase):
             self.assertTrue(any("[[schloss-2019]]" in x for x in METHOD.COPY[lang]["method"]["s11.list"]), lang)
 
     def test_wording_not_stronger_than_the_source(self):
-        """R-15, R-16, R-19, T-08: Herkunft, Prüfumfang, Autoren und Abschwächungen wie in der Quelle, DE wie EN."""
+        """Herkunft, Prüfumfang, Autoren und Abschwächungen wie in der Quelle, DE wie EN."""
         e = EXPLAIN["60-30-10"]
         self.assertNotIn("stammt aus", e["body_de"])
         self.assertNotIn("comes from", e["body_en"])
@@ -144,7 +178,7 @@ class TestSourcesFaithful(unittest.TestCase):
         self.assertIn("möglichst", RULES["chart-max-categories"]["text_de"])
 
     def test_sister_projects_named_correctly(self):
-        """R-09: Nur Bildsprache nutzt das Swiss-Theme mit #0B0B0B, Designsprache ein eigenes."""
+        """Nur Bildsprache nutzt das Swiss-Theme mit #0B0B0B, Designsprache ein eigenes."""
         for lang, bad in (("de", ("Schwesterprojekte", "Familie")), ("en", ("sister projects", "family"))):
             T = METHOD.COPY[lang]["method"]
             for s in flat([T["s11.list"], T["s15.p"]]):
@@ -153,13 +187,13 @@ class TestSourcesFaithful(unittest.TestCase):
             self.assertIn("Bildsprache", " ".join(T["s15.p"]))
 
     def test_slides_tile_matches_the_model(self):
-        """R-10: Im hellen Raum bleibt am Beamer laut eigener Rechnung wenig Kontrast; die Kachel verspricht das nicht."""
+        """Im hellen Raum bleibt am Beamer laut eigener Rechnung wenig Kontrast; die Kachel verspricht das nicht."""
         t = TASKS["slides"]
         self.assertNotRegex(t["summary_de"], r"hellen Raum")
         self.assertNotRegex(t["summary_en"], r"lit room|bright room")
 
     def test_readme_counts(self):
-        """R-18: Die Regeln allein zitieren nicht alle Quellen; die README nennt die Gesamtzahl für alle Texte."""
+        """Die Regeln allein zitieren nicht alle Quellen; die README nennt die Gesamtzahl für alle Texte."""
         cited = {s for r in RULES.values() for s in r["sources"]}
         self.assertLess(len(cited), len(SOURCES_D))
         for f, rules_word, all_words in (("README.de.md", "Regeln tragen", "Regeln, Erklärt-Einträge, Methode und Menüwege"),
@@ -173,7 +207,7 @@ class TestSourcesFaithful(unittest.TestCase):
 
 class TestLicenses(unittest.TestCase):
     def test_every_path_has_a_license(self):
-        """R-14: Jede eigene Datei ist einer Lizenz zugeordnet: LICENSE (Code) oder LICENSE-CONTENT.md (Texte, Werte,
+        """Jede eigene Datei ist einer Lizenz zugeordnet: LICENSE (Code) oder LICENSE-CONTENT.md (Texte, Werte,
         Fremddaten)."""
         text = (ROOT / "LICENSE").read_text(encoding="utf-8") + (ROOT / "LICENSE-CONTENT.md").read_text(encoding="utf-8")
         skip = {".git", ".gitignore", ".DS_Store", "__pycache__", "docs", "docs.tmp", "research", "og.html", "LICENSE",
@@ -184,7 +218,7 @@ class TestLicenses(unittest.TestCase):
             self.assertTrue(n in text or n.rstrip("/") + "/" in text or n.rstrip("/") in text.replace("`", " ").split(), n)
 
     def test_dataset_colors_keep_their_terms(self):
-        """R-11: Exporte stehen unter CC0, Farben aus Datensätzen nicht; der Tol-Vermerk trägt den Copyright-Satz."""
+        """Exporte stehen unter CC0, Farben aus Datensätzen nicht; der Tol-Vermerk trägt den Copyright-Satz."""
         tol = jload("data/datasets/tol.json")["required_notice"]
         for lang in LANGS:
             self.assertIn(tol, CORE.COPY[lang]["export"]["notice.tol"])
@@ -199,23 +233,53 @@ class TestLicenses(unittest.TestCase):
 
 
 class TestPublicTexts(unittest.TestCase):
-    SPEC = re.compile(r"Spezifikation \d|Bauspezifikation|specification \d|build specification|\bP0\b|Arbeitspaket|"
-                      r"[Ww]ork package|Paketarbeit|Anfrage an P")
+    # Verweise auf internes Arbeitsmaterial. Diese Datei liegt selbst im Prüfumfang, deshalb trifft kein Muster seinen
+    # eigenen Quelltext (etwa [s] statt s).
+    SPEC = re.compile("|".join([
+        # Abschnitte der Spezifikation
+        r"Spezifikation \d", r"Bau[s]pezifikation", r"[Ss]pecification \d", r"[Bb]uild [s]pecification", r"Vertrag (?:nach )?\d",
+        # Pakete mit Nummer (nicht der Farbraum: Display P3, P3 → OKLCH, P3-Farbraum, in P3) und interne Kürzel der Aufgaben
+        r"\bP[0-245]\b", r"(?<!isplay-)(?<!isplay )(?<!\bin )\bP3\b(?! →|-)", r"Arbeits[p]aket", r"[Ww]ork [p]ackage",
+        r"Paket(?:arbeit|bau|prüfung|datei|daten)", r"Anfrage an [P]", r"\(T\d{1,2}[,)]", r"\b(?:von|wie|aus|für) T\d{1,2}\b",
+        r"\bT\d{1,2} nach\b", r"\bT\d{1,2}/T\d{1,2}\b",
+        # interne Zusammenführung und Prüfung (nicht eine Gegenprüfung mit einer anderen Bibliothek)
+        r"\b[Nn]ach Z\b", r"\b[Ss]eit Z\b", r"\(Z\)", r"Zusammenf[ü]hrung Z\b", r"Gegenpr[ü]fer",
+        r"\b(?:[Ll]aut|[Nn]ach|[Ss]eit|[Bb]ei|[Vv]or|[Aa]us|[Ii]n|[Dd]er|[Dd]ie|[Zz]ur) (?:der )?"
+        r"(?:Zusammenf[ü]hrung|Gegenpr[ü]fung)\b(?! mit)",
+        # Recherche-Notizen
+        r"Recherche ?\d", r"research/[\w.-]",
+        # Befund-IDs
+        r"\b(?:R4|MV|R|M|T|U|X|E)-\d{1,3}\b"]))
+
+    def internal_refs(self, text):
+        """Treffer als (Zeile, Text): die Muster aus SPEC, dreiteilige Abschnittsnummern allein in Klammern und
+        zweiteilige wie bei SECTION_2."""
+        hits = []
+        for n, line in enumerate(text.splitlines(), 1):
+            hits += [(n, m.group(0)) for m in self.SPEC.finditer(line)]
+            hits += [(n, m.group(0)) for m in SECTION.finditer(line) if (m.group(1) or m.group(2)) not in WCAG_SC]
+            hits += [(n, m.group(0)) for m in SECTION_2.finditer(line)]
+        return hits
 
     def test_no_references_to_the_unpublished_specification(self):
-        """R-12, T-06, T-09: research/ wird nicht veröffentlicht. Nutzertexte, README und CONTRIBUTING verweisen weder auf
-        die Spezifikation noch auf interne Arbeitspakete."""
+        """research/ wird nicht veröffentlicht. Weder Nutzertexte noch eine versionierte oder neue Datei des Repos (ohne
+        docs/, tests/out/ und research/) verweisen auf die Spezifikation, interne Pakete, die interne Zusammenführung und
+        Prüfung, Recherche-Notizen oder Befund-IDs."""
         for ctx, lang, s, art in user_texts():
-            self.assertNotRegex(s, self.SPEC, ctx)
-        for f in ("CONTRIBUTING.md", "README.md", "README.de.md", "web/readme.de.md", "web/readme.en.md"):
-            self.assertNotRegex((ROOT / f).read_text(encoding="utf-8"), self.SPEC, f)
+            self.assertEqual(self.internal_refs(s), [], ctx)
+        files = source_files()
+        for f in ("CONTRIBUTING.md", "README.md", "README.de.md", "web/readme.de.md", "web/readme.en.md", "tests/test_belege.py"):
+            self.assertIn(ROOT / f, files)
+        self.assertGreater(len(files), 150)
+        hits = [f"{f.relative_to(ROOT)}:{n}: {m}" for f in files for n, m in self.internal_refs(f.read_text(encoding="utf-8"))]
+        self.assertEqual(hits, [])
         c = (ROOT / "CONTRIBUTING.md").read_text(encoding="utf-8")
         self.assertIn("python3 build.py --fixtures ", c)
         self.assertIn("drei Startpaletten (Diagramm: vier)", c)
         self.assertIn("three starter palettes (charts: four)", c)
 
     def test_color_location_hint_is_true(self):
-        """M-01: Die Farbe steht im Link und geht damit an den Webserver; der Hinweis sagt das statt „bleibt im Browser“."""
+        """Die Farbe steht im Link und geht damit an den Webserver; der Hinweis sagt das statt „bleibt im Browser“."""
         bad = re.compile(r"bleib(t|en) in deinem Browser|stays? in your browser")
         for ctx, lang, s, art in user_texts():
             self.assertNotRegex(s, bad, ctx)
@@ -224,7 +288,7 @@ class TestPublicTexts(unittest.TestCase):
             self.assertIn(word, CHECK.COPY[lang]["check"]["in.hint"])
 
     def test_one_term_per_thing(self):
-        """T-10: dieselben Begriffe auf allen Seiten (Startpalette, dunkel/gedimmt/hell, with normal vision, data sets,
+        """Dieselben Begriffe auf allen Seiten (Startpalette, dunkel/gedimmt/hell, with normal vision, data sets,
         Tol-Schreibweise, gedämpfte Schrift, Schriftfarbe) und Gebrauchsangaben im Englischen klein."""
         bad = {"de": re.compile(r"Startsets|abgedunkelt"),
                "en": re.compile(r"starter sets|darkened|under normal vision|in normal vision|\bdatasets\b|Paul Tol, (Bright|Muted)")}
@@ -240,7 +304,7 @@ class TestPublicTexts(unittest.TestCase):
         self.assertEqual(METHOD.COPY["de"]["method"]["s6.row.tol-bright"], CHARTS.COPY["de"]["charts"]["ctl.fam.tol-bright"])
 
     def test_role_names_read_in_sentences(self):
-        """T-03: Rollennamen stehen in „{fg} auf {bg}“ und „auf {bg}“; ein Name mit eigener Präposition ergäbe
+        """Rollennamen stehen in „{fg} auf {bg}“ und „auf {bg}“; ein Name mit eigener Präposition ergäbe
         „auf … auf“, ein Name mit Adjektiv vorn „auf Zweite Farbe“."""
         for t, task in TASKS.items():
             bgs = {b for f in ("pairs", "decorative", "advisory") for p in task.get(f) or [] for b in p["on"]}
@@ -251,7 +315,7 @@ class TestPublicTexts(unittest.TestCase):
                     self.assertNotRegex(r["name_de"], r"^(Erste|Zweite|Dritte|Vierte|Schlimmste)", f"{t} {r['id']}")
 
     def test_number_and_label_format(self):
-        """T-12, T-13: DE-Zahlen in Prosa mit Komma, Kommas im englischen Satz, verständliche Kurzlabels."""
+        """DE-Zahlen in Prosa mit Komma, Kommas im englischen Satz, verständliche Kurzlabels."""
         self.assertIn("1,0", SOURCES_D["recraft-api-usage"]["claim_de"])
         self.assertTrue(any(x.startswith("From {cut} series on, the page") for x in METHOD.COPY["en"]["method"]["s11.list"]))
         self.assertEqual(CHECK.COPY["de"]["check"]["mx.g"], "Große Schrift, Grafik")
@@ -262,7 +326,7 @@ class TestPublicTexts(unittest.TestCase):
 @unittest.skipUnless(REQUIRE or (DOCS / "de" / "index.html").exists(), "docs/ fehlt – erst python3 build.py")
 class TestPages(unittest.TestCase):
     def test_foreign_parts_marked(self):
-        """T-07, R4-10: englische Titel und Zitate auf der deutschen Quellenseite mit lang="en", deutsche Teile auf der
+        """Englische Titel und Zitate auf der deutschen Quellenseite mit lang="en", deutsche Teile auf der
         englischen mit lang="de"; zweisprachige Titel je Teil, Anführungszeichen nach der Sprache des Satzes."""
         de, en = page("de/quellen"), page("en/sources")
         for sid, s in SOURCES_D.items():
@@ -314,7 +378,7 @@ class TestPages(unittest.TestCase):
         self.assertNotRegex(page("en/ai-image"), r'id="ctl-b1"[^>]*lang=')
 
     def test_cited_in_names_rules(self):
-        """T-11: „Zitiert in“ nennt Aufgabe und Regelanfang statt einer englischen ID und verlinkt auf die Regel."""
+        """„Zitiert in“ nennt Aufgabe und Regelanfang statt einer englischen ID und verlinkt auf die Regel."""
         for rel, word in (("de/quellen", "Regel ("), ("en/sources", "Rule (")):
             t = page(rel)
             cit = re.findall(r'<p class="src-meta">(?:Zitiert in:|Cited in:) (.*?)</p>', t)
@@ -327,7 +391,7 @@ class TestPages(unittest.TestCase):
                 self.assertRegex(h, r"#regel(n|-[a-z0-9-]+)$")
 
     def test_every_source_is_cited(self):
-        """R-18: Die README sagt, Regeln, Erklärt-Einträge, Methode und Menüwege stützen sich auf alle Quellen. Das stimmt nur,
+        """Die README sagt, Regeln, Erklärt-Einträge, Methode und Menüwege stützen sich auf alle Quellen. Das stimmt nur,
         wenn keine Quelle auf der Quellenseite „noch nirgends“ zitiert ist."""
         for rel, lang in (("de/quellen", "de"), ("en/sources", "en")):
             t = page(rel)
@@ -335,7 +399,7 @@ class TestPages(unittest.TestCase):
             self.assertNotIn(html.escape(SOURCES.COPY[lang]["sources"]["cited.none"]), t, rel)
 
     def test_check_distance_headings_use_everyday_words(self):
-        """X:T-10: Die Überschriften unter „Kleinste Abstände“ sind die Sichtweisen der Simulation, nicht das Fachwort
+        """Die Überschriften unter „Kleinste Abstände“ sind die Sichtweisen der Simulation, nicht das Fachwort
         allein, und beginnen groß."""
         for rel, lang in (("de/pruefen", "de"), ("en/check", "en")):
             heads = re.findall(r'<div class="dist-k"><h4>([^<]+)</h4>', page(rel))
@@ -343,7 +407,7 @@ class TestPages(unittest.TestCase):
             self.assertEqual([html.unescape(h) for h in heads], [F["sim." + k] for k in ("normal", "deutan", "protan", "tritan", "gray")])
 
     def test_pair_labels_without_double_preposition(self):
-        """T-03: kein „auf … auf“ in Tabelle, Dekor-Liste und Badges; im Englischen Rollennamen im Satz klein."""
+        """Kein „auf … auf“ in Tabelle, Dekor-Liste und Badges; im Englischen Rollennamen im Satz klein."""
         for d in sorted((DOCS / "de").glob("*/index.html")) + sorted((DOCS / "en").glob("*/index.html")):
             t = d.read_text(encoding="utf-8")
             word = " auf " if "/de/" in str(d) else " on "
@@ -357,7 +421,7 @@ class TestPages(unittest.TestCase):
                     self.assertNotRegex(b.strip(), r"^[A-Z][a-z]", d)
 
     def test_hints_on_pages(self):
-        """M-01: Startseite, Aufgaben und Prüfseite zeigen den wahren Hinweis."""
+        """Startseite, Aufgaben und Prüfseite zeigen den wahren Hinweis."""
         for rel, word in (("de", "Adresse der Seite"), ("de/website", "Adresse der Seite"), ("de/pruefen", "Adresse der Seite"),
                           ("en", "page address"), ("en/website", "page address"), ("en/check", "page address")):
             t = page(rel)

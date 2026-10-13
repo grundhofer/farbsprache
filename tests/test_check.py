@@ -1,4 +1,4 @@
-"""Palette prüfen (Spezifikation 3.8, 4.9, 5.8, Abnahme P5): Scanner mit CSS-Kontexten, Rollen-Raten,
+"""Palette prüfen: Scanner mit CSS-Kontexten, Rollen-Raten,
 Befundstufen, Reparatur, URL-Zustand und Prüfbericht in tools/check.py. Die JS-Seite prüft tests/check.test.cjs."""
 import json, re, sys, unittest
 from pathlib import Path
@@ -176,7 +176,7 @@ class TestRepair(unittest.TestCase):
         self.assertGreater(n, 5)
 
     def test_repair_text_says_what_the_calculation_does(self):
-        """M-05: Der Löser setzt nur L neu; das Gamut-Mapping senkt danach oft die Buntheit (#FF6347 → #FFC8B9 verliert
+        """Der Löser setzt nur L neu; das Gamut-Mapping senkt danach oft die Buntheit (#FF6347 → #FFC8B9 verliert
         rund zwei Drittel). Der Vorschlagstext darf keine gleiche Buntheit des Ergebnisses behaupten."""
         seen = 0
         for text in ("#B22222 #FF6347", "#FFFFFF #00FF00", "#4A2A10 #BC641E", "tomato #FFFFFF"):
@@ -196,7 +196,7 @@ class TestRepair(unittest.TestCase):
         self.assertGreater(seen, 0, "kein Fall, in dem die Buntheit beim Abbilden deutlich sinkt")
 
     def test_gray_message_claims_no_print_result(self):
-        """R-17: Der Befund rechnet nur Graustufen nach WCAG-Leuchtdichte; über Druck und Kopierer sagt er nichts Sicheres."""
+        """Der Befund rechnet nur Graustufen nach WCAG-Leuchtdichte; über Druck und Kopierer sagt er nichts Sicheres."""
         m = model("#FFFFFF #777777 #E69F00 #F0E442 #56B4E9")
         gray = [f for f in findings(m) if f["id"] == "check-gray"]
         self.assertTrue(gray)
@@ -235,7 +235,7 @@ class TestRepair(unittest.TestCase):
         self.assertTrue({"check-duplicates", "check-cvd"} <= {f["id"] for f in findings(m)})
 
     def test_distance_repairs_never_lower_contrast(self):
-        # „keine Kontrastprüfung verschlechtert“ (4.9): auch eine schon verfehlte Prüfung sinkt nicht weiter
+        # „keine Kontrastprüfung verschlechtert“: auch eine schon verfehlte Prüfung sinkt nicht weiter
         n = 0
         for text in PALETTES + ["#FFFFFF #0F172B #E69F00 #56B4E9", "#000000 #F0E442 #FFFF66 #777777"]:
             m = model(text)
@@ -295,7 +295,7 @@ class TestStateAndReport(unittest.TestCase):
         self.assertNotIn("r=", CK.query(model("#0F172B #F8FAFC #E69F00")))
 
     def test_shared_roles_stay_addressable(self):
-        """M-03: Teilen sich Farben eine Rolle oder einen Namen, bekommt jede im CSS-Export und im Eingabetext aus dem Link
+        """Teilen sich Farben eine Rolle oder einen Namen, bekommt jede im CSS-Export und im Eingabetext aus dem Link
         einen eigenen Namen (zweiter „surface-b“), vor und nach dem Teilen. Kein Suffix trifft ein anderes Rollenmuster."""
         rq = CK.read_query("?f=FFFFFF,0A0A0A,FAFAFA,F5F5F5,171717,737373&r=bg,text,surface,surface,accent,text-muted", CFG)
         text = CK.state_text(rq["f"], rq["r"])
@@ -344,11 +344,11 @@ class TestStateAndReport(unittest.TestCase):
         self.assertIn("@media (prefers-color-scheme: dark)", css)
         self.assertIn("--background:", css)
         exp = CK.export_html(m, R)
-        for name in ("farbsprache-check-eigen.md", "farbsprache-check-eigen.txt", "farbsprache-check-eigen.css"):  # Schema 5.0
+        for name in ("farbsprache-check-eigen.md", "farbsprache-check-eigen.txt", "farbsprache-check-eigen.css"):  # Schema der Dateinamen
             self.assertIn(f'data-filename="{name}"', exp)
 
     def test_counts_have_singular_forms(self):
-        """T-02/R4-14: „1 weiterer Befund“ und „1 weitere Farbe ist weggelassen“ statt der Mehrzahl, bei zwei Mehrzahl."""
+        """„1 weiterer Befund“ und „1 weitere Farbe ist weggelassen“ statt der Mehrzahl, bei zwei Mehrzahl."""
         thirteen = " ".join("#%02X%02X%02X" % (i * 17 % 256, i * 53 % 256, i * 91 % 256) for i in range(1, 15))
         cases = {"de": ("1 weiterer Befund", "3 weitere Befunde", "1 weitere Farbe ist weggelassen.", "2 weitere Farben sind weggelassen."),
                  "en": ("1 more finding", "3 more findings", "1 more color is left out.", "2 more colors are left out.")}

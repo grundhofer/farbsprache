@@ -1,4 +1,4 @@
 {
-  "_comment": "Reihenfolge der Aufgaben auf der Startseite und im Build (Spezifikation 2.1, 2.5). Jede ID braucht data/tasks/<id>.json, einen SEG-Eintrag in build.py und die Dateien des Pakets. Fehlt eine Aufgabe, bricht der Build ab; nur python3 build.py --allow-missing baut eine Platzhalterkachel.",
+  "_comment": "Reihenfolge der Aufgaben auf der Startseite und im Build. Jede ID braucht data/tasks/<id>.json, einen SEG-Eintrag in build.py und die Dateien der Aufgabe. Fehlt eine Aufgabe, bricht der Build ab; nur python3 build.py --allow-missing baut eine Platzhalterkachel.",
   "order": ["website", "status", "charts", "slides", "brand", "image-text", "ai-image"]
 }

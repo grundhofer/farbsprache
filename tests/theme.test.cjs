@@ -88,7 +88,7 @@ test('theme: offene Tabs und Zurück-Cache synchronisieren, ohne die Wahl zu üb
   m.events.storage({ key: null, newValue: null }); assert.equal(m.root.dataset.theme, 'system');
   m.storage.set(KEY, 'dark'); m.events.pageshow({ persisted: true }); assert.equal(m.root.dataset.theme, 'dark');
 });
-test('theme: storage-Ereignis wirft nicht, wenn schon der Zugriff auf localStorage scheitert (T-16)', () => {
+test('theme: storage-Ereignis wirft nicht, wenn schon der Zugriff auf localStorage scheitert', () => {
   const events = {};
   const root = { hidden: false, dataset: {}, classList: { add() {}, contains: () => false } };
   const document = { documentElement: root, addEventListener() {}, querySelectorAll: () => [] };

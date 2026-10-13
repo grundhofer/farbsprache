@@ -1,5 +1,5 @@
 'use strict';
-// Paket P4, KI-Bild im Browser-Code (FS.gen['ai-image'], FS.ui['ai-image']): Golden-Namen, Sperrwörter, Vorbehalte nur
+// KI-Bild im Browser-Code (FS.gen['ai-image'], FS.ui['ai-image']): Golden-Namen, Sperrwörter, Vorbehalte nur
 // außerhalb der Kopiertexte, keine Hex-Werte, wo die Doku keine vorsieht, Recraft-Gewichte, Vorrang f vor c vor p.
 // Die Gleichheit mit Python prüft tests/gen-brand.test.cjs.
 const assert = require('node:assert/strict');

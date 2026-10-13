@@ -1,5 +1,5 @@
 {
-  "_comment": "Quellen von Paket P4 (Logo und Marke, KI-Bild, Kurz erklärt context, harmony, 60-30-10, meaning, color-systems). Jede URL am 2026-10-11 selbst abgerufen und die Aussage im Text nachgelesen. claim_* gibt nur wieder, was dort steht. Was nicht nachgelesen werden konnte, steht in unverified_*. IDs ohne Namen von Farbsystemen, weil tools/blocklist.txt auch IDs prüft.",
+  "_comment": "Quellen (Logo und Marke, KI-Bild, Kurz erklärt context, harmony, 60-30-10, meaning, color-systems). Jede URL am 2026-10-11 selbst abgerufen und die Aussage im Text nachgelesen. claim_* gibt nur wieder, was dort steht. Was nicht nachgelesen werden konnte, steht in unverified_*. IDs ohne Namen von Farbsystemen, weil tools/blocklist.txt auch IDs prüft.",
   "sources": [
     {
       "id": "bfl-hex-prompting",

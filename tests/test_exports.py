@@ -1,4 +1,4 @@
-"""Exporte (Spezifikation 5.0 bis 5.7, 7.9) aus den Python-Renderern für alle Startpaletten aller Aufgaben
+"""Exporte aus den Python-Renderern für alle Startpaletten aller Aufgaben
 und der Testaufgabe: alle Rollen vorhanden, kein None/undefined/NaN, jede Zahl der Form „a/b 15,76“ im
 Prompt und in den DTCG-$extensions aus den Tokens desselben Exports nachgerechnet, Tailwind und DTCG
 strukturell gültig, jede x:1-Angabe der Begründung ist ein Kontrast zweier Rollen der Palette."""
@@ -104,7 +104,7 @@ class TestExports(unittest.TestCase):
                     theme = tw.split("@theme inline {", 1)[1]
                     refs = re.findall(r"--color-([a-z0-9-]+): var\(--([a-z0-9-]+)\);", theme)
                     defined = set(re.findall(r"--([a-z0-9-]+): #[0-9A-F]{6};", tw.split("@theme inline {")[0]))
-                    # 5.2: jede --color-x verweist auf eine --x, die jeder Modus definiert (sonst färbt die Utility dort nichts)
+                    # jede --color-x verweist auf eine --x, die jeder Modus definiert (sonst färbt die Utility dort nichts)
                     per_mode = [set(re.findall(r"--([a-z0-9-]+): #[0-9A-F]{6};", b)) for b in tw.split("@theme inline {")[0].split(":root {")[1:]]
                     self.assertEqual(len(per_mode), len(pal["modes"]))
                     self.assertTrue(refs)
@@ -126,7 +126,7 @@ class TestExports(unittest.TestCase):
                 with self.subTest(task=t["id"], preset=p["id"], lang=lang, mode=mode):
                     doc = json.loads(b["text"])
                     toks = doc["color"]
-                    # Token-Namen sind die Exportnamen nach 6.3 (css_name), wie in CSS und Hex-Liste
+                    # Token-Namen sind die Exportnamen (css_name), wie in CSS und Hex-Liste
                     names = X.css_names(t)
                     self.assertEqual(list(toks), [names[rid] for rid in included(t, pal, mode, opts)])
                     for rid in included(t, pal, mode, opts):
@@ -169,7 +169,7 @@ class TestExports(unittest.TestCase):
                     part = part.split("\n" + ctx["core"]["label." + mode] + "\n", 1)[1].split("\n\n", 1)[0]
                 for m in re.finditer(r"([a-z0-9-]+)/([a-z0-9-]+) (\d+" + re.escape(sep) + r"\d\d)", part):
                     v = mode_of[mode]
-                    # Jeder Name eines Paars ist ein Token desselben Prompts (5.4, T-05), kein Rückgriff auf Rollen-IDs
+                    # Jeder Name eines Paars ist ein Token desselben Prompts, kein Rückgriff auf Rollen-IDs
                     with self.subTest(task=t["id"], preset=p["id"], lang=lang, pair=m.group(0)):
                         self.assertIn(m.group(1), v, f"{m.group(1)} steht nicht im Token-Block")
                         self.assertIn(m.group(2), v, f"{m.group(2)} steht nicht im Token-Block")

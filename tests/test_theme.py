@@ -25,7 +25,7 @@ class TestThemeContrast(unittest.TestCase):
                     self.assertGreaterEqual(C.contrast(p["ink-3"], p[tag]), 3.0)
 
     def test_tokens_unchanged_from_bildsprache(self):
-        """Spezifikation 7.7/9.2: Swiss-Theme unverändert (ground #FFFFFF/#0B0B0B, accent #C8050F/#FF4D52)."""
+        """Swiss-Theme unverändert (ground #FFFFFF/#0B0B0B, accent #C8050F/#FF4D52)."""
         self.assertEqual((theme.PALETTES["light"]["ground"], theme.PALETTES["dark"]["ground"]), ("#FFFFFF", "#0B0B0B"))
         self.assertEqual((theme.PALETTES["light"]["ink"], theme.PALETTES["dark"]["ink"]), ("#0B0B0B", "#FFFFFF"))
         self.assertEqual((theme.PALETTES["light"]["accent"], theme.PALETTES["dark"]["accent"]), ("#C8050F", "#FF4D52"))

@@ -1,5 +1,5 @@
 {
-  "_comment": "60 feste Seeds für den Paritätstest Python/JS (Spezifikation 7.9): L × C × h, L-Werte außen, h innen. Nur Eingaben, keine Ergebnisse. Vor der Übergabe an Generatoren mit parse() in Hex umwandeln.",
+  "_comment": "60 feste Seeds für den Paritätstest Python/JS: L × C × h, L-Werte außen, h innen. Nur Eingaben, keine Ergebnisse. Vor der Übergabe an Generatoren mit parse() in Hex umwandeln.",
   "L": [0.3, 0.5, 0.7],
   "C": [0.03, 0.08, 0.15, 0.22],
   "h": [0, 72, 144, 216, 288],

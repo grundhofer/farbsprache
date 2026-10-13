@@ -1,4 +1,4 @@
-"""Paketprüfung P3 (Präsentation, Text auf Bild): check(D, warn) -> [Meldungen].
+"""Prüfung der Aufgaben Präsentation und Text auf Bild: check(D, warn) -> [Meldungen].
 
 Prüft, was die generischen Prüfungen nicht kennen: Die Menüwege in data/tasks/slides.json (menu_paths) nennen
 eine Quelle aus data/sources/*.json, ihre url ist genau die url dieser Quelle, und checked ist ein gültiges

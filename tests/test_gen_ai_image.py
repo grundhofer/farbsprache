@@ -1,9 +1,9 @@
-"""Fachfälle der Aufgabe KI-Bild (Spezifikation 3.7, 4.8, 5.5, Abnahme P4).
+"""Fachfälle der Aufgabe KI-Bild.
 
-Geprüft: 33 Pflicht- und 40 Golden-Namen, keine Sperrwörter, Startsets mit den Erwartungs-Hex aus 4.8.3, Farbblock
-für FLUX.2, Ideogram und Recraft wörtlich wie in 5.5, keine Hex-Werte in Ideogram (Prompt), Midjourney und gpt-image,
+Geprüft: 33 Pflicht- und 40 Golden-Namen, keine Sperrwörter, Startsets mit den Erwartungs-Hex, Farbblock
+für FLUX.2, Ideogram und Recraft wörtlich, keine Hex-Werte in Ideogram (Prompt), Midjourney und gpt-image,
 Recraft-Gewichte höchstens 1, Vorbehalte nur außerhalb der Kopiertexte, Stand je Modell sichtbar, Vorrang f vor c vor p,
-Vorschläge nach den Formeln aus 4.8.2, Textzeile nur ab 4,5:1, kein Teal-Orange-Startset."""
+Vorschläge nach festen Formeln, Textzeile nur ab 4,5:1, kein Teal-Orange-Startset."""
 import json, re, sys, unittest
 from pathlib import Path
 
@@ -70,7 +70,7 @@ class TestNames(unittest.TestCase):
         names = A.block_names(["#E63946", "#D33B36"], cn())
         self.assertEqual(names, ["lighter red", "darker red"])
         self.assertEqual(A.block_names(["#777777", "#787878"], cn()), ["mid gray", "mid gray"])
-        # M-09: Gleiche Hex-Werte heißen gleich, ohne „lighter“ und „darker“; same-names greift
+        # Gleiche Hex-Werte heißen gleich, ohne „lighter“ und „darker“; same-names greift
         self.assertEqual(A.block_names(["#FF0000", "#FF0000", "#00FF00"], cn())[:2], ["vivid red", "vivid red"])
         self.assertEqual(len(set(A.block_names(["#FFFFFF"] * 4, cn()))), 1)
         self.assertEqual(A.block_names(["#E63946", "#E63946", "#D33B36"], cn()), ["lighter red", "lighter red", "darker red"])

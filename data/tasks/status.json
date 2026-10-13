@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe Statusfarben (Spezifikation 3.2, 4.3). Prosa steht in web/copy/status.py. Der Generator tools/gen/status.py nutzt Neutraltöne und Statusoptimierung aus tools/gen/website.py; im Browser lädt web/gen/website.js vorher (gen_deps).",
+  "_comment": "Aufgabe Statusfarben. Prosa steht in web/copy/status.py. Der Generator tools/gen/status.py nutzt Neutraltöne und Statusoptimierung aus tools/gen/website.py; im Browser lädt web/gen/website.js vorher (gen_deps).",
   "id": "status",
   "generator": "status",
   "name_de": "Statusfarben",

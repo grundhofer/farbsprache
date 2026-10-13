@@ -1,8 +1,8 @@
-"""Generator der Aufgabe KI-Bild (Spiegel von web/gen/ai-image.js, Spezifikation 3.7, 4.8, 5.5).
+"""Generator der Aufgabe KI-Bild (Spiegel von web/gen/ai-image.js).
 
 Ein englischer Farbblock für Bildprompts: Farben aus dem Feld „Eigene Farben“ (f), sonst drei Vorschläge aus der
 eigenen Farbe (c, Chips s), sonst das Startset (p). Farbnamen nur aus dem festen Vokabular data/colornames.json,
-Modellsyntax aus data/models.json (beide über ctx["data"]). Vertrag nach 7.4: build(task, inp, ctx) -> Palettenobjekt;
+Modellsyntax aus data/models.json (beide über ctx["data"]). Vertrag: build(task, inp, ctx) -> Palettenobjekt;
 der Rahmen setzt task, preset, input, name_de und name_en. Rein und deterministisch, keine Datei-IO.
 """
 import re
@@ -18,7 +18,7 @@ TOKEN = re.compile(r"\{(c|w|p|a|b)\}")
 WS = " \t\n\r"
 
 
-# ---- Farbnamen (4.8.1)
+# ---- Farbnamen
 
 def _sector(h, sectors):
     for lim, name in sectors:
@@ -28,7 +28,7 @@ def _sector(h, sectors):
 
 
 def color_name(hx, cn):
-    """Englischer Name aus dem festen Vokabular: Helligkeit, Buntheit, Grundwort (4.8.1, Schritte 1 bis 7)."""
+    """Englischer Name aus dem festen Vokabular: Helligkeit, Buntheit, Grundwort."""
     L, c, h = C.hex_to_oklch(hx)
     if c < cn["neutral_c_max"] or h is None:
         name = "black"
@@ -68,7 +68,7 @@ def color_name(hx, cn):
 
 
 def block_names(hexes, cn):
-    """Namen eines Blocks; gleiche Namen ohne Helligkeitszusatz bekommen „lighter “ und „darker “ (Schritt 8), aber nur,
+    """Namen eines Blocks; gleiche Namen ohne Helligkeitszusatz bekommen „lighter “ und „darker “, aber nur,
     wenn die hellste wirklich heller ist als die dunkelste. Gleiche Hex-Werte heißen immer gleich, dann greift same-names."""
     names = [color_name(h, cn) for h in hexes]
     out = list(names)
@@ -94,7 +94,7 @@ def block_names(hexes, cn):
     return out
 
 
-# ---- Vorschläge aus einer Farbe (4.8.2)
+# ---- Vorschläge aus einer Farbe
 
 def suggest(seed, kind):
     """Drei Farben dominant, secondary, accent aus der eigenen Farbe, gamut-gemappt und quantisiert."""
@@ -122,7 +122,7 @@ def suggest_values(seed, kind):
 # ---- Palette
 
 def _colors(inp):
-    """Vorrang f vor c vor p (2.3). → ([(rolle, hex)], quelle)."""
+    """Vorrang f vor c vor p. → ([(rolle, hex)], quelle)."""
     o = inp["options"]
     f = o.get("f")
     if f:
@@ -150,7 +150,7 @@ def build(task, inp, ctx):
     hexes = [hx for _, hx in cols]
     roles = {"default": dict(cols)}
     names = dict(zip(present, block_names(hexes, cn)))
-    # Textpaar: dunkelste auf hellster Farbe (4.8.4)
+    # Textpaar: dunkelste auf hellster Farbe
     ys = [C.rel_lum(hx) for hx in hexes]
     dk, lt = 0, 0
     for i, y in enumerate(ys):
@@ -201,7 +201,7 @@ def view_vars(palette, mode, toggles):
     return out
 
 
-# ---- Export Bildprompt (5.5)
+# ---- Export Bildprompt
 
 def fill(t, vals):
     return TOKEN.sub(lambda m: vals[m.group(1)] if m.group(1) in vals else m.group(0), t)
@@ -293,7 +293,7 @@ def prompt(palette, task, ctx, lang, opts=None):
 
 def hex_list(palette, task, ctx, lang, opts=None):
     """Hex-Liste des Rahmens. Mit eigenen Farben (f) nennt die Kopfzeile „Eigene Farben“ statt der Startpalette
-    (f geht vor p, 2.3). Seit Z setzt der Rahmen diesen Namen selbst (custom_name_colors); das bleibt als Absicherung."""
+    (f geht vor p). Inzwischen setzt der Rahmen diesen Namen selbst (custom_name_colors); das bleibt als Absicherung."""
     if palette["extra"].get("source") == "f":
         ctx = dict(ctx, name=ctx["text"]["name.f"])
     return X.hex_list(palette, task, ctx, lang, opts)

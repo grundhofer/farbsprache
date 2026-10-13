@@ -1,5 +1,5 @@
 {
-  "_comment": "Vergleichswerte für „im Diagramm unterscheidbar“ (Spezifikation 4.1.8). Nur Definitionen. Die Werte rechnet reference_values() in tools/color.py bzw. referenceValues() in web/color.js beim Build: kleinster schlechtester Abstand (das Hundertfache von ΔEOK) über alle Farbpaare und die genannten Sichtweisen. Vergleichswerte sind keine belegte Grenze.",
+  "_comment": "Vergleichswerte für „im Diagramm unterscheidbar“. Nur Definitionen. Die Werte rechnet reference_values() in tools/color.py bzw. referenceValues() in web/color.js beim Build: kleinster schlechtester Abstand (das Hundertfache von ΔEOK) über alle Farbpaare und die genannten Sichtweisen. Vergleichswerte sind keine belegte Grenze.",
   "comparisons": [
     {
       "id": "okabe-ito-7",

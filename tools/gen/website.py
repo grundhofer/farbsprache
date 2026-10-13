@@ -1,17 +1,17 @@
 """Generator der Aufgabe Website oder App (Spiegel von web/gen/website.js).
 
-T1 nach Spezifikation 4.2: Neutraltöne aus Farbton und Tönung der eigenen Farbe, Akzent als Fläche mit
-Schriftfarbe, Akzent als Text, Diagrammfarben für die Export-Option. T2 nach 4.3: Statusfarben, in festen
+Neutraltöne aus Farbton und Tönung der eigenen Farbe, Akzent als Fläche mit
+Schriftfarbe, Akzent als Text, Diagrammfarben für die Export-Option. Dazu Statusfarben, in festen
 Bändern optimiert auf den größten kleinsten Abstand bei normalem Sehen, Deuteranopie und Protanopie, mit
 dem Vergleichswert ohne Optimierung. Die Aufgabe status nutzt neutrals, status_colors und status_findings.
-Vertrag 7.4: build(task, inp, ctx) -> Palettenobjekt (6.14); task, preset, input und Namen setzt der Rahmen.
+Vertrag: build(task, inp, ctx) -> Palettenobjekt; task, preset, input und Namen setzt der Rahmen.
 """
 import json
 
 from tools import color as C, export as X
 
 KINDS3 = ["normal", "deutan", "protan"]
-# Statusfarben (4.3): Farbton, Chroma je Modus, Fläche je Modus (L, C), Band je Modus (Start, Anzahl), Schritt 0,02
+# Statusfarben: Farbton, Chroma je Modus, Fläche je Modus (L, C), Band je Modus (Start, Anzahl), Schritt 0,02
 STATUS = [("danger", 27.0), ("warning", 70.0), ("success", 150.0), ("info", 250.0)]
 STATUS_C = {"light": 0.15, "dark": 0.13}
 STATUS_SURF = {"light": (0.965, 0.025), "dark": (0.27, 0.04)}
@@ -21,15 +21,15 @@ CHARTS = 5
 # Start der Suche für die Linkfarbe, wenn die eigene Farbe jenseits der Flächen liegt (dunkler als die dunklen
 # Flächen, heller als der helle Hintergrund): unterhalb der Grenze 4,5:1 und auf der richtigen Seite der Flächen
 TEXT_L0 = {-1: 0.80, 1: 0.40}
-# Reserve über der Schwelle (4.1.17, Festlegung): gedämpfter Text 4,95 statt 4,5, kräftiger Rahmen 3,3 statt 3,
+# Reserve über der Schwelle (Festlegung): gedämpfter Text 4,95 statt 4,5, kräftiger Rahmen 3,3 statt 3,
 # als Literal wie LIGHT_T in tools/gen/slides.py. pages/method.py liest die Reserve und DARK_C von hier.
 TEXT_T, LINE_T = 4.95, 3.3
-# Buntheit des Akzents im dunklen Modus (4.1.17)
+# Buntheit des Akzents im dunklen Modus
 DARK_C = 0.85
 
 
 def tint(cs, tone):
-    """Tönung t der Neutraltöne (4.2): neutral 0, leicht getönt 0,1·C, kräftig 0,25·C, jeweils begrenzt."""
+    """Tönung t der Neutraltöne: neutral 0, leicht getönt 0,1·C, kräftig 0,25·C, jeweils begrenzt."""
     if tone == "neutral":
         return 0.0
     if tone == "strong":
@@ -46,7 +46,7 @@ def seed_lch(seed, tone):
 
 
 def neutrals(h, t):
-    """Neutraltöne hell und dunkel (4.2), Reserve ×1,1 über TEXT_T und LINE_T."""
+    """Neutraltöne hell und dunkel, Reserve ×1,1 über TEXT_T und LINE_T."""
     lt = {"bg": C.oklch_to_hex(0.985, 0.4 * t, h), "surface": "#FFFFFF", "surface-2": C.oklch_to_hex(0.955, 0.6 * t, h),
           "text": C.oklch_to_hex(0.24, 1.6 * t, h), "border": C.oklch_to_hex(0.88, t, h)}
     lt["text-muted"] = C.solve_l(1.4 * t, h, [lt["bg"], lt["surface"], lt["surface-2"]], TEXT_T, -1, 0.60)["hex"]
@@ -58,7 +58,7 @@ def neutrals(h, t):
     return {"light": lt, "dark": dk}
 
 
-# ---- Akzent (4.2)
+# ---- Akzent
 
 def accent_fill(cand, L, c, h, labels, mode, changes):
     """Akzent als Fläche: labels = [(Schrift, Richtung)], Richtung −1 für helle Schrift (Akzent dunkler),
@@ -90,7 +90,7 @@ def accent_fill(cand, L, c, h, labels, mode, changes):
 
 
 def text_accent(c, h, against, d, L):
-    """Akzent als Text (4.2): solve_l ab der eigenen Helligkeit L. Liegt die eigene Farbe jenseits der Flächen
+    """Akzent als Text: solve_l ab der eigenen Helligkeit L. Liegt die eigene Farbe jenseits der Flächen
     (Vorbedingung von solve_l verletzt, etwa bei Schwarz oder #111827 im dunklen Modus), sucht er ab TEXT_L0."""
     try:
         return C.solve_l(c, h, against, 4.5, d, L)
@@ -112,7 +112,7 @@ def accents(seed, L, cs, h, roles, changes):
                         "values": {"before": min(C.contrast(seed, lt["bg"]), C.contrast(seed, lt["surface"])), "after": at["ratio"]}})
     cand = C.oklch_to_hex(L, DARK_C * cs, h)
     dk["accent"], dk["on-accent"], kept["dark"] = accent_fill(cand, L, DARK_C * cs, h, [(dk["text"], -1), (dk["bg"], 1)], "dark", changes)
-    # Dunkel geht die Linkfarbe vom dunklen Kandidaten aus; weicht sie ab, sagt das ein Hinweis wie hell (3.0 C)
+    # Dunkel geht die Linkfarbe vom dunklen Kandidaten aus; weicht sie ab, sagt das ein Hinweis wie hell (Block C)
     at = text_accent(DARK_C * cs, h, [dk["bg"], dk["surface"]], 1, L)
     dk["accent-text"] = at["hex"]
     if at["hex"] != cand:
@@ -126,7 +126,7 @@ def okabe(ctx):
 
 
 def charts(roles, ctx):
-    """Export-Option „Diagrammfarben einschließen“: Linkfarbe zuerst, dann Okabe-Ito mit ≥ 3:1 auf bg (4.2)."""
+    """Export-Option „Diagrammfarben einschließen“: Linkfarbe zuerst, dann Okabe-Ito mit ≥ 3:1 auf bg."""
     ok = okabe(ctx)
     for mode in ("light", "dark"):
         r = roles[mode]
@@ -135,7 +135,7 @@ def charts(roles, ctx):
             r[f"chart-{i + 1}"] = hx
 
 
-# ---- Statusfarben (4.3)
+# ---- Statusfarben
 
 def status_surface(mode, hue):
     Ls, cs = STATUS_SURF[mode]
@@ -164,7 +164,7 @@ def _best(cands, dist):
 
 
 def status_colors(roles, findings):
-    """Statusfarben und Flächen je Modus (4.3) → distinct-Einträge mit Vergleich „unoptimiert“."""
+    """Statusfarben und Flächen je Modus → distinct-Einträge mit Vergleich „unoptimiert“."""
     distinct = []
     for mode in ("light", "dark"):
         r = roles[mode]
@@ -202,7 +202,7 @@ def status_colors(roles, findings):
 
 
 def status_findings(distinct, ctx, findings):
-    """Hinweis je Modus, wenn die Statusfarben näher liegen als der Vergleichswert Okabe-Ito (4.2, 5.4)."""
+    """Hinweis je Modus, wenn die Statusfarben näher liegen als der Vergleichswert Okabe-Ito."""
     ref = C.reference_values(ctx["comparisons"], ctx["datasets"])["okabe-ito-7"]["value"]
     for d in distinct:
         if d["id"] == "status" and d["value"] < ref:
@@ -211,7 +211,7 @@ def status_findings(distinct, ctx, findings):
 
 
 def conflict(cs, h, findings):
-    """Konfliktregel (4.3): Akzent weniger als 30° von 27° entfernt und C > 0,1."""
+    """Konfliktregel: Akzent weniger als 30° von 27° entfernt und C > 0,1."""
     if h is None or cs <= 0.1:
         return
     dh = abs(h - 27.0) % 360
@@ -231,7 +231,7 @@ def build(task, inp, ctx):
     distinct = status_colors(roles, findings)
     charts(roles, ctx)
     ev = C.evaluate(task, roles, "skip")
-    # Schwachstellen (4.2): textartige Rollen auf nicht freigegebenen Flächen, Akzentfläche, Links, Status
+    # Schwachstellen: textartige Rollen auf nicht freigegebenen Flächen, Akzentfläche, Links, Status
     for mode in ("light", "dark"):
         r = roles[mode]
         for rid in ["accent-text"] + [s for s, _ in STATUS]:
@@ -276,7 +276,7 @@ def status_template(palette, text, mode, key):
 
 def status_ctx(palette, ctx):
     """Palette und Texte für die generischen Renderer: Der Hinweis status-close bekommt je Modus den Text mit
-    dem engsten Paar (Prompt, 5.4), das Token {status_why} der Begründung den Satz für hell (5.6), ohne
+    dem engsten Paar (Prompt), das Token {status_why} der Begründung den Satz für hell, ohne
     Hinweis hell den Satz why.status_plain."""
     text = dict(ctx["text"])
     # Idee je Tönung: ohne Tönung (neutral oder unbunte Farbe) und kräftig mit eigenem Text, sonst agent.idea
@@ -315,7 +315,7 @@ def rationale(palette, task, ctx, lang, opts=None):
     return X.rationale(p, task, c, lang, opts)
 
 
-# Hinweis, wenn in einem Modus weniger als fünf Diagrammfarben 3:1 erreichen (4.2). Er steht in jedem Export,
+# Hinweis, wenn in einem Modus weniger als fünf Diagrammfarben 3:1 erreichen. Er steht in jedem Export,
 # der die Diagrammfarben enthält: CSS, Tailwind, Tokens im Prompt, Hex-Liste und Design-Tokens.
 
 def charts_few(palette, ctx, lang, mode, opts):

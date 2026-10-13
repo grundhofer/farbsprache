@@ -1,4 +1,4 @@
-"""Texte der Seite Kurz erklärt (Spezifikation 3.9). Vertrauenswürdiges HTML (CC BY 4.0).
+"""Texte der Seite Kurz erklärt. Vertrauenswürdiges HTML (CC BY 4.0).
 
 Die Einträge selbst stehen in data/explain/*.json. {color} setzt pages/explained.py als berechnetes Hex ein.
 Texte im Muster demo-context ({{schlüssel}}) sucht die Seite zuerst unter pattern.<schlüssel> hier.

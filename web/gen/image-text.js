@@ -1,5 +1,5 @@
-/* Generator der Aufgabe Text auf Bild (FS.gen['image-text']). Spiegel von tools/gen/image_text.py
-   (Bauspezifikation 4.7, 4.1.15, 5.8). build(task, inp, ctx) -> Palettenobjekt (6.14), viewVars für Deckkraft und
+/* Generator der Aufgabe Text auf Bild (FS.gen['image-text']). Spiegel von tools/gen/image_text.py.
+   build(task, inp, ctx) -> Palettenobjekt, viewVars für Deckkraft und
    Referenzflächen, exports scrim, values und agent (nur Hex-Werte). */
 (function (root, factory) {
   'use strict';
@@ -35,7 +35,7 @@
     t2.pairs = pairs;
     var ev = C().evaluate(t2, roles, 'skip');
     var worst = res.worst === '#FFFFFF' ? 'white' : 'black', tkey = target === 3 ? '3' : '4.5';
-    // Es zählt der kleinere Kontrast (4.7); die Seite zeigt den 8-Bit-Wert und sagt, ob er der kleinere ist
+    // Es zählt der kleinere Kontrast; die Seite zeigt den 8-Bit-Wert und sagt, ob er der kleinere ist
     // Gleichstand innerhalb der Rechengenauigkeit (1e-9) gilt als 8 Bit, wie in Python
     var low = res.ratio_at_percent_8bit <= res.ratio_at_percent + 1e-9 ? '8bit' : 'float';
     return { task: task.id, preset: null, input: inp, name_de: null, name_en: null,

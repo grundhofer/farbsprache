@@ -1,5 +1,5 @@
 'use strict';
-// Parität Python/JS (Spezifikation 7.9): dieselben Eingaben wie tools/parity.py durch FS.gen[<aufgabe>].build.
+// Parität Python/JS: dieselben Eingaben wie tools/parity.py durch FS.gen[<aufgabe>].build.
 // Hex und Texte exakt, Gleitkomma mit Toleranz 1e-9 (relativ ab Betrag 1). Keine Bitgleichheit behauptet.
 // Fälle opt:… sind eigene Zustände ohne eigene Farbe; mit Namenshaken vergleicht der Test auch displayName.
 // Vorher: python3 tools/parity.py (schreibt tests/out/parity.json).

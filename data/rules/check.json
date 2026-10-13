@@ -1,5 +1,5 @@
 {
-  "_comment": "Regeln der Seite Palette prüfen (Spezifikation 4.9, 6.5, Eigentümer P5). Texte mit Platzhaltern, nie mit Messzahlen. check-gamut und check-alpha sind zusätzlich zum Regelkatalog 6.5 angelegt, damit jeder Befund eine Belegstufe und Quelle trägt. Verwendet werden alle Regeln über data/check.json (findings[].rule).",
+  "_comment": "Regeln der Seite Palette prüfen. Texte mit Platzhaltern, nie mit Messzahlen. check-gamut und check-alpha sind zusätzlich angelegt, damit jeder Befund eine Belegstufe und Quelle trägt. Verwendet werden alle Regeln über data/check.json (findings[].rule).",
   "rules": [
     {
       "id": "check-duplicates",

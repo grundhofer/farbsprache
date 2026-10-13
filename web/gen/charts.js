@@ -1,6 +1,6 @@
 /* Generator der Aufgabe Diagramm oder Dashboard (FS.gen.charts). Spiegel von tools/gen/charts.py, gleiche
    Reihenfolge der Schritte, damit Hex exakt und Zahlen bis 1e-9 gleich sind (Paritätstest).
-   Vertrag nach Spezifikation 7.4: build(task, inp, ctx) -> Palettenobjekt (6.14), dazu viewVars und exports.js. */
+   build(task, inp, ctx) -> Palettenobjekt, dazu viewVars und exports.js. */
 (function (root, factory) {
   'use strict';
   var api = factory(root);
@@ -31,7 +31,7 @@
   function usageOf(hx, bg) { var r = C.contrast(hx, bg); return r >= 4.5 ? 'text' : r >= 3.0 ? 'lines' : 'area'; }
   function isRed(h) { return isNum(h) && ((h >= 0 && h <= 45) || h >= 345); }
   function isGreen(h) { return isNum(h) && h >= 120 && h <= 160; }
-  // Rot-Grün-Ablehnung (4.4): Gegenseite h_b durch 255° ersetzen → [h_b, ersetzt]
+  // Rot-Grün-Ablehnung: Gegenseite h_b durch 255° ersetzen → [h_b, ersetzt]
   function redGreen(ha, hb) {
     if ((isRed(ha) && isGreen(hb)) || (isGreen(ha) && isRed(hb))) { return [255.0, true]; }
     return [hb, false];
@@ -198,7 +198,7 @@
     roles.grid = C.oklchToHex(GRID_L[bgk], 0.0, 0.0);
     var rbm = {}; rbm[MODE] = roles;
 
-    // Paare: Linien (cat lines, hl) normativ 3:1; Flächen (cat areas, seq, div) nur als Hinweis (4.4)
+    // Paare: Linien (cat lines, hl) normativ 3:1; Flächen (cat areas, seq, div) nur als Hinweis
     var t2 = {}, p, pairs = [], adv = (task.advisory || []).slice();
     for (k in task) { if (has(task, k)) { t2[k] = task[k]; } }
     if (t === 'cat' && o.mark === 'areas') {
@@ -214,7 +214,7 @@
     }
     if (low !== null) { findings.unshift({ id: 'low-contrast', mode: null, severity: 'note', values: { ratio: low } }); }
 
-    // Abstände (4.1.8): schlechtester Fall normal, Deuteranopie, Protanopie; bei pr zusätzlich Graustufen getrennt
+    // Abstände: schlechtester Fall normal, Deuteranopie, Protanopie; bei pr zusätzlich Graustufen getrennt
     var cols = [], groups, g, a, md, base;
     for (i = 0; i < data.length; i++) { cols.push(roles[data[i]]); }
     if (t === 'seq' || t === 'div') {
@@ -238,14 +238,14 @@
     }
     var usage = {}; usage[MODE] = {};
     for (i = 0; i < data.length; i++) { usage[MODE][data[i]] = usageOf(roles[data[i]], bg); }
-    // advisory: Datenfarben ohne Normpaar (Stufen, Flächen) mit Wert; der Rahmen zeigt sie in Block C und F (3.3)
+    // advisory: Datenfarben ohne Normpaar (Stufen, Flächen) mit Wert; der Rahmen zeigt sie in Block C und F
     return { task: task.id, preset: null, input: inp, name_de: null, name_en: null,
       modes: task.modes.slice(), roles: rbm, pairs: ev.pairs, decorative: ev.decorative,
       advisory: ev.advisory, distinct: distinct, changes: changes, findings: findings, usage: usage,
       extra: { datasets: used, summary: summary } };
   }
 
-  // ---------- Name eines eigenen Zustands ohne eigene Farbe (nach Z geändert, 5.0): Familie, Anzahl, Darstellung,
+  // ---------- Name eines eigenen Zustands ohne eigene Farbe: Familie, Anzahl, Darstellung,
   // Hintergrund, wie die Palette sie zeigt; fam „seed“ ohne eigene Farbe fällt wie im Generator auf die Standardfamilie
   function displayName(palette, text, lang) {
     var o = palette.input.options, t = o.t, fam = o.fam === 'seed' && !palette.input.seed ? DEFAULT_FAM[t] : o.fam, r = palette.roles[MODE], n = 0, k;
@@ -284,7 +284,7 @@
     return v;
   }
 
-  // ---------- JS-Array (5.8)
+  // ---------- JS-Array
   function jsArray(palette, task, ctx, lang, opts) {
     var o = palette.input.options, t = o.t, r = palette.roles[MODE], text = ctx.text, rids = [], k, i, lines = [], low = [], nn, vals = [];
     var pre = { cat: 'series-', seq: 'step-', div: 'step-' };
@@ -305,7 +305,7 @@
     return lines.join('\n');
   }
 
-  // ---------- Zweck der Datenfarben unter 3:1 (4.4): „nur Flächen mit Kontur“ statt „Linien, Punkte, Balken“
+  // ---------- Zweck der Datenfarben unter 3:1: „nur Flächen mit Kontur“ statt „Linien, Punkte, Balken“
   function areaTask(palette, task, ctx, lang) {
     var u = (palette.usage || {})[MODE] || {}, t = {}, k, i, r, c, roles = [];
     for (k in task) { if (has(task, k)) { t[k] = task[k]; } }

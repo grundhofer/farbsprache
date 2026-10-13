@@ -1,4 +1,4 @@
-"""Fachfälle der Aufgabe Präsentation (Paket P3, Bauspezifikation 4.1.14, 4.5, 5.7, 8 Abnahme P3).
+"""Fachfälle der Aufgabe Präsentation.
 
 Beamer-Erwartungen 5,98 / 3,14 / 3,99 (dazu 96,19 und 2,66), Folienschrift ≥ 7:1 bei allen Startpaletten,
 Ansicht „Beamer“ über view_vars, Office-Reihenfolge der Hex-Liste, Menüwege mit Quelle und Datum,
@@ -45,7 +45,7 @@ def preset_palettes():
 
 
 class TestProjector(unittest.TestCase):
-    """Beamer-Modell (4.1.14): Erwartungswerte der Spezifikation, angezeigt mit fmt_ratio."""
+    """Beamer-Modell: feste Erwartungswerte, angezeigt mit fmt_ratio."""
 
     def test_expected_values(self):
         cases = [("#000000", "#FFFFFF", "normal", 5.9850, "5,98:1"), ("#767676", "#FFFFFF", "normal", 3.1448, "3,14:1"),
@@ -221,7 +221,7 @@ class TestData(unittest.TestCase):
                 self.assertEqual(srcs[m["source"]]["access"], "fulltext")
                 self.assertTrue(m["text_de"] and m["text_en"])
 
-    def test_package_checks_clean(self):
+    def test_own_checks_clean(self):
         from tools import checks, checks_slides  # noqa: PLC0415
         D, errs = checks.load_all([ROOT])
         self.assertEqual(checks_slides.check(D, lambda m: None), [])

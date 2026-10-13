@@ -35,7 +35,7 @@
   var NAMES = K.css_names;
   var KINDS = ['normal', 'deutan', 'protan', 'tritan', 'gray'];
   var WORST_KINDS = ['normal', 'deutan', 'protan'];
-  // Einzige feste Abstandsschwelle: unter 100 · JND (= 2) fallen zwei Farben praktisch zusammen (4.1.8)
+  // Einzige feste Abstandsschwelle: unter 100 · JND (= 2) fallen zwei Farben praktisch zusammen
   var JND_DISTANCE = 100 * JND;
   // Gleitkommarauschen beim Gamut-Test der Eingabe (oklch(100% 0 0) liefert 1,0000000000000004).
   var GAMUT_NOISE = 1e-9;
@@ -152,7 +152,7 @@
   }
   function oklchToHex(L, C, h) { return srgbToHex(gamutMap(L, C, h)); }
 
-  // ---------- Parser (4.1.1)
+  // ---------- Parser
   var WS = '[ \\t\\n\\r\\f\\v\\u00a0\\u1680\\u2000-\\u200a\\u2028\\u2029\\u202f\\u205f\\u3000\\ufeff]';
   var WS1 = new RegExp('^' + WS + '$');
   var SPLIT = new RegExp(WS + '+');
@@ -329,7 +329,7 @@
   function grayHex(c) { var g = gam(relLum(c)); return srgbToHex([g, g, g]); }
   function grayDistance(a, b) { return Math.abs(grayValue(a) - grayValue(b)) * 100; }
 
-  // ---------- Farbsehschwäche (4.1.7) und Abstände (4.1.8)
+  // ---------- Farbsehschwäche und Abstände
   var simCache = {}, simCount = 0;
   function simLin(h, kind) {
     var s = hexToSrgb(h), l = [lin(s[0]), lin(s[1]), lin(s[2])], o, y;
@@ -383,7 +383,7 @@
     return best;
   }
 
-  // ---------- Formatierer (4.1.9): Ausgabe immer aus Ganzzahlen gebaut
+  // ---------- Formatierer: Ausgabe immer aus Ganzzahlen gebaut
   function sep(lang) {
     if (lang === 'de') { return ','; }
     if (lang === 'en') { return '.'; }
@@ -420,7 +420,7 @@
   }
   function fmtLum(y, lang) { finite(y); return fixed(Math.floor(y * 10000 + 0.5), 4, lang || 'en'); }
 
-  // ---------- Kürzeste OKLCH-Schreibweise (4.1.10)
+  // ---------- Kürzeste OKLCH-Schreibweise
   var P10 = [1, 10, 100, 1000, 10000, 100000];
   function shortestOklch(h, maxP) {
     var hx = normHex(h), lch = hexToOklch(hx), p, sL, sC, nh, s, r;
@@ -439,7 +439,7 @@
     return null;
   }
 
-  // ---------- L-Löser (4.1.11)
+  // ---------- L-Löser
   function SolveError(key, values) {
     this.name = 'SolveError'; this.key = key; this.values = values || {}; this.message = key;
     if (Error.captureStackTrace) { Error.captureStackTrace(this, SolveError); } else { this.stack = (new Error(key)).stack; }
@@ -499,7 +499,7 @@
     throw new SolveError('unreachable', { target: target, best: best.ratio, best_hex: best.hex });
   }
 
-  // ---------- Unterscheidbare Farben auswählen (4.1.12)
+  // ---------- Unterscheidbare Farben auswählen
   function pickDistinct(pool, k, kinds, start, bg) {
     kinds = kinds || WORST_KINDS;
     if (kinds.indexOf('tritan') >= 0) { throw new Error('Tritan geht in keine Auswahl ein'); }
@@ -532,7 +532,7 @@
     return chosen;
   }
 
-  // ---------- Link-Fenster (4.1.13), Beamer (4.1.14), Schleier (4.1.15)
+  // ---------- Link-Fenster, Beamer, Schleier
   function linkWindow(text, bgs) {
     if (!bgs || !bgs.length) { throw new Error('bgs ist leer'); }
     var yt = relLum(text), ys = [], i, allLight = true, allDark = true, lo, hi, pol, v;
@@ -589,7 +589,7 @@
     return { alpha: hi, percent: pc, ratio_at_percent: r, ratio_at_percent_8bit: r8, worst: worst, mix_hex: q };
   }
 
-  // ---------- Paarbewertung aus dem Rollenschema (4.1.16)
+  // ---------- Paarbewertung aus dem Rollenschema
   function evaluate(task, rolesByMode, missing) {
     var out = { pairs: [], decorative: [], advisory: [] };
     var modes = task.modes && task.modes.length ? task.modes : Object.keys(rolesByMode);
@@ -637,7 +637,7 @@
     return out;
   }
 
-  // ---------- Vergleichswerte (4.1.8)
+  // ---------- Vergleichswerte
   function comparisonColors(spec, datasets) {
     var out = [], i, ds, scheme, ex, n;
     if (spec.generate !== undefined) {
@@ -671,7 +671,7 @@
     return out;
   }
 
-  // ---------- Platzhalter (6.12)
+  // ---------- Platzhalter
   function RenderError(message) {
     this.name = 'RenderError'; this.message = message;
     if (Error.captureStackTrace) { Error.captureStackTrace(this, RenderError); } else { this.stack = (new Error(message)).stack; }

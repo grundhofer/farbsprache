@@ -1,4 +1,4 @@
-/* ---------- Seiten von P5: nur Selektoren mit .t-check, .t-explained, .t-method, .t-sources (main-Klasse der Seite) ---------- */
+/* ---------- Palette prüfen, Kurz erklärt, Methode, Quellen: nur Selektoren mit .t-check, .t-explained, .t-method, .t-sources (main-Klasse der Seite) ---------- */
 .t-check .mast .wrap, .t-explained .mast .wrap, .t-method .mast .wrap, .t-sources .mast .wrap { padding-bottom:clamp(20px,3vw,32px); }
 .t-check .chk-in { display:grid; gap:8px; padding-top:clamp(20px,3vw,32px); max-width:72ch; }
 .t-check .chk-text { font:16px/1.5 var(--f-code); color:var(--ink); background:var(--surface); border:1px solid var(--ink-3); border-radius:0;
@@ -66,7 +66,7 @@
 .t-check .chk-rules { margin-top:clamp(36px,5vw,56px); }
 .t-check .chk-rules > .hint { margin-bottom:8px; }
 
-/* ---------- Kurz erklärt, Methode, Quellen (P5): .t-explained, .t-method, .t-sources ---------- */
+/* ---------- Kurz erklärt, Methode, Quellen: .t-explained, .t-method, .t-sources ---------- */
 .t-explained .ex-toc, .t-method .m-toc, .t-sources .m-toc { padding-top:clamp(20px,3vw,32px); font-size:14px; }
 .t-explained .ex-toc ol, .t-method .m-toc ol, .t-sources .m-toc ol { columns:2 16rem; column-gap:32px; }
 .t-explained .ex-toc li, .t-method .m-toc li, .t-sources .m-toc li { break-inside:avoid; margin:0; padding:0; }

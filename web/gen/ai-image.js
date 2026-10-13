@@ -1,5 +1,5 @@
-/* Generator der Aufgabe KI-Bild (FS.gen['ai-image']). Spiegel von tools/gen/ai_image.py (Spezifikation 3.7,
-   4.8, 5.5): Farbnamen aus dem festen Vokabular, Vorschläge aus einer Farbe, Palettenobjekt, Export Bildprompt.
+/* Generator der Aufgabe KI-Bild (FS.gen['ai-image']). Spiegel von tools/gen/ai_image.py:
+   Farbnamen aus dem festen Vokabular, Vorschläge aus einer Farbe, Palettenobjekt, Export Bildprompt.
    Vorrang f vor c vor p. Rein, ohne DOM; tests/parity.test.cjs vergleicht mit Python. */
 (function (root, factory) {
   'use strict';
@@ -16,7 +16,7 @@
   function has(o, k) { return o !== null && o !== undefined && Object.prototype.hasOwnProperty.call(o, k); }
   function hue(h) { return h === null || h === undefined || h !== h ? null : h; }
 
-  // ---------- Farbnamen (4.8.1)
+  // ---------- Farbnamen
   function sector(h, sectors) {
     for (var i = 0; i < sectors.length; i++) { if (h < sectors[i][0]) { return sectors[i][1]; } }
     return sectors[sectors.length - 1][1];
@@ -77,7 +77,7 @@
     return out;
   }
 
-  // ---------- Vorschläge aus einer Farbe (4.8.2)
+  // ---------- Vorschläge aus einer Farbe
   function suggest(seed, kind) {
     var o = C().hexToOklch(seed), L = o[0], Cs = o[1], h = hue(o[2]), K = C(), sec, acc;
     if (h === null) { h = 0; }
@@ -168,7 +168,7 @@
     return out;
   }
 
-  // ---------- Export Bildprompt (5.5)
+  // ---------- Export Bildprompt
   function fill(t, vals) { return t.replace(/\{(c|w|p|a|b)\}/g, function (m, k) { return has(vals, k) ? vals[k] : m; }); }
   function model(ctx, mid) {
     var ms = ctx.data.models.models, i;
@@ -222,7 +222,7 @@
     }
     return blocks;
   }
-  // Hex-Liste des Rahmens; mit eigenen Farben (f) heißt die Palette „Eigene Farben“ statt wie die Startpalette (seit Z setzt das auch der Rahmen)
+  // Hex-Liste des Rahmens; mit eigenen Farben (f) heißt die Palette „Eigene Farben“ statt wie die Startpalette (das setzt auch der Rahmen)
   function hexList(palette, task, ctx, lang, opts) {
     var c = ctx, k;
     if (palette.extra.source === 'f') {

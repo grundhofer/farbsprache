@@ -1,5 +1,5 @@
 {
-  "_comment": "ColorBrewer, nur Blues, RdBu und PuOr mit allen Klassenstufen (Spezifikation 9.4). Werte per tools/datasets.py aus colorbrewer.json übernommen und gegen colorbrewer_schemes.js abgeglichen, nicht abgetippt. Reihenfolge wie in der Quelle (Blues hell nach dunkel, RdBu rot nach blau, PuOr orange nach lila). flags_quoted sind Etiketten der Website colorbrewer2.org, keine Aussage von Farbsprache. kind auf oberster Ebene „mixed“, weil Blues sequenziell und RdBu und PuOr divergierend sind; maßgeblich ist kind je Palette.",
+  "_comment": "ColorBrewer, nur Blues, RdBu und PuOr mit allen Klassenstufen. Werte per tools/datasets.py aus colorbrewer.json übernommen und gegen colorbrewer_schemes.js abgeglichen, nicht abgetippt. Reihenfolge wie in der Quelle (Blues hell nach dunkel, RdBu rot nach blau, PuOr orange nach lila). flags_quoted sind Etiketten der Website colorbrewer2.org, keine Aussage von Farbsprache. kind auf oberster Ebene „mixed“, weil Blues sequenziell und RdBu und PuOr divergierend sind; maßgeblich ist kind je Palette.",
   "id": "colorbrewer",
   "name": "ColorBrewer",
   "authors": ["Cynthia Brewer", "Mark Harrower"],

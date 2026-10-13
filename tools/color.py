@@ -51,7 +51,7 @@ NAMES = K["css_names"]
 VERSION = K["version"]
 KINDS = ("normal", "deutan", "protan", "tritan", "gray")
 WORST_KINDS = ("normal", "deutan", "protan")
-# Einzige feste Abstandsschwelle: unter 100 · JND (= 2) fallen zwei Farben praktisch zusammen (4.1.8)
+# Einzige feste Abstandsschwelle: unter 100 · JND (= 2) fallen zwei Farben praktisch zusammen
 JND_DISTANCE = 100 * JND
 # Gleitkommarauschen beim Gamut-Test der Eingabe (oklch(100% 0 0) liefert 1,0000000000000004).
 # Wirkt nur auf das Etikett out_of_gamut, nicht auf das Hex.
@@ -242,7 +242,7 @@ def oklch_to_hex(L, C, h):
     return srgb_to_hex(gamut_map(L, C, h))
 
 
-# ---- Parser (4.1.1)
+# ---- Parser
 
 _WS = "[ \t\n\r\f\v\u00a0\u1680\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff]"
 _TRIM = re.compile(f"^{_WS}+|{_WS}+$")
@@ -495,7 +495,7 @@ def gray_distance(a, b):
     return abs(gray_value(a) - gray_value(b)) * 100
 
 
-# ---- Farbsehschwäche (4.1.7) und Abstände (4.1.8)
+# ---- Farbsehschwäche und Abstände
 
 _SIM_CACHE = {}
 
@@ -568,7 +568,7 @@ def min_distance(colors, kinds=WORST_KINDS):
     return best
 
 
-# ---- Formatierer (4.1.9): Ausgabe immer aus Ganzzahlen gebaut
+# ---- Formatierer: Ausgabe immer aus Ganzzahlen gebaut
 
 def _sep(lang):
     if lang == "de":
@@ -631,7 +631,7 @@ def fmt_lum(y, lang="en"):
     return _fixed(math.floor(y * 10000 + 0.5), 4, lang)
 
 
-# ---- Kürzeste OKLCH-Schreibweise (4.1.10)
+# ---- Kürzeste OKLCH-Schreibweise
 
 _P10 = (1, 10, 100, 1000, 10000, 100000)
 
@@ -657,7 +657,7 @@ def shortest_oklch(h, max_p=3):
     return None
 
 
-# ---- L-Löser (4.1.11)
+# ---- L-Löser
 
 class SolveError(Exception):
     """Löser ohne Ergebnis: key 'mixed-sides' oder 'unreachable', values mit Details."""
@@ -731,7 +731,7 @@ def solve_l(C, h, against, target, direction, L0):
     raise SolveError("unreachable", {"target": target, "best": best["ratio"], "best_hex": best["hex"]})
 
 
-# ---- Unterscheidbare Farben auswählen (4.1.12)
+# ---- Unterscheidbare Farben auswählen
 
 def pick_distinct(pool, k, kinds=WORST_KINDS, start=None, bg=None):
     """Gierige Max-Min-Auswahl. Erste Farbe: start, sonst höchster Kontrast zu bg (sonst die erste).
@@ -771,11 +771,11 @@ def pick_distinct(pool, k, kinds=WORST_KINDS, start=None, bg=None):
     return chosen
 
 
-# ---- Link-Fenster (4.1.13), Beamer (4.1.14), Schleier (4.1.15)
+# ---- Link-Fenster, Beamer, Schleier
 
 def link_window(text, bgs):
     """Leuchtdichte-Fenster für Links ohne Unterstreichung (G183) → {lo, hi, empty, polarity}.
-    Dunkler Text auf hellen Flächen nach Spezifikation, heller Text auf dunklen Flächen gespiegelt."""
+    Dunkler Text auf hellen Flächen direkt, heller Text auf dunklen Flächen gespiegelt."""
     yt = rel_lum(text)
     ys = [rel_lum(b) for b in bgs]
     if not ys:
@@ -848,7 +848,7 @@ def scrim_alpha(text, scrim, target):
     return {"alpha": hi, "percent": pct, "ratio_at_percent": r, "ratio_at_percent_8bit": r8, "worst": worst, "mix_hex": q}
 
 
-# ---- Paarbewertung aus dem Rollenschema (4.1.16)
+# ---- Paarbewertung aus dem Rollenschema
 
 def evaluate(task, roles_by_mode, missing="error"):
     """Alle Paare aus task.pairs, task.decorative, task.advisory für jeden Modus.
@@ -892,7 +892,7 @@ def evaluate(task, roles_by_mode, missing="error"):
     return out
 
 
-# ---- Vergleichswerte (4.1.8)
+# ---- Vergleichswerte
 
 def _comparison_colors(spec, datasets):
     if "generate" in spec:
@@ -928,7 +928,7 @@ def reference_values(comparisons=None, datasets=None):
     return out
 
 
-# ---- Platzhalter (6.12)
+# ---- Platzhalter
 
 class RenderError(ValueError):
     """Platzhalter, der sich nicht auflösen lässt."""

@@ -1,5 +1,5 @@
 {
-  "_comment": "Regeln der Aufgabe Diagramm oder Dashboard (Spezifikation 3.3, 6.5). Texte mit Platzhaltern, nie mit Messzahlen. Bedingte Regeln (show_if) erscheinen nur, wenn die Bedingung für die aktuelle Palette gilt: count zählt Rollen mit dem Präfix a, finding prüft die Hinweise der Palette.",
+  "_comment": "Regeln der Aufgabe Diagramm oder Dashboard. Texte mit Platzhaltern, nie mit Messzahlen. Bedingte Regeln (show_if) erscheinen nur, wenn die Bedingung für die aktuelle Palette gilt: count zählt Rollen mit dem Präfix a, finding prüft die Hinweise der Palette.",
   "rules": [
     {
       "id": "chart-lines-3-1",

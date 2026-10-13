@@ -1,5 +1,5 @@
-"""Texte der Aufgabe Statusfarben (Spezifikation 3.2, 4.3, 5.8). COPY[lang]["status"][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach 6.12. Keine Messzahlen von Hand.
+"""Texte der Aufgabe Statusfarben. COPY[lang]["status"][schlüssel],
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahlen von Hand.
 
 Die Texte zum engsten Statuspaar teilt diese Aufgabe mit Website oder App; sie kommen aus
 web/copy/website.py (SHARED), geladen über den Dateipfad wie alle Textmodule."""

@@ -1,14 +1,14 @@
-"""Generator der Aufgabe Logo und Marke (Spiegel von web/gen/brand.js, Spezifikation 3.5, 4.6, 5.8).
+"""Generator der Aufgabe Logo und Marke (Spiegel von web/gen/brand.js).
 
 Steckbrief einer Markenfarbe: Schriftfarbe darauf (Weiß oder Schwarz, der höhere Kontrast), Textvarianten auf Weiß
-und auf #16191D per solve_l bei gleichem Farbton und gleicher Chroma, Graustufe nach 4.1.6, optional eine zweite
+und auf #16191D per solve_l bei gleichem Farbton und gleicher Chroma, Graustufe, optional eine zweite
 Markenfarbe mit Kontrast und Abständen. Die Markenfarbe selbst bleibt immer unverändert; abgeleitete Textvarianten
-melden sich als Änderungshinweis. Vertrag nach 7.4: build(task, inp, ctx) -> Palettenobjekt.
+melden sich als Änderungshinweis. Vertrag: build(task, inp, ctx) -> Palettenobjekt.
 """
 from tools import color as C
 from tools import export as X
 
-WHITE, BLACK, DARK = "#FFFFFF", "#000000", "#16191D"  # #16191D: dunkler Hintergrund (4.1.17, Festlegung)
+WHITE, BLACK, DARK = "#FFFFFF", "#000000", "#16191D"  # #16191D: dunkler Hintergrund (Festlegung)
 KINDS2 = ("normal", "deutan", "protan", "gray")
 
 
@@ -63,7 +63,7 @@ def view_vars(palette, mode, toggles):
     return {"mono-ink": BLACK, "mono-paper": WHITE, "show-2": "flex" if "brand-2" in palette["roles"][mode] else "none"}
 
 
-# ---- Steckbrief (5.8, Markdown)
+# ---- Steckbrief (Markdown)
 
 def _rgb(hx):
     return "rgb(" + " ".join(str(int(hx[i:i + 2], 16)) for i in (1, 3, 5)) + ")"

@@ -1,4 +1,4 @@
-"""Startpaletten (Spezifikation 6.4, 7.9): je Aufgabe Gleichheit mit tests/golden/<aufgabe>.json, kein
+"""Startpaletten: je Aufgabe Gleichheit mit tests/golden/<aufgabe>.json, kein
 normatives Paar verfehlt, expect in beide Richtungen. Läuft über alle vorhandenen Aufgaben und die
 Testaufgabe aus tests/fixtures/. Golden neu schreiben nur bewusst: python3 build.py --update-golden."""
 import json, sys, unittest

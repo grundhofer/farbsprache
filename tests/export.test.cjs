@@ -1,5 +1,5 @@
 'use strict';
-// Exporte und dynamische Blöcke (Spezifikation 5.0, 7.9): Für Startpalette 1 jeder Aufgabe gleicht die
+// Exporte und dynamische Blöcke: Für Startpalette 1 jeder Aufgabe gleicht die
 // JS-Ausgabe Byte für Byte dem statischen HTML aus dem Python-Build. Geladen werden genau die
 // ausgelieferten Dateien aus docs/assets/ (color.js mit FS_CONST, export.js, gen/*.js, site.js).
 // Vorher: python3 build.py --fixtures (Datum über --date fest).
@@ -79,7 +79,7 @@ for (const [name, dir] of SITES) {
         assert.notEqual(py, null, `Block ${id} fehlt im HTML`);
         assert.equal(js, py, `Block ${id} weicht ab`);
       }
-      // Prompt und Design-Tokens nennen in den Paaren dieselben Namen wie ihre Tokens (5.4, 6.3; T-05, M-07)
+      // Prompt und Design-Tokens nennen in den Paaren dieselben Namen wie ihre Tokens
       const exps = data.task.exports.visible.concat(data.task.exports.more || []);
       for (const b of exps.includes('agent') ? ctx.FS.export.render('agent', pal, data.task, S.render.exportCtx(data, pal, st, false), data.lang, exp, gen) : []) {
         if (!b.text.includes('```css')) continue;
@@ -134,7 +134,7 @@ test('Exporte der Testaufgabe enthalten jede Rolle und die Kopf- und Fußzeile',
   }
 });
 
-// #task-data ist gekürzt (pages/task.py browser_rule/browser_source, Budget 7.11): Regeln nur in der Seitensprache,
+// #task-data ist gekürzt (pages/task.py browser_rule/browser_source, Größenbudget): Regeln nur in der Seitensprache,
 // Quellen nur mit title, url, access, short_<lang>, die Aufgabe ohne _comment. Mit den vollen Daten aus data/ muss
 // der Browser für jede Startpalette und für eigene Farben genau dasselbe rendern und exportieren.
 test('Gekürztes #task-data rendert wie die vollen Daten', (t) => {

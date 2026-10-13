@@ -1,5 +1,5 @@
 /* Farbsprache – Palette prüfen (FS.check): Scanner, Rollen, Befund-Engine, Reparatur, Ansicht und Exporte.
-   Rein, ohne DOM. Spiegel von tools/check.py (Spezifikation 3.8, 4.9, 5.8); tests/check.test.cjs vergleicht
+   Rein, ohne DOM. Spiegel von tools/check.py; tests/check.test.cjs vergleicht
    beide Seiten. Jede Zahl kommt aus FS.color (Formatierer und Platzhalter). */
 (function (root, factory) {
   'use strict';
@@ -36,7 +36,7 @@
   function ljust(s, w) { return s.length >= w ? s : s + spaces(w - s.length); }
   function hex2(n) { var s = n.toString(16).toUpperCase(); return s.length < 2 ? '0' + s : s; }
 
-  // ---------- Scanner (4.9)
+  // ---------- Scanner
   function blocks(text) {
     var out = [], stack = [], last = 0, i, ch, top;
     for (i = 0; i < text.length; i++) {
@@ -732,7 +732,7 @@
     return out.join('');
   }
 
-  // ---------- Exporte (5.8)
+  // ---------- Exporte
   function secLines(R, m, cx, sev) {
     var out = [], i, f, line, fix;
     for (i = 0; i < cx.findings.length; i++) {
@@ -818,7 +818,7 @@
     }
     return lines.join('\n');
   }
-  // CSS gibt es nur mit Rollen (5.9)
+  // CSS gibt es nur mit Rollen
   function hasCss(m) { for (var i = 0; i < m.colors.length; i++) { if (m.colors[i].role) { return true; } } return false; }
   function exports_(m, R) {
     var out = [['report', report(m, R)], ['hex', hexlist(m, R)]];

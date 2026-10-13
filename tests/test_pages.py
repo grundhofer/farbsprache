@@ -1,4 +1,4 @@
-"""Seiten von P5 im Build (Spezifikation 3.8 bis 3.11): Methode mit 16 Abschnitten und gerechneter Vergleichstabelle,
+"""Seiten Palette prüfen, Kurz erklärt, Methode und Quellen im Build: Methode mit 16 Abschnitten und gerechneter Vergleichstabelle,
 Quellen mit allen Lizenzvolltexten und Pflichtvermerken, Kurz erklärt mit allen Einträgen, Prüfseite mit Daten.
 Ohne Build übersprungen, außer FARBSPRACHE_REQUIRE_BUILD=1. Dazu Einheitentests der Seitenmodule ohne Build
 (Demo-Variablen, zitierte Verhältnisse aus Quellen, Stand der Release-Gates, Quellenangaben der Methode)."""
@@ -30,7 +30,7 @@ def datasets():
 
 
 @unittest.skipUnless(REQUIRE or (DOCS / "de" / "index.html").exists(), "docs/ fehlt – erst python3 build.py")
-class TestPagesP5(unittest.TestCase):
+class TestBuiltPages(unittest.TestCase):
     def setUp(self):
         for kind in PAGES:
             if '<main id="main" class="stub">' in read(kind, "de"):
@@ -103,7 +103,7 @@ class TestPagesP5(unittest.TestCase):
             for name, probe in (("MIT.txt", "Permission is hereby granted"), ("BSD-3-Clause.txt", "Neither the name of the copyright holder"),
                                 ("Apache-2.0.txt", "TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION"),
                                 ("ColorBrewer.txt", "Apache-Style Software License for ColorBrewer"),
-                                # mitgelieferte Schriften (R-02/T-04): Lizenztexte auf der Quellenseite
+                                # mitgelieferte Schriften: Lizenztexte auf der Quellenseite
                                 ("OFL-1.1-Inter.txt", "SIL OPEN FONT LICENSE Version 1.1"), ("OFL-1.1-IBM-Plex.txt", 'Reserved Font Name "Plex"'),
                                 # Material aus CSS Color 4: Lizenztext und Vermerk
                                 ("W3C-Software-and-Document-2023.txt", "provided that you include the following on ALL copies")):
@@ -227,7 +227,7 @@ class TestPageUnits(unittest.TestCase):
         self.assertNotIn("\u2236", out)
         s["calc_de"] = "Farbsprache: {proj:#000000/#FFFFFF/normal}"
         self.assertIn('data-m="proj"', S.claim_html(site, "de", s))
-        # eigene Rechnung neben der Quellzahl (6.7) auch ohne calc_* in der Quelle, aus web/copy/sources.py
+        # eigene Rechnung neben der Quellzahl auch ohne calc_* in der Quelle, aus web/copy/sources.py
         for lang in ("de", "en"):
             out = S.claim_html(site, lang, {"id": "ti-dlpa088", "claim_" + lang: "5,99:1"})
             self.assertIn('data-m="proj" data-a="#000000" data-b="#FFFFFF" data-t="normal"', out)

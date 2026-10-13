@@ -1,5 +1,5 @@
-"""Texte der Aufgabe Logo und Marke (Spezifikation 3.5, 4.6, 5.8). COPY[lang]["brand"][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach 6.12. Keine Messzahlen von Hand; Hex-Werte nur als feste Eingaben
+"""Texte der Aufgabe Logo und Marke. COPY[lang]["brand"][schlüssel],
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahlen von Hand; Hex-Werte nur als feste Eingaben
 (#FFFFFF, #000000) oder über {hex:rolle}. fs.* sind die Zeilen des Steckbriefs (Markdown, tools/gen/brand.py)."""
 
 COPY = {

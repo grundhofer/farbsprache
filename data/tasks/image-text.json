@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe Text auf Bild (Bauspezifikation 3.6, 4.7, 4.1.15, 5.8). Die eigene Farbe ist die Schleierfarbe (URL-Name sc). Schriftfarbe tc und Ziel tg sind Steuerelemente; das Ziel aus tg ersetzt beim Rechnen das min des Paars. Format fmt und Sicherheitsrand safe sind reine Muster-Schalter. Prosa steht in web/copy/image_text.py. Kein Bild-Upload in v1.",
+  "_comment": "Aufgabe Text auf Bild. Die eigene Farbe ist die Schleierfarbe (URL-Name sc). Schriftfarbe tc und Ziel tg sind Steuerelemente; das Ziel aus tg ersetzt beim Rechnen das min des Paars. Format fmt und Sicherheitsrand safe sind reine Muster-Schalter. Prosa steht in web/copy/image_text.py. Kein Bild-Upload in v1.",
   "id": "image-text",
   "generator": "image-text",
   "name_de": "Text auf Bild",

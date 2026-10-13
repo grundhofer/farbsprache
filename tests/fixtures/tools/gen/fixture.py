@@ -2,8 +2,8 @@
 
 Trivial, aber mit echtem Farbkern: Neutraltöne aus dem Farbton der eigenen Farbe, ein Akzent mit
 Schriftfarbe (Änderungshinweis, wenn keine Schrift 4,5:1 erreicht), Stufen per solve_l auf 3,3:1,
-Abstände mit Vergleich, Hinweise aus evaluate. Vertrag nach Spezifikation 7.4:
-build(task, inp, ctx) -> Palettenobjekt (6.14); der Rahmen setzt task, preset, input, name_de, name_en.
+Abstände mit Vergleich, Hinweise aus evaluate. Vertrag:
+build(task, inp, ctx) -> Palettenobjekt; der Rahmen setzt task, preset, input, name_de, name_en.
 """
 from tools import color as C
 

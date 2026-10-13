@@ -1,8 +1,8 @@
-"""Prüfungen von Paket P4 (Spezifikation 4.8.1, 6.9, 6.10, 9.10), eingehängt über tools/checks.py: check(D, warn).
+"""Prüfungen der Aufgaben Logo und Marke sowie KI-Bild, eingehängt über tools/checks.py: check(D, warn).
 
 Vokabular: Sperrliste vollständig (darf nur wachsen), jeder Golden-Name stimmt mit dem Algorithmus, kein ausgegebener
 Name enthält ein Sperrwort oder ein Wort außerhalb des festen Vokabulars (geprüft an allen Golden-Fällen und an einem
-Raster über den sRGB-Würfel). Modelle: genau die fünf aus 6.9, bekannte Methode, Quelle vorhanden und mit derselben URL, Zitat mit eigener Quelle. Startsets: kein
+Raster über den sRGB-Würfel). Modelle: genau die fünf aus MODELS, bekannte Methode, Quelle vorhanden und mit derselben URL, Zitat mit eigener Quelle. Startsets: kein
 Teal-Orange-Paar. Meldungen deutsch nach dem Muster „Kontext id: Problem (was tun)“."""
 import re
 
@@ -46,12 +46,12 @@ def check(D, warn):
             return errs
         for w in BLOCKED_MIN:
             if w not in cn["blocked_words"]:
-                errs.append(f"{c}: Sperrwort {w} fehlt in blocked_words (die Liste darf nur wachsen, 4.8.1)")
+                errs.append(f"{c}: Sperrwort {w} fehlt in blocked_words (die Liste darf nur wachsen)")
         for w in cn["allowed_words"]:
             if w in cn["blocked_words"]:
                 errs.append(f"{c}: {w} steht in allowed_words und in blocked_words")
         if len(cn["golden"]) != 40:
-            errs.append(f"{c}: golden hat {len(cn['golden'])} Einträge, verlangt sind 40 (6.10)")
+            errs.append(f"{c}: golden hat {len(cn['golden'])} Einträge, verlangt sind 40")
         for g in cn["golden"]:
             got = A.color_name(g["hex"], cn)
             if got != g["name"]:
@@ -72,13 +72,13 @@ def check(D, warn):
                 names = [A.color_name(C.parse(x["value"], False)["hex"], cn) for x in p.get("colors") or []]
                 bases = [n.split(" ")[-1] for n in names]
                 if any(b in TEAL for b in bases) and any(b in ORANGE for b in bases):
-                    errs.append(f"Aufgabe ai-image Startset {p.get('id')}: kombiniert Teal und Orange (9.10, Startsets ohne dieses Paar)")
+                    errs.append(f"Aufgabe ai-image Startset {p.get('id')}: kombiniert Teal und Orange (Startsets ohne dieses Paar)")
     if models is not None:
         c = "data/models.json"
         ms = models.get("models") or []
         ids = [m.get("id") for m in ms]
         if sorted(ids) != sorted(MODELS):
-            errs.append(f"{c}: Modelle {ids}, verlangt sind genau {list(MODELS)} (6.9)")
+            errs.append(f"{c}: Modelle {ids}, verlangt sind genau {list(MODELS)}")
         for m in ms:
             mc = f"{c} {m.get('id')}"
             for k in ("name", "vendor", "method", "note_de", "note_en", "source", "source_id", "checked"):

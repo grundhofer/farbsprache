@@ -6,7 +6,7 @@
 Seitenstil Swiss wie die Website: Schwarz-Weiß, Rot nur als Marke. Rechts eine geprüfte Farbreihe
 (Okabe-Ito aus data/datasets/okabe-ito.json) mit dem Kontrast jeder Farbe zu Weiß. Jede Zahl kommt aus
 den Formatierern in tools/color.py, die Zähler aus build.py. og.png liegt im Repo, weil der CI-Runner keinen
-Browser hat; build.py kopiert es nach docs/. Nach der Zusammenführung (Z) mit den endgültigen Zahlen neu rendern.
+Browser hat; build.py kopiert es nach docs/. Ändern sich die Zahlen, neu rendern.
 """
 import html, pathlib, shutil, subprocess, sys
 
@@ -17,7 +17,7 @@ from tools import color as C  # noqa: E402
 
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 # Dieselben mitgelieferten Schriften wie die Website (web/fonts/, OFL 1.1), relativ zu og.html im Projektordner;
-# kein Abruf von Google Fonts (nach Z geändert, 7.2)
+# kein Abruf von Google Fonts
 FONT_FACES = "".join(f'@font-face{{font-family:"{fam}";font-weight:{w};src:url(web/fonts/{f}) format("woff2")}}'
                      for fam, w, f in (("Inter", 400, "inter-400.woff2"), ("Inter", 500, "inter-500.woff2"),
                                        ("Inter", 700, "inter-700.woff2"), ("IBM Plex Mono", 400, "IBMPlexMono-Regular-Latin1.woff2"),

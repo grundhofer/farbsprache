@@ -1,11 +1,11 @@
-"""Datenprüfungen vor dem Build (Spezifikation 7.8). Jede check_*-Funktion liefert deutsche Meldungen
+"""Datenprüfungen vor dem Build. Jede check_*-Funktion liefert deutsche Meldungen
 nach dem Muster „Kontext id: Problem (was tun)“. check_all(root) sammelt sie.
 
 Leitsatz wie in Bildsprache: Was die Website behauptet, wird nachgerechnet. Hier heißt das zuerst:
 Daten enthalten Eingaben, Schwellen, Texte und Quellen, nie Messergebnisse, und keine Zahl steht von Hand
 im Text. load_all() lädt alles selbst in try/except; kaputtes JSON wird eine Meldung, kein Traceback.
 
-Pakete hängen eigene Prüfungen an: tools/checks_<owner>.py mit check(D, warn) -> [Meldungen].
+Aufgaben hängen eigene Prüfungen an: tools/checks_<owner>.py mit check(D, warn) -> [Meldungen].
 D ist das Datenbündel aus load_all(); warn(text) meldet eine WARNUNG.
 Data checks run before the build."""
 import datetime, importlib.util, json, pathlib, re
@@ -95,8 +95,8 @@ def _find(roots, rel):
 
 def _own(roots, r, f):
     """Darf Datei f aus Wurzel r geladen werden? Mit Überlagerung (Testaufgabe) liefert das Projekt nur seinen
-    Kern von P0: data/*/core.json, web/copy/core.py, Datensätze, Konstanten. Aufgaben, Regeln, Erklärt, Quellen,
-    Texte und Prüfungen der Pakete bleiben draußen, damit die Testaufgabe nie von Paketdaten abhängt."""
+    Kern: data/*/core.json, web/copy/core.py, Datensätze, Konstanten. Aufgaben, Regeln, Erklärt, Quellen,
+    Texte und eigene Prüfungen (tools/checks_*.py) bleiben draußen, damit die Testaufgabe nie von ihnen abhängt."""
     return len(roots) == 1 or r != roots[0] or pathlib.Path(f).stem == "core"
 
 
@@ -230,7 +230,7 @@ def load_all(roots):
         for f in sorted((r / "patterns").glob("*.html")):
             if f"patterns/{f.name}" not in used:
                 D["extra_patterns"][f"patterns/{f.name}"] = f.read_text(encoding="utf-8")
-    # README-Vorlagen, Sperrliste, Paketprüfungen
+    # README-Vorlagen, Sperrliste, eigene Prüfungen (tools/checks_*.py)
     for lang in ("de", "en"):
         p = root / "web" / f"readme.{lang}.md"
         D["readme"][lang] = p.read_text(encoding="utf-8") if p.exists() else None
@@ -342,7 +342,7 @@ def check_tasks(D, allow_missing, warn):
 
 def check_task(D, tid, t, allow_missing=False, warn=None):
     """Schema einer Aufgabe. Verweise auf Regeln und Erklärt-Einträge, die es (noch) nicht gibt, sind mit
-    --allow-missing nur eine WARNUNG: Ein Paket darf Einträge anderer Pakete nennen, bevor sie gemergt sind."""
+    --allow-missing nur eine WARNUNG: Eine Aufgabe darf Einträge nennen, die erst später dazukommen."""
     errs = []
     c = f"Aufgabe {tid}"
     missing = warn if allow_missing and warn is not None else errs.append
@@ -444,7 +444,7 @@ def check_task(D, tid, t, allow_missing=False, warn=None):
         _need(errs, f"{c} pattern_toggles {tg.get('id')}", tg, ("id", "values", "default"))
         if tg.get("default") not in (tg.get("values") or []):
             errs.append(f"{c} pattern_toggles {tg.get('id')}: default steht nicht in values")
-    # Presets (6.4)
+    # Presets
     want = PRESET_COUNT.get(tid, 3)
     if len(t["presets"]) != want:
         errs.append(f"{c}: genau {want} Startpaletten nötig, gefunden {len(t['presets'])}")
@@ -1230,7 +1230,7 @@ def check_readme(D):
 # ---- Sammeln
 
 def run(D, seg=None, twin=None, allow_missing=False, date=None, warnings=None):
-    """Alle generischen Prüfungen und die Paketprüfungen auf einem geladenen Datenbündel."""
+    """Alle generischen Prüfungen und die eigenen Prüfungen (tools/checks_*.py) auf einem geladenen Datenbündel."""
     warns = warnings if warnings is not None else []
     warn = warns.append
     errs = []

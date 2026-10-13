@@ -1,5 +1,5 @@
 'use strict';
-// Sprachweiche docs/index.html (Spezifikation 2.4, Muster landing.test.cjs aus Designsprache):
+// Sprachweiche docs/index.html (Muster landing.test.cjs aus Designsprache):
 // ?lang= vor gespeicherter Wahl vor Browsersprache vor en; automatische Erkennung schreibt nie in den
 // Speicher (writes === 0); Query und Hash bleiben, lang entfällt; ohne JS zwei Links.
 const assert = require('node:assert/strict');

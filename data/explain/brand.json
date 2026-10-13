@@ -1,5 +1,5 @@
 {
-  "_comment": "Kurz erklärt, Einträge von Paket P4 (Spezifikation 3.9). Je 60 bis 120 Wörter, kein HTML, Absätze durch Leerzeile. Wirkungsaussagen tragen die Belegstufe aus Recherche 05. Die Demo context steht in patterns/demo-context.html; demo_vars nennt die Eingabefarben der Demo für die Seite Kurz erklärt (Hex rechnet der Build).",
+  "_comment": "Kurz erklärt: context, harmony, 60-30-10, meaning, color-systems. Je 60 bis 120 Wörter, kein HTML, Absätze durch Leerzeile. Wirkungsaussagen tragen die Belegstufe. Die Demo context steht in patterns/demo-context.html; demo_vars nennt die Eingabefarben der Demo für die Seite Kurz erklärt (Hex rechnet der Build).",
   "entries": [
     {
       "id": "context",

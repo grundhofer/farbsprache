@@ -1,5 +1,5 @@
 'use strict';
-// Fachfälle der Aufgabe Präsentation in JS (Paket P3): Beamer-Erwartungen, Ansicht „Beamer“, Office-Reihenfolge,
+// Fachfälle der Aufgabe Präsentation in JS: Beamer-Erwartungen, Ansicht „Beamer“, Office-Reihenfolge,
 // lösbare Extremfarben und Byte-Gleichheit der Exporte hex, rationale und css mit Python für alle Startpaletten
 // und Optionen (nicht nur Startpalette 1 wie tests/export.test.cjs). Python läuft dafür als Kindprozess.
 const assert = require('node:assert/strict');

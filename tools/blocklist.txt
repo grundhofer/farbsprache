@@ -1,4 +1,4 @@
-# Sperrliste für Namen, IDs und Datensätze (Spezifikation 7.8, Prüfung 12; 9.4, 10).
+# Sperrliste für Namen, IDs und Datensätze.
 # Ein Eintrag je Zeile, Vergleich ohne Groß/Klein, nur als ganzes Wort.
 # Prosa darf Normfarbsysteme nennen (Eintrag color-systems), aber nie mit einem Hex-Wert im selben Satz.
 #

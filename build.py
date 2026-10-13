@@ -2,7 +2,7 @@
 """Baut die Website Farbsprache nach docs/.
 
     python3 build.py                     vollständiger Build; fehlt eine Aufgabe, bricht er ab
-    python3 build.py --allow-missing     lokal während der Paketarbeit: Platzhalter statt Abbruch
+    python3 build.py --allow-missing     lokal während der Arbeit an einer Aufgabe: Platzhalter statt Abbruch
     python3 build.py --fixtures          zusätzlich die Testaufgabe nach tests/out/fixtures/docs/
     python3 build.py --date 2026-10-11   festes Datum (sonst SOURCE_DATE_EPOCH, sonst heute)
     python3 build.py --update-golden     tests/golden/<aufgabe>.json neu schreiben (nur bewusst)
@@ -61,10 +61,10 @@ SEG = {
 }
 # Nur für die Testaufgabe (wird nie ausgeliefert); verschiedene Segmente prüfen PAGE_TWIN.
 FIXTURE_SEG = {"fixture": {"de": "testaufgabe", "en": "test-task"}}
-PAGES = ("check", "explained", "method", "sources", "legal")   # Seiten von P5 und das Impressum (pages/<name>.py)
+PAGES = ("check", "explained", "method", "sources", "legal")   # Seiten Palette prüfen, Kurz erklärt, Methode, Quellen und das Impressum (pages/<name>.py)
 N_PAGES_PER_LANG = 13
-# Schriften liefert die Seite selbst aus (web/fonts/ nach assets/fonts/, SIL OFL 1.1), keine Anfrage an fremde Server
-# (nach Z geändert, 7.2). site.css bindet sie per @font-face ein; vorgeladen werden die drei Schnitte von Inter, die jede
+# Schriften liefert die Seite selbst aus (web/fonts/ nach assets/fonts/, SIL OFL 1.1), keine Anfrage an fremde Server.
+# site.css bindet sie per @font-face ein; vorgeladen werden die drei Schnitte von Inter, die jede
 # Seite im ersten Bildschirm braucht. Die Lizenztexte liegen in data/licenses/ und gehen mit nach assets/fonts/.
 PRELOAD_FONTS = ("inter-400.woff2", "inter-500.woff2", "inter-700.woff2")
 FONT_LICENSES = ("OFL-1.1-Inter.txt", "OFL-1.1-IBM-Plex.txt")
@@ -101,7 +101,7 @@ RE_WORDS = {"return", "typeof", "case", "do", "else", "in", "instanceof", "new",
 
 
 def squeeze_js(line):
-    """Leerraum innerhalb einer Codezeile entfernen, wo er nichts trennt (nach Z geändert, 7.2): Zeichenketten, Regex
+    """Leerraum innerhalb einer Codezeile entfernen, wo er nichts trennt: Zeichenketten, Regex
     und Kommentare bleiben wörtlich. Ein Leerzeichen bleibt zwischen zwei Wortzeichen, zwischen ++ und --, neben /
     und dort, wo sonst <! oder -> entstünde. Bleibt etwas offen (Zeichenkette, Regex, Blockkommentar), bleibt die
     Zeile unverändert. Nur Leerraum fällt weg; tests/test_site.py prüft das für jede ausgelieferte Datei."""
@@ -161,9 +161,9 @@ def squeeze_js(line):
 
 
 def compact_js(src):
-    """Jedes ausgelieferte Skript (color.js, export.js, site.js, check.js, gen/*.js, ui/*.js) wegen des Budgets
-    7.11: Einzug, reine Kommentarzeilen und Blockkommentare am Zeilenanfang entfallen, Leerraum innerhalb der Zeile
-    nach squeeze_js (nach Z geändert). Jeder Zeilenumbruch im Code bleibt (ASI und Bedeutung unverändert). Eine Zeile
+    """Jedes ausgelieferte Skript (color.js, export.js, site.js, check.js, gen/*.js, ui/*.js) wegen des Größenbudgets:
+    Einzug, reine Kommentarzeilen und Blockkommentare am Zeilenanfang entfallen, Leerraum innerhalb der Zeile
+    nach squeeze_js. Jeder Zeilenumbruch im Code bleibt (ASI und Bedeutung unverändert). Eine Zeile
     nach einem Backslash am Zeilenende bleibt samt Einzug stehen. tests/export.test.cjs und state.test.cjs laden genau
     diese Dateien."""
     out, in_block, keep = [], False, False
@@ -192,7 +192,7 @@ def compact_js(src):
 
 
 def compact_css(src):
-    """site.css wegen des Budgets 7.11 (nach Z geändert): Kommentare, Einzug und Leerzeilen entfallen, die Regeln stehen
+    """site.css wegen des Größenbudgets: Kommentare, Einzug und Leerzeilen entfallen, die Regeln stehen
     wörtlich. Die Quellen (web/site.css, web/css/*.css) behalten ihre Kommentare; Zeichenketten mit /* gibt es dort nicht."""
     return "\n".join(s for s in (line.strip() for line in re.sub(r"/\*.*?\*/", "", src, flags=re.S).splitlines()) if s) + "\n"
 
@@ -419,7 +419,7 @@ class Site:
         for name in PAGES:
             f = ROOT / "pages" / f"{name}.py"
             if len(self.roots) > 1:
-                continue  # Testaufgabe: nur Kern von P0 (checks._own), Seiten von P5 und Impressum als Platzhalter
+                continue  # Testaufgabe: nur der Kern (checks._own), alle Seiten aus PAGES als Platzhalter
             if f.exists():
                 try:
                     self.page_mods[name] = importlib.import_module(f"pages.{name}")
@@ -577,7 +577,7 @@ class Site:
 """
 
     def render(self, template, ctx, lang, escape=False):
-        """Platzhalter (6.12) mit den Zählern, Vergleichswerten und dem Datum dieses Builds."""
+        """Platzhalter mit den Zählern, Vergleichswerten und dem Datum dieses Builds."""
         c = {"refs": self.refs, "counts": self.counts, "date": self.date}
         c.update(ctx or {})
         return self.color.render_text(template, c, lang, escape)[0]
@@ -711,7 +711,7 @@ class Site:
                 put(name, compact_js(f.read_text(encoding="utf-8")))
         for g, f in self.gen_js.items():
             put(f"gen/{g}.js", compact_js(f.read_text(encoding="utf-8")))
-        for r in self.roots:  # alle DOM-Haken, auch ui/check.js der Prüfseite (P5)
+        for r in self.roots:  # alle DOM-Haken, auch ui/check.js der Prüfseite
             for f in sorted((r / "web" / "ui").glob("*.js")):
                 put(f"ui/{f.name}", compact_js(f.read_text(encoding="utf-8")))
         og = ROOT / "og.png"
@@ -787,7 +787,7 @@ def frame_palette(task, preset, inp, pal, names):
 
 
 def validate_palette(site, task, preset, pal, label):
-    """Palettenobjekt (6.14) prüfen: Form, Rollen, nachgerechnete Paare, Normpaare, Hinweise in beide Richtungen."""
+    """Palettenobjekt prüfen: Form, Rollen, nachgerechnete Paare, Normpaare, Hinweise in beide Richtungen."""
     C = site.color
     from tools import export as X
     errs = []
@@ -921,8 +921,8 @@ def main(argv=None):
     except ValueError:
         sys.exit(f"--date {args.date}: kein Datum JJJJ-MM-TT")
     try:
-        # README.md und README.de.md nur im strengen Build: Paketbauten (--allow-missing) und --update-golden
-        # überschrieben sonst Dateien von P0 mit Teilzahlen.
+        # README.md und README.de.md nur im strengen Build: Bauten mit --allow-missing und --update-golden
+        # überschrieben sie sonst mit Teilzahlen.
         site = build_site([ROOT], DOCS, date, args.allow_missing, None, args.update_golden,
                           readmes=not (args.allow_missing or args.update_golden))
     except BuildError as e:

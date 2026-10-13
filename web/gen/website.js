@@ -1,5 +1,5 @@
 /* Generator der Aufgabe Website oder App (FS.gen.website). Spiegel von tools/gen/website.py.
-   T1 nach Spezifikation 4.2 (Neutraltöne, Akzent, Akzent als Text, Diagrammfarben) und T2 nach 4.3
+   Aufgabe Website oder App (Neutraltöne, Akzent, Akzent als Text, Diagrammfarben) und Aufgabe Statusfarben
    (Statusfarben in festen Bändern, optimiert auf den größten kleinsten Abstand, mit Vergleich „unoptimiert“).
    web/gen/status.js nutzt neutrals, statusColors, statusFindings und conflict. */
 (function (root, factory) {
@@ -22,12 +22,12 @@
   var CHARTS = 5;
   // Start der Suche für die Linkfarbe, wenn die eigene Farbe jenseits der Flächen liegt
   var TEXT_L0 = { '-1': 0.80, '1': 0.40 };
-  // Reserve über der Schwelle (4.1.17): gedämpfter Text 4,95 statt 4,5, kräftiger Rahmen 3,3 statt 3, als Literal
+  // Reserve über der Schwelle: gedämpfter Text 4,95 statt 4,5, kräftiger Rahmen 3,3 statt 3, als Literal
   var TEXT_T = 4.95, LINE_T = 3.3;
-  // Buntheit des Akzents im dunklen Modus (4.1.17)
+  // Buntheit des Akzents im dunklen Modus
   var DARK_C = 0.85;
 
-  // Tönung t der Neutraltöne (4.2)
+  // Tönung t der Neutraltöne
   function tint(cs, tone) {
     if (tone === 'neutral') { return 0; }
     if (tone === 'strong') { return Math.min(Math.max(0.25 * cs, 0.010), 0.030); }
@@ -52,7 +52,7 @@
     return { light: lt, dark: dk };
   }
 
-  // ---------- Akzent (4.2)
+  // ---------- Akzent
   // labels = [[Schrift, Richtung]]: −1 helle Schrift (Akzent dunkler), +1 dunkle Schrift (heller)
   function accentFill(cand, L, cc, h, labels, mode, changes) {
     var c = C(), best = null, i, r, pick = null, err = null, res, step;
@@ -77,7 +77,7 @@
       values: { before: c.contrast(pick[0], cand), after: pick[2].ratio } });
     return [pick[2].hex, pick[0], false];
   }
-  // Akzent als Text (4.2): solveL ab L; liegt die eigene Farbe jenseits der Flächen (mixed-sides), ab TEXT_L0
+  // Akzent als Text: solveL ab L; liegt die eigene Farbe jenseits der Flächen (mixed-sides), ab TEXT_L0
   function textAccent(cc, h, against, d, L) {
     try {
       return C().solveL(cc, h, against, 4.5, d, L);
@@ -99,7 +99,7 @@
     cand = c.oklchToHex(L, DARK_C * cs, h);
     a = accentFill(cand, L, DARK_C * cs, h, [[dk.text, -1], [dk.bg, 1]], 'dark', changes);
     dk.accent = a[0]; dk['on-accent'] = a[1]; kept.dark = a[2];
-    // Dunkel geht die Linkfarbe vom dunklen Kandidaten aus; weicht sie ab, sagt das ein Hinweis wie hell (3.0 C)
+    // Dunkel geht die Linkfarbe vom dunklen Kandidaten aus; weicht sie ab, sagt das ein Hinweis wie hell
     at = textAccent(DARK_C * cs, h, [dk.bg, dk.surface], 1, L);
     dk['accent-text'] = at.hex;
     if (at.hex !== cand) {
@@ -113,7 +113,7 @@
     for (i = 0; i < cols.length; i++) { if (cols[i].name !== 'black') { out.push(cols[i].hex); } }
     return out;
   }
-  // Export-Option „Diagrammfarben einschließen“: Linkfarbe zuerst, dann Okabe-Ito mit ≥ 3:1 auf bg (4.2)
+  // Export-Option „Diagrammfarben einschließen“: Linkfarbe zuerst, dann Okabe-Ito mit ≥ 3:1 auf bg
   function charts(roles, ctx) {
     var c = C(), ok = okabe(ctx), j, i, r, pool, picked;
     for (j = 0; j < MODES.length; j++) {
@@ -125,7 +125,7 @@
     }
   }
 
-  // ---------- Statusfarben (4.3)
+  // ---------- Statusfarben
   function statusSurface(mode, hue) { return C().oklchToHex(STATUS_SURF[mode][0], STATUS_SURF[mode][1], hue); }
   // Kombination mit dem größten kleinsten Abstand; lexikographisch, Ersatz nur bei mehr als 1e-12 besser
   function bestCombo(cands, dist) {
@@ -194,7 +194,7 @@
     }
     return distinct;
   }
-  // Hinweis je Modus, wenn die Statusfarben näher liegen als der Vergleichswert Okabe-Ito (4.2, 5.4)
+  // Hinweis je Modus, wenn die Statusfarben näher liegen als der Vergleichswert Okabe-Ito
   function statusFindings(distinct, ctx, findings) {
     var ref = C().referenceValues(ctx.comparisons, ctx.datasets)['okabe-ito-7'].value, i, d;
     for (i = 0; i < distinct.length; i++) {
@@ -204,7 +204,7 @@
       }
     }
   }
-  // Konfliktregel (4.3): Akzent weniger als 30° von 27° entfernt und C > 0,1
+  // Konfliktregel: Akzent weniger als 30° von 27° entfernt und C > 0,1
   function conflict(cs, h, findings) {
     if (h === null || h !== h || cs <= 0.1) { return; }
     var dh = Math.abs(h - 27.0) % 360;
@@ -219,7 +219,7 @@
     distinct = statusColors(roles, findings);
     charts(roles, ctx);
     ev = c.evaluate(task, roles, 'skip');
-    // Schwachstellen (4.2)
+    // Schwachstellen
     ids = ['accent-text'];
     for (k = 0; k < STATUS.length; k++) { ids.push(STATUS[k][0]); }
     for (j = 0; j < MODES.length; j++) {
@@ -275,7 +275,7 @@
       .split('{a}').join(text['st.' + d.a]).split('{b}').join(text['st.' + d.b])
       .split('{pair_dist}').join('{dist:' + hx[d.a] + '/' + hx[d.b] + '/' + d.kind + '}');
   }
-  // Hinweis status-close je Modus mit dem engsten Paar (Prompt, 5.4), Token {status_why} der Begründung (5.6),
+  // Hinweis status-close je Modus mit dem engsten Paar (Prompt), Token {status_why} der Begründung,
   // ohne Hinweis hell der Satz why.status_plain
   function statusCtx(palette, ctx) {
     var text = copyObj(ctx.text), fs = [], i, f, key, light = false, why = [], p, c, inp = palette.input || {}, tone = (inp.options || {}).tone;
@@ -308,7 +308,7 @@
   function agent(palette, task, ctx, lang, opts) { var pc = statusCtx(palette, ctx); return chartsCss(X().agent(pc[0], task, pc[1], lang, opts), palette, ctx, lang, opts); }
   function rationale(palette, task, ctx, lang, opts) { var pc = statusCtx(palette, ctx); return X().rationale(pc[0], task, pc[1], lang, opts); }
 
-  // Hinweis, wenn in einem Modus weniger als fünf Diagrammfarben 3:1 erreichen (4.2): in jedem Export mit Diagrammfarben
+  // Hinweis, wenn in einem Modus weniger als fünf Diagrammfarben 3:1 erreichen: in jedem Export mit Diagrammfarben
   function chartsFew(palette, ctx, lang, mode, opts) {
     var n = 0, k;
     if (!(opts || {}).charts) { return null; }

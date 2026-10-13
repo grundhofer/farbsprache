@@ -110,7 +110,7 @@ test('Parität Python/JS: Palette, Muster-Variablen, Name, JS-Array und Exporte 
     for (const lang of ['de', 'en']) {
       const js = G.exports.js(pal, task, py.ex[lang].ctx, lang, {});
       if (js !== py.ex[lang].js) errs.push(`${label} js ${lang}:\n${js}\n--- Python:\n${py.ex[lang].js}`);
-      // Name eigener Zustände (gen.displayName) und die Exporte mit Exportnamen und Zweck unter 3:1 (nach Z)
+      // Name eigener Zustände (gen.displayName) und die Exporte mit Exportnamen und Zweck unter 3:1
       const name = G.displayName(pal, py.ex[lang].ctx.text, lang);
       if (name !== py.ex[lang].name) errs.push(`${label} Name ${lang}: ${name} gegen ${py.ex[lang].name}`);
       for (const f of Object.keys(py.ex[lang].fmts)) {

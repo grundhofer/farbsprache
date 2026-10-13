@@ -1,5 +1,5 @@
-/* Generator der Aufgabe Logo und Marke (FS.gen.brand). Spiegel von tools/gen/brand.py (Spezifikation 3.5,
-   4.6, 5.8): Schriftfarbe, Textvarianten auf Weiß und #16191D, Graustufe, zweite Farbe, Steckbrief als Markdown.
+/* Generator der Aufgabe Logo und Marke (FS.gen.brand). Spiegel von tools/gen/brand.py:
+   Schriftfarbe, Textvarianten auf Weiß und #16191D, Graustufe, zweite Farbe, Steckbrief als Markdown.
    Die Markenfarbe selbst bleibt unverändert. Rein, ohne DOM; tests/parity.test.cjs vergleicht mit Python. */
 (function (root, factory) {
   'use strict';
@@ -51,7 +51,7 @@
     return { 'mono-ink': BLACK, 'mono-paper': WHITE, 'show-2': has(palette.roles[mode], 'brand-2') ? 'flex' : 'none' };
   }
 
-  // ---------- Steckbrief (5.8, Markdown)
+  // ---------- Steckbrief (Markdown)
   function rgb(hx) { return 'rgb(' + parseInt(hx.slice(1, 3), 16) + ' ' + parseInt(hx.slice(3, 5), 16) + ' ' + parseInt(hx.slice(5, 7), 16) + ')'; }
   function factsheet(palette, task, ctx, lang) {
     var t = ctx.text, r = palette.roles['default'], rc = X().rctx(palette, 'default', null, ctx), ok = C().shortestOklch(r.brand);

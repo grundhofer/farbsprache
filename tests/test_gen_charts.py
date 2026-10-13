@@ -1,6 +1,6 @@
-"""Fachfälle der Aufgabe Diagramm (Spezifikation 3.3, 4.4, 4.1.12, 5.8, Abnahme P2).
+"""Fachfälle der Aufgabe Diagramm.
 Okabe-Ito auf Weiß und Dunkel, viridis-Richtung und Monotonie, ColorBrewer-Klassen und Pflichtsatz, Rot-Grün-Ablehnung,
-keine gemischten Familien, eigene Farbe auf 3:1, Hervorhebung, JS-Array nach 5.8, Muster-Variablen."""
+keine gemischten Familien, eigene Farbe auf 3:1, Hervorhebung, JS-Array, Muster-Variablen."""
 import copy, itertools, json, math, re, sys, unittest
 from pathlib import Path
 
@@ -194,7 +194,7 @@ class TestRedGreen(unittest.TestCase):
 
     def test_div_with_own_color_replaces_opposite(self):
         """Rot-Grün-Ablehnung bei div mit eigener Farbe: Mit h_b = h_s + 180° liegen die Enden in OKLCH nie zugleich
-        im Rot- und im Grünbereich (Befund, siehe Bericht). Der Pfad wird deshalb mit erzwungener Regel geprüft."""
+        im Rot- und im Grünbereich. Der Pfad wird deshalb mit erzwungener Regel geprüft."""
         for h in range(0, 360):
             self.assertFalse(G.red_green(float(h), (h + 180.0) % 360.0)[1], f"h={h}")
         orig = G.red_green
@@ -309,7 +309,7 @@ class TestExportsAndPattern(unittest.TestCase):
         pal.update({"preset": pid, "name_de": p["name_de"], "name_en": p["name_en"]})
         return pal
 
-    def test_js_array_format_5_8(self):
+    def test_js_array_format(self):
         pal = self.preset("cat-okabe")
         text = G.exports["js"](pal, TASK, export_ctx(pal), "de", {})
         self.assertEqual(text.splitlines(), [
@@ -334,7 +334,7 @@ class TestExportsAndPattern(unittest.TestCase):
         self.assertNotIn(CB_NOTICE, X.render("hex", pal, TASK, export_ctx(pal), "de", {}, G)[0]["text"])
 
     def test_tol_copyright_in_every_export(self):
-        # R-11: Exporte mit Tol-Farben tragen den Copyright-Vermerk aus tol_colors.py (required_notice des Datensatzes),
+        # Exporte mit Tol-Farben tragen den Copyright-Vermerk aus tol_colors.py (required_notice des Datensatzes),
         # in jedem Format und beiden Sprachen; vorher stand dort nur „Paul Tol, tol_colors.py, BSD-3-Clause“.
         notice = jload("data/datasets/tol.json")["required_notice"]
         for fam in ("tol-bright", "tol-muted"):
@@ -460,8 +460,8 @@ class TestExportsAndPattern(unittest.TestCase):
         self.assertTrue(copy_charts.COPY["de"]["charts"]["rationale"])
 
     def test_custom_name_names_only_the_family_shown(self):
-        """Nach Z (R-01, M-06, T-11): Der Name eines eigenen Zustands ohne eigene Farbe nennt Familie, Anzahl und
-        Hintergrund der gezeigten Farben, nie eine andere Familie und nie ColorBrewer (9.4). Die Pflichtnennungen
+        """Der Name eines eigenen Zustands ohne eigene Farbe nennt Familie, Anzahl und
+        Hintergrund der gezeigten Farben, nie eine andere Familie und nie ColorBrewer. Die Pflichtnennungen
         (extra.datasets) passen zur Familie, aus der die Farben stammen."""
         from web.copy import charts as copy_charts
         dataset = {"okabe-ito": ["okabe-ito"], "tol-bright": ["tol"], "tol-muted": ["tol"], "viridis": ["viridis"],
@@ -488,7 +488,7 @@ class TestExportsAndPattern(unittest.TestCase):
                          "Tol bright, 3 colors, areas on dark")
 
     def test_series_below_3_1_are_areas_in_every_export(self):
-        """M-02: Serien unter 3:1 (usage area) tragen in Hex-Liste, CSS, Design-Tokens und Prompt den Zweck
+        """Serien unter 3:1 (usage area) tragen in Hex-Liste, CSS, Design-Tokens und Prompt den Zweck
         „nur Flächen mit Kontur“ mit der Konturfarbe, nie „Linien, Punkte, Balken“."""
         from web.copy import charts as copy_charts
         seen = 0
@@ -517,7 +517,7 @@ class TestExportsAndPattern(unittest.TestCase):
         self.assertGreater(seen, 0, "kein Fall mit einer Serie unter 3:1")
 
     def test_every_data_color_has_a_checked_value(self):
-        """MV-01: Auch Datenfarben ohne Normpaar (Verlauf, Abweichung, Flächen) stehen mit Kontrast zum Hintergrund im
+        """Auch Datenfarben ohne Normpaar (Verlauf, Abweichung, Flächen) stehen mit Kontrast zum Hintergrund im
         Palettenobjekt (advisory), in Block C und F der Seite und in den Paaren des Prompts."""
         from pages import task as P
         from web.copy import charts as copy_charts, core as copy_core

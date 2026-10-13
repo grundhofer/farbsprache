@@ -1,5 +1,5 @@
-"""Texte der Aufgabe Text auf Bild (Bauspezifikation 3.6, 4.7, 5.8). COPY[lang]["image-text"][schlüssel],
-vertrauenswürdiges HTML, Platzhalter nach 6.12. Keine Messzahl von Hand: Deckkraft über {scrim:…}, Kontraste über
+"""Texte der Aufgabe Text auf Bild. COPY[lang]["image-text"][schlüssel],
+vertrauenswürdiges HTML, Platzhalter des Farbkerns. Keine Messzahl von Hand: Deckkraft über {scrim:…}, Kontraste über
 {cr:…}. Token wie {text}, {pct} oder {ratio} ohne Doppelpunkt setzt der Generator in den Exporten selbst ein,
 jeweils aus den Formatierern des Farbkerns."""
 

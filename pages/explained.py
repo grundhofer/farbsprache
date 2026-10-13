@@ -1,11 +1,11 @@
-"""Seite Kurz erklärt (Spezifikation 3.9): alle Einträge aus data/explain/*.json in der Reihenfolge von
+"""Seite Kurz erklärt: alle Einträge aus data/explain/*.json in der Reihenfolge von
 data/explain/_order.json, je mit Anker, Belegstufe, Text, Quellen und „Steht bei“ (invers aus den Aufgaben).
 
-Einziges Demo in v1: context („Gleiche Farbe, anderer Eindruck“), Muster patterns/demo-context.html (P4).
+Einziges Demo in v1: context („Gleiche Farbe, anderer Eindruck“), Muster patterns/demo-context.html.
 Vertrag mit dem Muster: Die Seite setzt am Element .demo.demo-context je Eintrag in demo_vars des Erklärt-Eintrags
 (Eingaben, etwa {"ground-a": "oklch(0.70 0.18 55)", …}) die Variable --d-<name> als beim Bau berechnetes Hex und das
 Attribut data-bridge="off|on"; der Knopf „Brücke zeigen“ (web/ui/explained.js) schaltet es um. Fehlt demo_vars, gelten
-die Eingaben aus Spezifikation 3.9 (DEMOS). Die Bildunterschrift nennt das Hex der Farbe, die kein Grund ist.
+die Eingaben aus DEMOS. Die Bildunterschrift nennt das Hex der Farbe, die kein Grund ist.
 Texte {{schlüssel}} kommen aus pattern.<schlüssel>.
 """
 import re
@@ -14,12 +14,12 @@ from tools import color as C
 from pages import method as M, task as TP
 
 esc = C.esc
-# Eingaben der Demo (Spezifikation 3.9), keine Messwerte: zwei Gründe und ein Grau darauf
+# Eingaben der Demo, keine Messwerte: zwei Gründe und ein Grau darauf
 DEMOS = {"context": {"ground-a": "oklch(0.70 0.18 55)", "ground-b": "oklch(0.50 0.18 260)", "sample": "oklch(0.62 0 0)"}}
 
 
 def pattern_text(site, lang, key):
-    """Text zu {{key}}: zuerst Kurz erklärt, dann jede andere Seite mit pattern.<key> (etwa die Texte von P4)."""
+    """Text zu {{key}}: zuerst Kurz erklärt, dann jede andere Seite mit pattern.<key> (etwa die Texte einer Aufgabe)."""
     own = site.copy[lang].get("explained", {})
     if "pattern." + key in own:
         return own["pattern." + key]

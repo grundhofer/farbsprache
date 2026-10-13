@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe Diagramm oder Dashboard (Spezifikation 3.3, 4.4). Prosa steht in web/copy/charts.py. Ein Modus; der Hintergrund kommt aus der Option bg. Die Datentyp-Chips (t) wählen die Startpalette (preset_control). Startpaletten beruhen auf Datensätzen und haben keine eigene Farbe, deshalb weder seed noch colors (erlaubt mit preset_control). Stufen und Flächen sind keine Normpaare, sondern Hinweise (advisory), weil sie mit Kontur, Zellrand oder Beschriftung auskommen dürfen (Understanding 1.4.11).",
+  "_comment": "Aufgabe Diagramm oder Dashboard. Prosa steht in web/copy/charts.py. Ein Modus; der Hintergrund kommt aus der Option bg. Die Datentyp-Chips (t) wählen die Startpalette (preset_control). Startpaletten beruhen auf Datensätzen und haben keine eigene Farbe, deshalb weder seed noch colors (erlaubt mit preset_control). Stufen und Flächen sind keine Normpaare, sondern Hinweise (advisory), weil sie mit Kontur, Zellrand oder Beschriftung auskommen dürfen (Understanding 1.4.11).",
   "id": "charts",
   "generator": "charts",
   "name_de": "Diagramm oder Dashboard",

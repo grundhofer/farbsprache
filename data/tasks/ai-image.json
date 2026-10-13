@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe KI-Bild (Spezifikation 3.7, 4.8, 5.5). Prosa und die englischen Prompt-Bausteine stehen in web/copy/ai_image.py. Vorrang f vor c vor p: f setzt die Farben direkt, c zeigt die Vorschläge s statt der Startsets. Kein Startset kombiniert Teal mit Orange (9.10). Das Textpaar (dunkelste auf hellster Farbe) rechnet der Generator, deshalb ist pairs hier leer.",
+  "_comment": "Aufgabe KI-Bild. Prosa und die englischen Prompt-Bausteine stehen in web/copy/ai_image.py. Vorrang f vor c vor p: f setzt die Farben direkt, c zeigt die Vorschläge s statt der Startsets. Kein Startset kombiniert Teal mit Orange. Das Textpaar (dunkelste auf hellster Farbe) rechnet der Generator, deshalb ist pairs hier leer.",
   "id": "ai-image",
   "generator": "ai-image",
   "name_de": "KI-Bild",

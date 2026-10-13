@@ -1,5 +1,5 @@
-/* Generator der Aufgabe Präsentation (FS.gen.slides). Spiegel von tools/gen/slides.py (Bauspezifikation 4.5, 5.7).
-   build(task, inp, ctx) -> Palettenobjekt (6.14), viewVars für die Ansicht „Beamer“, exports hex und rationale. */
+/* Generator der Aufgabe Präsentation (FS.gen.slides). Spiegel von tools/gen/slides.py.
+   build(task, inp, ctx) -> Palettenobjekt, viewVars für die Ansicht „Beamer“, exports hex und rationale. */
 (function (root, factory) {
   'use strict';
   var api = factory(root);
@@ -113,7 +113,7 @@
       extra: { datasets: { 'okabe-ito': inOkabe }, summary: ['summary.' + room], pair_note: 'pair.' + room, office: office(r) } };
   }
 
-  // Muster-Schalter „Beamer“: jede Farbe nach dem Beamer-Modell (4.1.14) beim gewählten Raumlicht; die
+  // Muster-Schalter „Beamer“: jede Farbe nach dem Beamer-Modell beim gewählten Raumlicht; die
   // Modellbeschriftung bleibt in den Bildschirmfarben (cap-text auf cap-bg), damit sie auch im hellen Raum lesbar ist
   function viewVars(palette, mode, toggles) {
     var out = {}, k, room, roles = palette.roles[mode];

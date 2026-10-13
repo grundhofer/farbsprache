@@ -1,4 +1,4 @@
-"""Seite Palette prüfen (Spezifikation 3.8): Eingabe, Ergebnisblöcke 2 bis 8, Export (Block 9).
+"""Seite Palette prüfen: Eingabe, Ergebnisblöcke 2 bis 8, Export (Block 9).
 
 Statisch steht das Beispiel aus data/check.json, berechnet mit tools/check.py. Jede eigene Eingabe rechnet
 web/check.js im Browser mit denselben Funktionen (web/ui/check.js bindet das DOM an). tests/check.test.cjs

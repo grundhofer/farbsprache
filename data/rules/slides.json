@@ -1,5 +1,5 @@
 {
-  "_comment": "Regeln der Aufgaben Präsentation und Text auf Bild (Paket P3, Bauspezifikation 6.5). Texte mit Platzhaltern, nie mit Messzahlen. Die Platzhalter nutzen feste Hex-Werte, damit dieselbe Regel zu jeder Palette passt.",
+  "_comment": "Regeln der Aufgaben Präsentation und Text auf Bild. Texte mit Platzhaltern, nie mit Messzahlen. Die Platzhalter nutzen feste Hex-Werte, damit dieselbe Regel zu jeder Palette passt.",
   "rules": [
     {
       "id": "slides-dark-on-light",

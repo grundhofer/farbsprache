@@ -1,5 +1,5 @@
 {
-  "_comment": "Kurz erklärt, Eigentümer Diagramm (Spezifikation 3.9). Je 60 bis 120 Wörter, kein HTML, Absätze durch Leerzeile. Zahlen der Quellen stehen als Quellzahlen im Text, eigene Messwerte nur über {ref:…}.",
+  "_comment": "Kurz erklärt: simulation, categories, data-types, rainbow. Je 60 bis 120 Wörter, kein HTML, Absätze durch Leerzeile. Zahlen der Quellen stehen als Quellzahlen im Text, eigene Messwerte nur über {ref:…}.",
   "entries": [
     {
       "id": "simulation",

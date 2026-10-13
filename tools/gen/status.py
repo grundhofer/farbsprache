@@ -1,8 +1,8 @@
 """Generator der Aufgabe Statusfarben (Spiegel von web/gen/status.js).
 
-T2 nach Spezifikation 4.3 auf den Neutraltönen von T1 (4.2): Hintergrund, Fläche und Text aus der Akzentfarbe,
+Auf den Neutraltönen der Aufgabe Website oder App: Hintergrund, Fläche und Text aus der Akzentfarbe,
 dazu Fehler, Warnung, Erfolg und Info mit eigener Meldungsfläche, optimiert wie in tools/gen/website.py. Die
-Akzentfarbe selbst ist keine Rolle; sie bestimmt Tönung und Konfliktprüfung. Eigenes Format: HTML-Snippet (5.8).
+Akzentfarbe selbst ist keine Rolle; sie bestimmt Tönung und Konfliktprüfung. Eigenes Format: HTML-Snippet.
 """
 from tools import color as C, export as X
 from tools.gen import website as W
@@ -31,7 +31,7 @@ def build(task, inp, ctx):
 
 
 def html(palette, task, ctx, lang, opts=None):
-    """HTML-Snippet (5.8): vier Meldungen mit Icon und Wort, dazu die Regeln .msg-<status>."""
+    """HTML-Snippet: vier Meldungen mit Icon und Wort, dazu die Regeln .msg-<status>."""
     T = ctx["text"]
     head = [X.header(ctx), T["html.needs"]] + X.notices(palette, ctx, task, opts) + [X.presub(ctx["core"]["link"], ctx)]
     out = ["<!-- " + head[0]] + ["     " + x for x in head[1:]]

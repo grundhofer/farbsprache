@@ -283,7 +283,7 @@
   }
   function formats(task) { return task.exports.visible.concat(task.exports.more || []); }
 
-  // ---------- Zustand (2.3): c, p und Optionen in sprachneutralen Query-Parametern
+  // ---------- Zustand: c, p und Optionen in sprachneutralen Query-Parametern
   function seedParam(task) { return task.seed_param || 'c'; }
   function control(task, id) { for (var i = 0; i < task.controls.length; i++) { if (task.controls[i].id === id) { return task.controls[i]; } } return null; }
   function preset(task, id) { for (var i = 0; i < task.presets.length; i++) { if (task.presets[i].id === id) { return task.presets[i]; } } return null; }
@@ -375,7 +375,7 @@
       if (has(seen, k)) { dirty = true; continue; }
       seen[k] = true;
       if (k === seedParam(task)) { p = C().parse(v); if (p && p.alpha === 1) { st.c = p.hex; } else { dirty = true; } continue; }
-      // Weiter-Links und Kacheln tragen c (2.3); mit eigenem seed_param (etwa sc) gilt c als Ersatz, die URL schreibt seed_param
+      // Weiter-Links und Kacheln tragen c; mit eigenem seed_param (etwa sc) gilt c als Ersatz, die URL schreibt seed_param
       if (k === 'c') { p = C().parse(v); if (p && p.alpha === 1) { alt = p.hex; } dirty = true; continue; }
       if (k === 'p') { if (preset(task, v)) { st.p = v; } else { dirty = true; } continue; }
       ctl = control(task, k);
@@ -386,7 +386,7 @@
       dirty = true;
     }
     if (!st.c && alt) { st.c = alt; }
-    // preset_control ohne c: Der Wert wählt seine Startpalette, wie beim Klick (2.3); er selbst fällt dann als Standard weg
+    // preset_control ohne c: Der Wert wählt seine Startpalette, wie beim Klick; er selbst fällt dann als Standard weg
     k = task.preset_control;
     if (k && !st.c && has(st.o, k) && preset(task, st.p || task.presets[0].id).options[k] !== st.o[k]) {
       for (j = 0; j < task.presets.length; j++) { if (task.presets[j].options[k] === st.o[k]) { st.p = task.presets[j].id; dirty = true; break; } }
@@ -416,7 +416,7 @@
       ctl = task.controls[i];
       if (has(st.o, ctl.id)) {
         if (ctl.type === 'toggle' && st.o[ctl.id] !== true) { out.push(ctl.id + '=0'); continue; }
-        // Komma bleibt lesbar (f ist eine kommagetrennte Hex-Liste, 2.3)
+        // Komma bleibt lesbar (f ist eine kommagetrennte Hex-Liste)
         out.push(ctl.id + '=' + encodeURIComponent(encodeValue(ctl, st.o[ctl.id])).replace(/%2C/g, ','));
       }
     }
@@ -443,13 +443,13 @@
     for (var k in st.o) { if (has(st.o, k) && control(task, k) && !isView(control(task, k))) { return true; } }
     return false;
   }
-  // Ein gesetztes Steuerelement vom Typ colors liefert die Farben selbst und geht vor c und p (2.3: f vor c vor p)
+  // Ein gesetztes Steuerelement vom Typ colors liefert die Farben selbst und geht vor c und p (f vor c vor p)
   function colorsSet(task, st) {
     for (var i = 0; i < task.controls.length; i++) { if (task.controls[i].type === 'colors' && st.o[task.controls[i].id]) { return true; } }
     return false;
   }
   // Name eines eigenen Zustands: eigene Farben (colors), eigene Farbe (c), sonst „{Startpalette}, angepasst“. Hat der
-  // Generator gen.displayName, steht statt der Startpalette, was die Palette zeigt (nach Z geändert, 5.0)
+  // Generator gen.displayName, steht statt der Startpalette, was die Palette zeigt
   function customNames(data, st, pal, gen) {
     var task = data.task, pr = preset(task, st.p || data.first), an = data.adjusted_names, nt = data.name_text, out = {}, l;
     if (colorsSet(task, st)) { return data.custom_names_colors; }
@@ -457,7 +457,7 @@
     for (l in an) { if (has(an, l)) { out[l] = fill(an[l], { palette: nt && gen.displayName ? gen.displayName(pal, nt[l], l) : pr['name_' + l] }); } }
     return out;
   }
-  // Gedrückter Startpaletten-Chip: keiner, solange c oder ein colors-Steuerelement gilt (2.3)
+  // Gedrückter Startpaletten-Chip: keiner, solange c oder ein colors-Steuerelement gilt
   function pressedPreset(task, st, first) { return st.c || colorsSet(task, st) ? null : (st.p || first); }
   // Option setzen (ändert st). Mit preset_control und ohne c wählt der Wert die Startpalette. Optionen, die sie nicht
   // selbst in options festlegt und die für sie gültig sind, bleiben stehen, wie mit c (etwa bg, pr, mark bei charts).
@@ -497,7 +497,7 @@
     pal.name_en = pr ? pr.name_en : names.en;
     return pal;
   }
-  // Palette zum Zustand: Startpaletten kommen fertig aus dem Build, nur Eigenes wird gerechnet (9.13).
+  // Palette zum Zustand: Startpaletten kommen fertig aus dem Build, nur Eigenes wird gerechnet.
   function compute(data, st, gen, lang) {
     var task = data.task, pid = st.p || data.first;
     if (!isCustom(task, st)) { return { palette: data.palettes[pid], error: null, custom: false }; }
@@ -540,11 +540,11 @@
       chk: check(R, pal), rulesSum: rulesSum(R, r.n), rules: r.html, exports: ex };
   }
 
-  // Sprachlink: Zwillingsseite plus kompletter Zustand und Sprungziel (2.3)
+  // Sprachlink: Zwillingsseite plus kompletter Zustand und Sprungziel
   function langHref(base, q, hash) { return base + (q ? '?' + q : '') + (hash || ''); }
-  // „Weiter“-Links und Kacheln tragen nur die eigene Farbe (2.3)
+  // „Weiter“-Links und Kacheln tragen nur die eigene Farbe
   function carryHref(base, hex, param) { return base + (hex ? '?' + (param || 'c') + '=' + hex.slice(1) : ''); }
-  // localStorage nur über diesen Umweg: gesperrter Speicher wirft nie (2.3, 11)
+  // localStorage nur über diesen Umweg: gesperrter Speicher wirft nie
   function storage(win) {
     return {
       get: function (key) { try { return win.localStorage.getItem(key); } catch (e) { return null; } },
@@ -553,7 +553,7 @@
       }
     };
   }
-  // Die gespeicherte Farbe ist nur ein Vorschlag (Chip „Zuletzt genutzt“) und wird nie angewandt (9.14).
+  // Die gespeicherte Farbe ist nur ein Vorschlag (Chip „Zuletzt genutzt“) und wird nie angewandt.
   function suggestion(store, stateC) {
     if (stateC) { return null; }
     var saved = store.get('farbsprache.color'), p = saved ? C().parse(saved, false) : null;
@@ -680,7 +680,7 @@
     }
     var timer;
     // Beim Tippen gilt eine Farbe nach 120 ms, wenn sie fertig aussieht. Kurzformen (#E63) und Unbekanntes warten auf
-    // eine Pause von 800 ms oder das Verlassen des Felds; bis dahin steht kein Fehler da (nach Z geändert, 3.0)
+    // eine Pause von 800 ms oder das Verlassen des Felds; bis dahin steht kein Fehler da
     input.addEventListener('input', function () {
       var s = input.value.replace(/\s/g, ''), ok = !s || (C().parse(input.value) && !/^#?[0-9A-Fa-f]{3,4}$/.test(s));
       clearTimeout(timer);
@@ -693,7 +693,7 @@
     if (last) { last.addEventListener('click', function () { input.value = last.getAttribute('data-hex'); read(false); }); }
     // set (Startpalette gewählt, Feld geleert oder Farbe aus der URL) nimmt alte Hinweise und Fehler mit
     return { set: function (hex) { input.value = hex || ''; note.hidden = true; err.textContent = ''; input.removeAttribute('aria-invalid'); if (hex && pick) { pick.value = hex.toLowerCase(); } show(hex); }, show: show,
-      // Farbe aus der URL übernehmen, ohne sie als eingegebene Farbe zu speichern (2.3)
+      // Farbe aus der URL übernehmen, ohne sie als eingegebene Farbe zu speichern
       apply: function () { read(false, true); } };
   }
 
@@ -767,7 +767,7 @@
         var vals = field(ctl, eff, 'values') || [];
         each(el.querySelectorAll('[data-val]'), function (b) {
           var val = b.getAttribute('data-val');
-          // Gelten eigene Farben (colors), ist auch kein Vorschlag aus der eigenen Farbe gewählt (2.3: f vor c vor p)
+          // Gelten eigene Farben (colors), ist auch kein Vorschlag aus der eigenen Farbe gewählt (f vor c vor p)
           b.setAttribute('aria-pressed', String(val === v && !(own && id === task.seed_control)));
           b.hidden = vals.indexOf(val) < 0;
         });
@@ -808,7 +808,7 @@
   var lastNotes = null;
   // Zeile neben dem Hauptknopf und in der Kopierleiste: angepasste Werte einer eigenen Palette oder keine Lösung. Im
   // Fehlerzustand verbirgt site.css alles, was kopiert werden könnte (#task[data-error]); die Palette darunter ist nur
-  // zum Vergleich da (nach Z geändert, 3.0 C)
+  // zum Vergleich da
   function palMsg(error) {
     var R = makeR(D), n = (current.changes || []).length, msg = error ? R.T['pal_msg.err'] : isCustom(task, st) && n ? fill(plural(R, 'pal_msg.chg', n), { n: C().fmtCount(n, lang) }) : '';
     each(doc.querySelectorAll('[data-pal-msg]'), function (a) { a.textContent = msg; a.hidden = !msg; });
@@ -851,7 +851,7 @@
       }
     }
     if (now === true) { run(); return; }
-    // 'frame': Die Eingabe war schon entprellt (Farbfeld), es zählt nur der nächste Frame (3.0)
+    // 'frame': Die Eingabe war schon entprellt (Farbfeld), es zählt nur der nächste Frame
     if (now) { (win.requestAnimationFrame || setTimeout)(run); return; }
     pending = setTimeout(function () { (win.requestAnimationFrame || setTimeout)(run); }, 120);
   }
@@ -977,7 +977,7 @@
   });
 
   // Kopierleiste: weg bei offener Tastatur und solange „Kopieren“ zu sehen ist; ab 1000 px auch, solange die Zeile mit dem
-  // Hauptknopf (im Fehlerzustand mit der Meldung) ganz zu sehen ist (nach Z geändert, 3.0). Ist sie da, hält
+  // Hauptknopf (im Fehlerzustand mit der Meldung) ganz zu sehen ist. Ist sie da, hält
   // scroll-padding-bottom den Fokus über ihr (WCAG 2.4.11).
   var copybar = doc.getElementById('copybar'), copySec = doc.getElementById('kopieren'), mainBtn = doc.querySelector('.pal-act');
   // mainSeen beginnt wahr: ohne IntersectionObserver bleibt die Leiste ab 1000 px weg, mit ihm blitzt sie beim Laden nicht auf
@@ -999,7 +999,7 @@
     barVisible();
   }
 
-  // API für die UI-Haken der Pakete (FS.ui[<aufgabe>])
+  // API für die UI-Haken der Aufgaben (FS.ui[<aufgabe>])
   var api = {
     lang: lang, task: task, data: D,
     slot: function (name) { return doc.querySelector('[data-slot="' + name + '"]'); },
@@ -1012,7 +1012,7 @@
     if (hex === st.c) { return; }
     st.c = hex;
     if (!hex && task.seed_control) { delete st.o[task.seed_control]; }
-    // Ohne c wählt der Wert von preset_control wieder seine Startpalette (2.3 „Zurücksetzen“), wie beim Wechsel
+    // Ohne c wählt der Wert von preset_control wieder seine Startpalette („Zurücksetzen“), wie beim Wechsel
     if (!hex && task.preset_control && has(st.o, task.preset_control)) { setOptionState(task, st, task.preset_control, st.o[task.preset_control], D.first); }
     pressControls(); syncUrl(); recompute(debounced ? 'frame' : false);
   });

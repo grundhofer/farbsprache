@@ -2,7 +2,7 @@
 Fehlerseite und Skripttexte. Vertrauenswürdiges HTML, wird nicht escaped (CC BY 4.0).
 
 Struktur wie alle Module unter web/copy/: COPY[lang][seite][schlüssel]. JS_TEXT geht als #i18n an site.js.
-Platzhalter nach Spezifikation 6.12 ({cr:…}, {count:…}, {date}); {palette}, {task}, {date_iso},
+Platzhalter des Farbkerns ({cr:…}, {count:…}, {date}); {palette}, {task}, {date_iso},
 {url} und {name}-artige Token ohne Doppelpunkt setzt der Rahmen vorher ein. Keine Messzahlen von Hand.
 """
 

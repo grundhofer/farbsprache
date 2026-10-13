@@ -1,5 +1,5 @@
 {
-  "_comment": "Aufgabe Logo und Marke (Spezifikation 3.5, 4.6, 5.8). Prosa und Steckbrief-Bausteine stehen in web/copy/brand.py. Die Rollen bg-light (#FFFFFF) und bg-dark (#16191D) sind die festen Flächen, auf denen die Textvarianten geprüft werden; ohne sie gäbe es kein Paar im Rollenschema (6.2). Logos sind von 1.4.3 ausgenommen, deshalb steht die Markenfarbe auf diesen Flächen nur unter decorative.",
+  "_comment": "Aufgabe Logo und Marke. Prosa und Steckbrief-Bausteine stehen in web/copy/brand.py. Die Rollen bg-light (#FFFFFF) und bg-dark (#16191D) sind die festen Flächen, auf denen die Textvarianten geprüft werden; ohne sie gäbe es kein Paar im Rollenschema. Logos sind von 1.4.3 ausgenommen, deshalb steht die Markenfarbe auf diesen Flächen nur unter decorative.",
   "id": "brand",
   "generator": "brand",
   "name_de": "Logo und Marke",
