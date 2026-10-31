@@ -39,6 +39,18 @@ class TestWorkflow(unittest.TestCase):
         self.assertRegex(deploy, r"concurrency:\n\s+group: pages\n\s+cancel-in-progress: false")
         self.assertIn("if: github.event_name == 'push' && github.ref == 'refs/heads/main'", deploy)
 
+    def test_tailwind_job_apart(self):
+        """Der Tailwind-Job installiert npm-Pakete in fester Version außerhalb des Repos; build und deploy hängen nicht davon ab."""
+        b = blocks(WF.read_text(encoding="utf-8"))
+        tw = b["job:tailwind"]
+        self.assertNotIn("write", tw)
+        self.assertNotRegex(b["job:build"], r"\bnpm (install|ci)\b|\bnpx\b")
+        self.assertRegex(b["job:deploy"], r"needs: build\n")
+        self.assertRegex(tw, r"tailwindcss@4\.\d+\.\d+ @tailwindcss/cli@4\.\d+\.\d+")
+        self.assertIn("--ignore-scripts", tw)
+        self.assertIn('--prefix "$RUNNER_TEMP/tw"', tw)
+        self.assertIn("tools/tailwind_check.py", tw)
+
 
 if __name__ == "__main__":
     unittest.main()
