@@ -14,7 +14,7 @@ Tailwind nicht an, prüft das Skript den generischen Renderer trotzdem.
 Die Kern-Builds hängen davon nicht ab: tests/test_tailwind.py läuft nur mit FARBSPRACHE_TAILWIND=<Pfad zur CLI>, die
 CI hat dafür einen eigenen Job. Exit-Code 1 bei jedem Fehler, 2 ohne oder mit falscher CLI.
 Checks the Tailwind v4 export against a real Tailwind 4 CLI (opt-in)."""
-import re, subprocess, sys, tempfile
+import os, re, subprocess, sys, tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -105,10 +105,22 @@ def verify(text, css, want, modes):
     return errs
 
 
+_ANSI = re.compile(r"\x1b\[[0-9;]*[A-Za-z]")
+
+
+def cli_run(args, cwd=None):
+    """CLI ohne Farben aufrufen. Ist CI gesetzt (GitHub Actions), färbt die Tailwind-CLI sonst ein, und zwischen
+    „tailwindcss“ und „v4.3.3“ steht ein ANSI-Code. Restliche Codes entfernt _ANSI. → (Exit, stdout, stderr)"""
+    env = dict(os.environ, NO_COLOR="1", FORCE_COLOR="0")
+    r = subprocess.run(args, cwd=cwd, capture_output=True, text=True, env=env)
+    return r.returncode, _ANSI.sub("", r.stdout), _ANSI.sub("", r.stderr)
+
+
 def version(cli):
-    r = subprocess.run([cli, "--help"], capture_output=True, text=True)
-    m = re.search(r"tailwindcss v(\d+\.\d+\.\d+\S*)", r.stdout + r.stderr)
-    return m.group(1) if m else None
+    """→ (Version oder None, Exit, stdout, stderr) von cli --help."""
+    code, out, err = cli_run([cli, "--help"])
+    m = re.search(r"tailwindcss v(\d+\.\d+\.\d+\S*)", out + err)
+    return (m.group(1) if m else None), code, out, err
 
 
 def install_root(cli):
@@ -125,9 +137,10 @@ def tempdir(cli):
 
 def run(cli, workdir, items=None, echo=print):
     """Kompiliert alle Fälle unter workdir und gibt die Zahl der fehlerhaften Fälle zurück."""
-    ver = version(cli)
+    ver, code, out, err = version(cli)
     if not ver or not ver.startswith("4."):
-        raise SystemExit(f"keine Tailwind-4-CLI: {cli} meldet {ver!r}")
+        raise SystemExit(f"keine Tailwind-4-CLI: {cli} meldet {ver!r} (Exit {code})\n"
+                         f"--- stdout von --help ---\n{out.strip()}\n--- stderr von --help ---\n{err.strip()}")
     echo(f"tailwindcss v{ver}")
     items = cases() if items is None else items
     bad = 0
@@ -137,13 +150,13 @@ def run(cli, workdir, items=None, echo=print):
         (d / "input.css").write_text(c["text"], encoding="utf-8")
         names, classes = utilities(c["text"])
         (d / "page.html").write_text(page_html(classes), encoding="utf-8")
-        r = subprocess.run([cli, "-i", "input.css", "-o", "out.css"], cwd=d, capture_output=True, text=True)
+        code, out, err = cli_run([cli, "-i", "input.css", "-o", "out.css"], cwd=d)
         css = (d / "out.css").read_text(encoding="utf-8") if (d / "out.css").exists() else ""
-        errs = ([f"Exit {r.returncode}"] if r.returncode else []) + verify(c["text"], css, c["want"], c["modes"])
-        if re.search(r"(?i)\b(warn|warning|error)\b", r.stdout + r.stderr):
-            errs.append("CLI meldet: " + " | ".join(x for x in (r.stdout + r.stderr).splitlines() if x.strip()))
+        errs = ([f"Exit {code}"] if code else []) + verify(c["text"], css, c["want"], c["modes"])
+        if re.search(r"(?i)\b(warn|warning|error)\b", out + err):
+            errs.append("CLI meldet: " + " | ".join(x for x in (out + err).splitlines() if x.strip()))
         n = sum(len(v) for v in c["want"].values())
-        echo(f"{c['key']}: Exit {r.returncode}, {len(classes)} Klassen, {n} Werte in {'/'.join(c['modes'])}"
+        echo(f"{c['key']}: Exit {code}, {len(classes)} Klassen, {n} Werte in {'/'.join(c['modes'])}"
              f"{'' if c['offered'] else ', Format nicht angeboten'} -> {'OK' if not errs else 'FEHLER'}")
         for e in errs:
             echo("    " + e)
