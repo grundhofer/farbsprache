@@ -72,6 +72,29 @@ jobs:
         with:
           path: docs
 
+  # Tailwind-v4-Export gegen eine echte Tailwind-4-CLI (tools/tailwind_check.py). Eigener Job mit fester Version außerhalb
+  # des Repos, ohne Installationsskripte: Build, Tests und Deployment hängen nicht von npm-Paketen ab (deploy braucht nur build).
+  tailwind:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install Tailwind CSS 4.3.3
+        run: npm install --prefix "$RUNNER_TEMP/tw" --no-save --ignore-scripts tailwindcss@4.3.3 @tailwindcss/cli@4.3.3
+
+      - name: Compile the Tailwind export of every starter palette
+        run: python3 tools/tailwind_check.py "$RUNNER_TEMP/tw/node_modules/.bin/tailwindcss"
+
   deploy:
     # Nur ein Push auf main veröffentlicht; Pull Requests und manuelle Läufe anderer Zweige nicht.
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'

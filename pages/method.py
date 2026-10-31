@@ -100,7 +100,7 @@ def counts(site):
     tv = site.D["files"].get("testvectors") or {}
     n = sum(len(v) for sec in tv.values() if isinstance(sec, dict) for v in sec.values() if isinstance(v, list))
     seeds = json.loads((site.roots[0] / "tests" / "parity_seeds.json").read_text(encoding="utf-8"))
-    return {"vectors": n, "seeds": len(seeds["seeds"])}
+    return {"vectors": n, "seeds": len(seeds["seeds"]), "presets": site.counts["presets"]}
 
 
 def cite(site, lang, page, sid):

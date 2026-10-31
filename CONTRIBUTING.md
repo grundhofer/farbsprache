@@ -68,6 +68,10 @@ FARBSPRACHE_REQUIRE_BUILD=1 node --test tests/*.test.cjs
 FARBSPRACHE_REQUIRE_BUILD=1 FARBSPRACHE_JS_DIR=docs/assets node --test tests/*.test.cjs   # dieselben Tests gegen die ausgelieferten Skripte
 ```
 
+Den Tailwind-v4-Export prüft `tools/tailwind_check.py` gegen eine echte Tailwind-4-CLI. Das ist freiwillig und braucht
+npm-Pakete außerhalb des Repos; die Anleitung steht im Skript, die CI hat dafür einen eigenen Job. Mit
+`FARBSPRACHE_TAILWIND=<Pfad zur CLI>` läuft die Prüfung auch in `tests/test_tailwind.py`.
+
 `README.md` und `README.de.md` erzeugt der Build aus `web/readme.en.md` und `web/readme.de.md`; ändere nur die Vorlagen.
 Die Angaben des Impressums (Name, Anschrift, E-Mail, Umsatzsteuer-ID) stehen nur in `data/legal.json`; `pages/legal.py`
 baut daraus `de/impressum/` und `en/legal-notice/`. Jede Seite verlinkt sie: die Sprachseiten in der Fußzeile,
@@ -217,6 +221,10 @@ FARBSPRACHE_REQUIRE_BUILD=1 python3 -m unittest discover -s tests -v
 FARBSPRACHE_REQUIRE_BUILD=1 node --test tests/*.test.cjs
 FARBSPRACHE_REQUIRE_BUILD=1 FARBSPRACHE_JS_DIR=docs/assets node --test tests/*.test.cjs   # the same tests against the shipped scripts
 ```
+
+`tools/tailwind_check.py` checks the Tailwind v4 export against a real Tailwind 4 CLI. This is optional and needs npm
+packages outside the repo; the script has the instructions, and CI runs it in a separate job. With
+`FARBSPRACHE_TAILWIND=<path to the CLI>` the check also runs in `tests/test_tailwind.py`.
 
 The build writes `README.md` and `README.de.md` from `web/readme.en.md` and `web/readme.de.md`; edit the templates
 only. If tasks, starter palettes or sources change, render `og.png` again with `python3 tools/og.py` (needs Google
